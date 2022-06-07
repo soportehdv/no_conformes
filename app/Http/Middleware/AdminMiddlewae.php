@@ -19,7 +19,7 @@ class AdminMiddlewae
     {
         if(Auth::check() && Auth::user()->rol=='admin')
             return $next($request);
-        
+
         return redirect('/');
     }
 }

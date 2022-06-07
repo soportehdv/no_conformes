@@ -1,4 +1,9 @@
-@if(isset($item['role']) && ( Auth::user()->rol == 'admin' || $item['role'] == Auth::user()->rol))
+{{-- @if(Auth::user() == null)
+    <a href="{{ route('login') }}" class="small-box-footer">
+        Ver <i class="fas fa-arrow-circle-right"></i>
+    </a>
+@else --}}
+@if(isset($item['role']) && (Auth::user()->rol == 'admin' || $item['role'] == Auth::user()->rol))
 
 <li @if(isset($item['id'])) id="{{ $item['id'] }}" @endif class="nav-item">
 
@@ -21,7 +26,9 @@
         </p>
 
     </a>
-   
 
 </li>
 @endif
+{{-- @endif --}}
+
+

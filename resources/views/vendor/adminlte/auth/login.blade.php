@@ -58,7 +58,7 @@
 
         {{-- Login field --}}
         <div class="row">
-            
+
             <div class="col-5">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                     <span class="fas fa-sign-in-alt"></span>
@@ -71,7 +71,7 @@
 @stop
 
 @section('auth_footer')
-   
 
-    
+
+
 @stop
