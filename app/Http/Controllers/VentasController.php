@@ -44,7 +44,7 @@ class VentasController extends Controller
         return $pdf->download('ejemplo.pdf');
     }
 
-    
+
 
     public function getVentas(Request $request)
     {
@@ -59,18 +59,18 @@ class VentasController extends Controller
                 ->where('serial','LIKE', '%' . $query . '%')
                 ->orderby('ventas.created_at', 'desc')
                 ->simplePaginate(10);
-            
-            
+
+
 
                 return view('Ventas/mostrar', [
                     'ubicacion' => $ubicacion,
                     'ventas' => $ventas,
-                    
+
                 ]);
-        } 
+        }
 
 
-        
+
     }
     public function fechaVista(Request $request){
         $start = Carbon::parse($request->get('fecha_inicial'));
@@ -85,18 +85,18 @@ class VentasController extends Controller
 
         return view('Ventas/mostrar', [
             'ventas' => $ventas,
-            
+
         ]);
     }
 
     public function create()
     {
-        
+
 
         $stocks = Stock::join('compras', 'compras.id', '=', 'stock.compra_id')
             ->select('stock.*', 'compras.serial as producto')
             ->get();
-              
+
         $clientes = Clientes::all();
         $compras = Compras::all();
         $tipo = Tipo::all();
@@ -116,9 +116,9 @@ class VentasController extends Controller
         $unidades = $request->input('unidades');
         $stock_id = $request->input('stock_id');
         $cliente_id = $request->input('cliente_id');
-        $user_id = $request->input('user');        
+        $user_id = $request->input('user');
         // dd($cliente_id);
- 
+
             // enviamos varios datos de ventas
             for ($i=0; $i < count($cliente_id); $i++){
                 // dd(count($cliente_id));
@@ -127,9 +127,9 @@ class VentasController extends Controller
                 // dd($stock->id);
 
                 // condicion si no hay suficientes productos
-                if ($unidades[$i] > $stock->unidades) {
+                if ($unidades[$i] > $compras->unidades) {
 
-                    $request->session()->flash('alert-danger', "No hay suficientes $stock->producto, quedan solo $stock->unidades ");
+                    $request->session()->flash('alert-danger', "No hay suficientes $compras->producto, quedan solo $compras->unidades ");
                     return redirect()->back();
                 }
                 else
@@ -146,7 +146,7 @@ class VentasController extends Controller
                     ];
                 // enviamos varios datos al stock
                     $datasave2 =[
-                        'unidades'    => $stock->unidades - $unidades[$i],
+                        'unidades'    => $compras->unidades - $unidades[$i],
                         'estado_ubi'  => $ubicacions->nombre,
                         'estado_id'   => 3,
                     ];
@@ -176,13 +176,13 @@ class VentasController extends Controller
                     DB::table('detalle_ventas')->insert($datasave5);
 
             }
-           
+
         }
         $request->session()->flash('alert-success', 'Entrega realizada con exito!');
-        return redirect()->route('ventas.lista', ['filtro' => 4]);           
-       
+        return redirect()->route('ventas.lista', ['filtro' => 4]);
+
     }
 
-    
-    
+
+
 }

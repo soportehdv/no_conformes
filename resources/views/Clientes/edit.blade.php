@@ -35,10 +35,10 @@
                                 @foreach ($user as $u)
                                         @if ($cliente->responsable_id === $u->id)
                                             <input type="text" class="form-control" name="responsable"
-                                            value="{{ $u->name }}" placeholder="" disabled>                                               
+                                            value="{{ $u->name }}" placeholder="" disabled>
                                         @endif
                                 @endforeach
-                                
+
                             </div>
                         </div>
 
@@ -57,14 +57,14 @@
                             <select id="departamento" name="departamento" class="form-control" required>
                                 <option value="">Seleccioné una ubicación</option>
                                 @foreach ($ubicacion as $ubi)
-                                    <option value="{{  $ubi->id }}" 
+                                    <option value="{{  $ubi->id }}"
                                         @if ($cliente->departamento === $ubi->id) selected='selected' @endif>
                                         {{ $ubi->nombre }}</option>
                                 @endforeach
 
                             </select>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
@@ -98,9 +98,9 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label for="">Tipo de gas </label>
+                            <label for="">Pedido </label>
                             <select id="tipo" name="tipo" class="form-control" required>
-                                <option value="">Seleccioné un tipo de gas</option>        
+                                <option value="">Seleccioné un elemento</option>
                                 <option value="oxigeno_8.5">Oxigeno 8.5</option>
                                 <option value="aire_medicinal">Aire medicinal</option>
                                 <option value="oxigeno_1m3">Oxigeno 1m3</option>
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <div class="row">
                         <div class="col-sm-8">
@@ -133,11 +133,11 @@
                         <div class="col-sm-4">
                             <a style="float:right" class="btn btn-primary" href="{{ URL::previous() }}">Regresar</a>
                         </div>
-                        
+
 
                     </div>
 
-                    
+
 
                     {{-- <button type="submit" class="btn btn-primary">Agregar</button> --}}
 

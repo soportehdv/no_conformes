@@ -98,10 +98,7 @@
                         <th>id</th>
                         <th style="background-color:#343a40; color:white;">Serial</th>
                         <th>Fecha_ingreso</th>
-                        <th>Vencimiento</th>
                         <th>Un.</th>
-                        {{-- <th>Lote</th> --}}
-                        <th>Tipo</th>
                         <th>Ubicacion</th>
                         <th>Estado</th>
 
@@ -118,10 +115,7 @@
                             <th>{{ $stoc->id }}</th>
                             <td style="text-transform: uppercase">{{ $stoc->serial }}</td>
                             <td>{{ $stoc->created_at }}</td>
-                            <td>{{ $stoc->fecha_vencimiento }}</td>
                             <td>{{ $stoc->uni }}</td>
-                            {{-- <td>{{ $stoc->lote }}</td> --}}
-                            <td>{{ $stoc->tipos_n }}</td>
                             @if ($stoc->estado_ubi === 'Bodega')
                                 <td>
                                     <span class="badge badge-pill badge-success">{{ $stoc->estado_ubi }}</span>

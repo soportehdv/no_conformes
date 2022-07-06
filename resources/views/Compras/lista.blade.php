@@ -38,14 +38,13 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Remisión</th>
-                    <th>Tipo</th>
-                    <th>Lote</th>
-                    <th>Vencimiento</th>
                     <th style="background-color:#343a40; color:white;">Serial</th>
-                    <th>N° Registro</th>
-                    <th>m3</th>
-                    <th>Color</th>
+                    <th>Elemento</th>
+                    <th>Caracteristica</th>
+                    <th>Ancho</th>
+                    <th>Largo</th>
+                    <th>color</th>
+                    <th>tela</th>
                     <th>Unidades</th>
                     {{-- <th>Acción</th> --}}
 
@@ -55,18 +54,17 @@
                 @foreach ($compras as $compra)
                     <tr>
                         <th>{{ $compra->id }}</th>
-                        <td>{{ $compra->remision }}</td>
-                        <td>{{ $compra->tipos }}</td>
-                        <td style="text-transform: uppercase">{{ $compra->lote }}</td>
-                        <td>{{ $compra->fecha_vencimiento }}</td>
                         <td style="text-transform: uppercase">{{ $compra->serial }}</td>
-                        <td style="text-transform: uppercase">{{ $compra->registro }}</td>
-                        <td>{{ $compra->presentacion }}</td>
-                        <td>{{ $compra->color }}</td>
+                        <td>{{ $compra->elemento }}</td>
+                        <td>{{ $compra->caracteristicas }}</td>
+                        <td style="text-transform: uppercase">{{ $compra->ancho }}</td>
+                        <td>{{ $compra->largo }}</td>
+                        <td style="text-transform: uppercase">{{ $compra->color }}</td>
+                        <td>{{ $compra->tela }}</td>
                         <td>{{ $compra->uni }}</td>
-                        {{-- <td><a href="{{ route('compras.update.vista', $compra->id) }}"
+                        <td><a href="{{ route('compras.update.vista', $compra->id) }}"
                                 class="btn btn-success mb-2"><i class="fas fa-edit"></i> Editar</a>
-                        </td> --}}
+                        </td>
 
                     </tr>
                 @endforeach

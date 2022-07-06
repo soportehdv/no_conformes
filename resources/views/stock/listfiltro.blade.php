@@ -8,7 +8,7 @@
         </div>
 
     </div>
-   
+
 
 @endsection
 
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a href="{{ route('ventas.create.vista') }}" class="btn btn-success mb-2"><i class="fas fa-clipboard-check"></i> Entregar</a>
-               
+
             </div>
         </div>
         @endif
@@ -121,11 +121,10 @@
                         <th>vencimiento</th>
                         <th>Unidades</th>
                         <th>Lote</th>
-                        <th>Tipo</th>
                         <th>Ubicacion</th>
                         <th>Estado</th>
 
-                        {{-- @if (Auth::user()->rol == "admin")                        
+                        {{-- @if (Auth::user()->rol == "admin")
                         <th>Acción</th>
                         @endif --}}
 
@@ -140,7 +139,6 @@
                             <td>{{ $stoc->fecha_vencimiento }}</td>
                             <td>{{ $stoc->uni }}</td>
                             <td>{{ $stoc->lote }}</td>
-                            <td>{{ $stoc->tipo }}</td>
                             @if ($stoc->estado_ubi === 'Bodega')
                                 <td>
                                     <span class="badge badge-pill badge-success">{{$stoc->estado_ubi}}</span>
@@ -148,7 +146,7 @@
                             @else ()
                                 <td>
                                     <span class="badge badge-pill badge-danger">{{$stoc->estado_ubi}}</span>
-                                </td>                            
+                                </td>
                             @endif
 
 
@@ -166,7 +164,7 @@
                                 </td>
                             @endif
 
-                            {{-- @if (Auth::user()->rol == "admin")               
+                            {{-- @if (Auth::user()->rol == "admin")
                             <td><a href="{{ route('compras.update.vista', $stoc->id) }}"
                                     class="btn btn-primary mb-2"><i class="fas fa-edit"></i> Editar</a>
                             </td>

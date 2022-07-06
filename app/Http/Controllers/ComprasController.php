@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Compras;
 use App\Models\Stock;
-use App\Models\Proveedores;
 use App\Models\Fracciones;
 use App\Models\Ubicacion;
 use App\Models\Estados;
@@ -33,14 +32,10 @@ class ComprasController extends Controller
 
             $query= trim($request->get('search'));
             $compras = Compras::join('estados', 'estados.id', '=', 'compras.estado_id')
-                ->join('tipos', 'tipos.id', '=', 'compras.tipo')
-                ->join('proveedores', 'proveedores.id', '=', 'compras.proveedor_id')
-                ->select('estados.estado as estado','proveedores.remision as remision', 'tipos.nombre_id as tipos','tipos.presentacion_m3_id as presentacion', 'tipos.color_id as color', 'compras.*')
+                ->select('estados.estado as estado', 'compras.*')
                 ->where('serial','LIKE', '%' . $query . '%')
                 ->where('status','LIKE', '%' . 1 . '%')
-                ->orderBy('id', 'desc')
-                // ->get();
-                // comentado para pruebas
+                ->orderBy('id', 'asc')
                 ->paginate(10);
 
             return view('compras/lista', [
@@ -52,7 +47,6 @@ class ComprasController extends Controller
     public function create()
     {
         $estado = Estados::all();
-        $proveedores = Proveedores::all();
         $Ubicacion = Ubicacion::all();
         $tipo = Tipo::all();
 
@@ -60,7 +54,6 @@ class ComprasController extends Controller
 
         return view('Compras/create', [
             'estado' => $estado,
-            'proveedores' => $proveedores,
             'ubicacion' => $Ubicacion,
             'tipo' => $tipo,
 
@@ -74,7 +67,6 @@ class ComprasController extends Controller
         //validamos los datos
         $validate = Validator::make($request->all(), [
             'serial'      => 'required',
-            'registro'      => 'required',
 
         ]);
 
@@ -88,32 +80,19 @@ class ComprasController extends Controller
         $Compras = new Compras();
 
         $Compras->serial = $request->input('serial');
-        $Compras->registro = $request->input('registro');
 
 
         $Compras->estado_id =  1;
-        $Compras->proveedor_id =  $request->input('proveedor_id');
-        $Compras->tipo =  $request->input('tipo');
-        $Compras->fecha_vencimiento = $request->input('fecha_vencimiento');
-        $Compras->unidades = 1;
-        $Compras->uni = 1;
-        $Compras->lote = $request->input('lote');
-        $Compras->limpieza = $request->input('limpieza');
-        $Compras->sello = $request->input('sello');
-        $Compras->eti_producto = $request->input('eti_producto');
-        $Compras->prueba = $request->input('prueba');
-        $Compras->estandar = $request->input('estandar');
-        $Compras->eti_lote = $request->input('eti_lote');
-        $Compras->integridad = $request->input('integridad');
+        $Compras->unidades = $request->input('cantidad');
+        $Compras->uni = $request->input('cantidad');
+        $Compras->elemento = $request->input('elemento');
+        $Compras->caracteristicas = $request->input('caracteristicas');
+        $Compras->ancho = $request->input('ancho');
+        $Compras->largo = $request->input('largo');
+        $Compras->color = $request->input('color');
+        $Compras->tela = $request->input('tela');
 
         $Compras->status = 1;
-
-        if ($Compras->limpieza == "C" && $Compras->sello == "C" && $Compras->eti_producto == "C" && $Compras->prueba == "C" && $Compras->estandar == "C" && $Compras->eti_lote == "C" && $Compras->integridad == "C"){
-            $Compras->aprobado = "X";
-        }else{
-            $Compras->rechazado = "X";
-        }
-
 
         $Compras->save();
 
@@ -121,20 +100,14 @@ class ComprasController extends Controller
 
         $stock = new Stock();
         $stock->estado_id =  1;
-        $stock->fecha_vencimiento = $request->input('fecha_vencimiento');
-        $stock->unidades = 1;
-        $stock->uni = 1;
-        $stock->tipo =  $request->input('tipo');
+        $stock->unidades = $request->input('cantidad');
+        $stock->uni = $request->input('cantidad');
         $stock->compra_id = $Compras->id;
 
         $stock->status = 1;
 
         $stock->save();
 
-
-        $proveedores = Proveedores::where('id', $request->input('proveedor_id'))->first();
-        $proveedores->contador = $request->input('contador') + 1;
-        $proveedores->save();
 
         $request->session()->flash('alert-success', 'Producto registrado con exito!');
 
@@ -144,14 +117,12 @@ class ComprasController extends Controller
     {
         $compras = Compras::where('id', $id)->first();
         $estado = Estados::all();
-        $proveedores = Proveedores::all();
 
         // $fracciones = Fracciones::all();
 
         return view('Compras/editar', [
             'compras' => $compras,
             'estado' => $estado,
-            'proveedores' => $proveedores,
 
             // 'fracciones' => $fracciones
         ]);
@@ -164,7 +135,7 @@ class ComprasController extends Controller
 
 
         $validate = Validator::make($request->all(), [
-            'unidades'      => 'required',
+            'unidades'      => 'color',
         ]);
 
         if ($validate->fails()) {
@@ -176,21 +147,19 @@ class ComprasController extends Controller
         //validamos los datos
         // $Compras = new Compras();
         $Compras->serial = $request->input('serial');
-        $Compras->registro = $request->input('registro');
 
-        $Compras->estado_id =  $request->input('estado_id');
-        $Compras->proveedor_id =  $request->input('proveedor_id');
-        $Compras->fecha_vencimiento = $request->input('fecha_vencimiento');
-        $Compras->unidades = $request->input('unidades');
-        $Compras->uni = $request->input('unidades');
-        $Compras->lote = $request->input('lote');
-        $Compras->limpieza = $request->input('limpieza');
-        $Compras->sello = $request->input('sello');
-        $Compras->eti_producto = $request->input('eti_producto');
-        $Compras->prueba = $request->input('prueba');
-        $Compras->estandar = $request->input('estandar');
-        $Compras->eti_lote = $request->input('eti_lote');
-        $Compras->integridad = $request->input('integridad');
+
+        $Compras->estado_id =  1;
+        $Compras->unidades = 1;
+        $Compras->uni = 1;
+        $Compras->elemento = $request->input('elemento');
+        $Compras->caracteristicas = $request->input('caracteristicas');
+        $Compras->ancho = $request->input('ancho');
+        $Compras->largo = $request->input('largo');
+        $Compras->color = $request->input('color');
+        $Compras->tela = $request->input('tela');
+
+        $Compras->status = 1;
 
 
         $Compras->save();
@@ -198,14 +167,14 @@ class ComprasController extends Controller
 
         //Guardamos en el stock
 
-        $stock->estado_id =  $request->input('estado_id');
-        $stock->fecha_vencimiento = $request->input('fecha_vencimiento');
-        $stock->unidades = $request->input('unidades');
-        $stock->uni = $request->input('unidades');
-        $stock->tipo =  $request->input('tipo');
-        $stock->compra_id = $Compras->id;
+        // $stock->estado_id =  1;
+        // $stock->unidades = 1;
+        // $stock->uni = 1;
+        // $stock->compra_id = $Compras->id;
 
-        $stock->save();
+        // $stock->status = 1;
+
+        // $stock->save();
 
         $request->session()->flash('alert-success', 'Ingreso actualizado con exito!');
 
@@ -215,7 +184,6 @@ class ComprasController extends Controller
     {
         $compras = Compras::where('id', $id)->first();
         $estado = Estados::all();
-        $proveedores = Proveedores::all();
         $ubicacion = Ubicacion::all();
 
         // $fracciones = Fracciones::all();
@@ -223,7 +191,6 @@ class ComprasController extends Controller
         return view('Compras/editarProducto', [
             'compras' => $compras,
             'estado' => $estado,
-            'proveedores' => $proveedores,
             'ubicacion' => $ubicacion,
 
 

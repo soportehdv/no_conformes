@@ -74,15 +74,15 @@
                                 </th>
                                 <th>
                                     <select class="form-control" name="stock_id[]" required>
-                                        @foreach ($stocks as $stock)
-                                            @if ($stock->unidades != 0)
-                                                <option value="{{ $stock->id }}">{{ $stock->producto }}</option>
+                                        @foreach ($compras as $compra)
+                                            @if ($compra->unidades != 0)
+                                                <option value="{{ $compra->id }}">{{ $compra->elemento }}, {{ $compra->caracteristicas }}</option>
                                             @endif
                                         @endforeach
                                     </select>
                                 </th>
                                 <th>
-                                    <input type="number" min="1" max="1" class="form-control" name="unidades[]" required>
+                                    <input type="number" min="1" class="form-control" name="unidades[]" required>
                                 </th>
                                 <input type="hidden" class="form-control" name="user[]" value='{{Auth::user()->id}}'required>
                                 <th><a href="javascript:void(0)" class="btn btn-danger deleteRow">-</a></th>
@@ -106,15 +106,15 @@
                             "    </th>"+
                             "    <th>"+
                             "        <select class='form-control' name='stock_id[]' required>"+
-                            "            @foreach ($stocks as $stock)"+
-                            "                @if ($stock->unidades != 0)"+
-                            "                    <option value='{{ $stock->id }}'>{{ $stock->producto }}</option>"+
+                            "            @foreach ($compras as $compra)"+
+                            "                @if ($compra->unidades != 0)"+
+                            "                    <option value='{{ $compra->id }}'>{{ $compra->elemento }}, {{ $compra->caracteristicas }}</option>"+
                             "                @endif"+
                             "            @endforeach"+
                             "        </select>"+
                             "    </th>"+
                             "    <th>"+
-                            "        <input type='number' min='1' max='1' class='form-control' name='unidades[]' required>"+
+                            "        <input type='number' min='1' class='form-control' name='unidades[]' required>"+
                             "    </th>"+
                             "    <input type='hidden' class='form-control' name='user[]' value='{{Auth::user()->id}}'required>"+
                             "    <th><a href='javascript:void(0)' class='btn btn-danger deleteRow'>-</a></th>                                "+

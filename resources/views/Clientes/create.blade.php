@@ -86,16 +86,13 @@ $array = ['Coordinador', 'Camillero', 'Emfermero', 'administracion', 'otros'];
                         </div>
 
                         <div class="col-sm-4">
-                            <label for="">Tipo de gas </label>
+                            <label for="">Pedido </label>
                             <select id="tipo" name="tipo" class="form-control" required>
-                                <option value="">Seleccioné un tipo de gas</option>
-                                <option value="oxigeno_8.5">Oxigeno 8.5</option>
-                                <option value="aire_medicinal">Aire medicinal</option>
-                                <option value="oxigeno_1m3">Oxigeno 1m3</option>
-                                <option value="nitrogeno">Nitrogeno</option>
-                                <option value="oxido_nitrico">Oxido nitrico</option>
-                                <option value="dioxido_carbono">Dioxido carbono</option>
-                                <option value="helontix">Helontix</option>
+                                <option value="">Seleccioné un tipo de elemento</option>
+                                @foreach($compras as $compra)
+                                    <option value="{{ $compra->elemento}}, {{ $compra->caracteristicas }}">{{ $compra->elemento}}, {{ $compra->caracteristicas }}</option>
+                                @endforeach
+
                             </select>
                         </div>
 

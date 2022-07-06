@@ -17,34 +17,21 @@ class CreateComprasTable extends Migration
             $table->id();
 
             $table->string('serial');
-            $table->string('registro');
-
-
             $table->integer('estado_id')->unsigned();
-            $table->integer('proveedor_id')->unsigned();
-            $table->integer('tipo');
             $table->string('estado_ubi')->nullable()->default("Bodega");
-            $table->date('fecha_vencimiento');
             $table->integer('unidades');
             $table->integer('uni');
-            $table->string('lote');
-            $table->string('limpieza');
-            $table->string('sello');
-            $table->string('eti_producto');
-            $table->string('prueba');
-            $table->string('estandar');
-            $table->string('eti_lote');
-            $table->string('integridad');
-            $table->string('aprobado');
-            $table->string('rechazado');
+            $table->string('elemento');
+            $table->string('caracteristicas');
+            $table->string('ancho');
+            $table->string('largo');
+            $table->string('color');
+            $table->string('tela');
 
             $table->integer('status');//activo o inactivo
 
 
 
-            // $table->float('precio_compra');
-            // $table->float('costo_unitario');
-            // $table->integer('fraccion_id')->unsigned();
             $table->timestamps();
         });
     }

@@ -60,9 +60,7 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Responsable</th>
-                        {{-- <th scope="col">Cargo</th> --}}
                         <th scope="col" style="background-color:#343a40; color:white;">Recibió</th>
-                        {{-- <th scope="col">Cargo</th> --}}
                         <th scope="col">Ubicación</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Estado</th>
@@ -83,9 +81,7 @@
                         <tr>
                             <th scope="row">{{ $cliente->id }}</th>
                             <td>{{ $cliente->responsable }}</td>
-                            {{-- <td>{{ $cliente->cargo }}</td> --}}
                             <td>{{ $cliente->nombre }}</td>
-                            {{-- <td>{{ $cliente->cargorecibe }}</td> --}}
                             <td>{{ $cliente->ubicacion }}</td>
                             <td>{{ $cliente->registro }}</td>
                             @if ($cliente->entregado != 0)
@@ -97,7 +93,7 @@
                                     <span class="badge badge-pill badge-success">Entregado</span>
                                 </td>
                             @endif
-                            
+
                             <td>{{$cliente->tipo}}</td>
                             <td>{{$cliente->cantidad}}</td>
                             <td>{{$cliente->entregado}}</td>
@@ -108,7 +104,7 @@
                             text-overflow: ellipsis;">
                                 {{ $cliente->direccion }}
                             </td>
-                            
+
                             @if (Auth::user()->rol == 'admin')
                                 <td>
                                     <a href="{{ route('clientes.update.vista', $cliente->id) }}"
