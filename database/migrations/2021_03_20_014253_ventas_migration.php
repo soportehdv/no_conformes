@@ -18,6 +18,7 @@ class VentasMigration extends Migration
             $table->integer('cliente_id');
             $table->integer('producto_id')->unsigned();
             $table->integer('user_id');
+            $table->integer('unidades');
             $table->timestamps();
         });
     }

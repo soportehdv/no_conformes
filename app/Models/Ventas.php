@@ -14,5 +14,7 @@ class Ventas extends Model
         'cliente_id',
         'producto_id',
         'user_id',
+        'unidades',
+
     ];
 }

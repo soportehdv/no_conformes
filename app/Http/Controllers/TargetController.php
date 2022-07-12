@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Stock;
 use App\Models\Compras;
 use App\Models\Clientes;
+use App\Models\Ventas;
 use Illuminate\Http\Request;
 
 
@@ -15,6 +16,7 @@ class TargetController extends Controller
     {
         $clientes = Clientes::all();
         $compras = Compras::all();
+        $ventas = Ventas::all();
         $stock = Stock::all();
 
 
@@ -22,6 +24,7 @@ class TargetController extends Controller
             'clientes'  => $clientes,
             'compras'  => $compras,
             'stock'  => $stock,
+            'ventas'  => $ventas,
 
         ]);
     }

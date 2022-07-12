@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Compras;
 use App\Models\Stock;
+use App\Models\Ventas;
 use App\Models\Fracciones;
 use App\Models\Ubicacion;
 use App\Models\Estados;
@@ -180,32 +181,37 @@ class ComprasController extends Controller
 
         return redirect()->route('compras.lista');
     }
-    public function updateProducto($id)
+    public function updateProducto($compra_id, $id_venta)
     {
-        $compras = Compras::where('id', $id)->first();
+
+        $compras = Compras::where('id', $compra_id)->first();
         $estado = Estados::all();
+        $ventas = ventas::where('id', $id_venta)->first();
         $ubicacion = Ubicacion::all();
 
-        // $fracciones = Fracciones::all();
+        $fracciones = Fracciones::all();
 
         return view('Compras/editarProducto', [
             'compras' => $compras,
             'estado' => $estado,
             'ubicacion' => $ubicacion,
+            'ventas' => $ventas,
 
-
-            // 'fracciones' => $fracciones
         ]);
     }
-    public function updatecomprasProducto(Request $request, $compra_id)
+    public function updatecomprasProducto(Request $request, $compra_id, $id_venta)
     {
+        // dd($request->input('unidades'));
+
 
         $Compras = Compras::where('id', $compra_id)->first();
         $stock = Stock::where('id', $compra_id)->first();
+        $ventas = Ventas::where('id', $id_venta)->first();
+
 
 
         $validate = Validator::make($request->all(), [
-            'estado_id'      => 'required',
+            'unidades'      => 'required',
         ]);
 
         if ($validate->fails()) {
@@ -214,24 +220,30 @@ class ComprasController extends Controller
             return redirect()->back();
         }
 
-        //validamos los datos
+        //Guardamos en el compras
 
-        $Compras->estado_id =  $request->input('estado_id');
-        $Compras->estado_ubi =  $request->input('ubicacion');
-        $Compras->unidades =  $Compras->unidades + 1;
+
+        $Compras->unidades = $Compras->unidades + $request->input('unidades');
         $Compras->save();
+
+        //Guardamos en el ventas
+
+
+        $ventas->unidades = $ventas->unidades - $request->input('unidades');
+        $ventas->save();
+
+
+        // guardamos
 
 
         //Guardamos en el stock
 
-        $stock->estado_id =  $request->input('estado_id');
-        $stock->estado_ubi =  $request->input('ubicacion');
-        $stock->unidades =  $stock->unidades + 1;
-        $stock->save();
+        // $stock->unidades = $stock->unidades + $request->input('unidades');
+        // $stock->save();
 
         $request->session()->flash('alert-success', 'Devolución con exito!');
 
-        return redirect()->route('devolucion.list');
+        return redirect()->route('ventas.lista');
     }
     public function updatecomprasCar($id){
         $compras = Compras::where('id', $id)->first();

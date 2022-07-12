@@ -51,11 +51,12 @@ class VentasController extends Controller
 
         if ($request->get('filtro') == null) { //Todas
             $ubicacion = Ubicacion::all();
+            $compras = Compras::all();
             $query= trim($request->get('search'));
             $ventas = Ventas::join('clientes', 'clientes.id', '=', 'ventas.cliente_id')
                 ->join('users', 'users.id', '=', 'ventas.user_id')
                 ->join('compras', 'compras.id', '=', 'ventas.producto_id')
-                ->select('ventas.id', 'clientes.nombre AS cliente', 'clientes.departamento AS ubicacion', 'users.name AS Vendedor', 'ventas.created_at AS Fecha', 'compras.serial AS serial')
+                ->select('ventas.id', 'ventas.unidades', 'clientes.nombre AS cliente', 'clientes.departamento AS ubicacion', 'users.name AS Vendedor', 'ventas.created_at AS Fecha', 'compras.serial AS serial')
                 ->where('serial','LIKE', '%' . $query . '%')
                 ->orderby('ventas.created_at', 'desc')
                 ->simplePaginate(10);
@@ -65,6 +66,7 @@ class VentasController extends Controller
                 return view('Ventas/mostrar', [
                     'ubicacion' => $ubicacion,
                     'ventas' => $ventas,
+                    'compras' => $compras,
 
                 ]);
         }
@@ -141,6 +143,7 @@ class VentasController extends Controller
                         'cliente_id'  => $cliente_id[$i],
                         'producto_id' => $stock_id[$i],
                         'user_id'     => $user_id[$i],
+                        'unidades'     => $unidades[$i],
                         'created_at'  => Carbon::now()->toDateTimeString(),
                         'updated_at'  => Carbon::now()->toDateTimeString()
                     ];

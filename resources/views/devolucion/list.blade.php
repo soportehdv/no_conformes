@@ -39,10 +39,7 @@
                     <tr>
                         <th>id</th>
                         <th style="background-color:#343a40; color:white;">Serial</th>
-                        <th>Fecha_ingreso</th>
-                        <th>Vencimiento</th>
                         <th>Unidades</th>
-                        <th>Lote</th>
                         <th>Ubicacion</th>
                         <th>Estado</th>
                         <th>Bodega</th>
@@ -55,42 +52,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($stock as $stoc)
-                        @if ($stoc->unidades === 0)
+                    @foreach ($compras as $compra)
+                        {{-- @if ($stoc->unidades === 0) --}}
                             <tr>
-                                <th>{{ $stoc->id }}</th>
-                                <td>{{ $stoc->serial }}</td>
-                                <td>{{ $stoc->created_at }}</td>
-                                <td>{{ $stoc->fecha_vencimiento }}</td>
-                                <td>{{ $stoc->unidades }}</td>
-                                <td>{{ $stoc->lote }}</td>
-                                @if ($stoc->estado_ubi === 'Bodega')
+                                <th>{{ $compra->id }}</th>
+                                <td>{{ $compra->serial }}</td>
+                                <td>{{ $compra->unidades }}</td>
+                                @if ($compra->estado_ubi === 'Bodega')
                                     <td>
-                                        <span class="badge badge-pill badge-success">{{$stoc->estado_ubi}}</span>
+                                        <span class="badge badge-pill badge-success">{{$compra->estado_ubi}}</span>
                                     </td>
                                 @else ()
                                     <td>
-                                        <span class="badge badge-pill badge-danger">{{$stoc->estado_ubi}}</span>
+                                        <span class="badge badge-pill badge-danger">{{$compra->estado_ubi}}</span>
                                     </td>
                                 @endif
 
 
-                                @if ($stoc->estados === 'Vacio')
+                                @if ($compra->estados === 'Vacio')
                                     <td>
                                         <span class="badge badge-pill badge-danger">Vacio</span>
                                     </td>
-                                @elseif ($stoc->estados === 'Lleno')
+                                @elseif ($compra->estados === 'Lleno')
                                     <td>
                                         <span class="badge badge-pill badge-success">Lleno</span>
                                     </td>
-                                @elseif ($stoc->estados === 'En servicio')
+                                @elseif ($compra->estados === 'En servicio')
                                     <td>
                                         <span class="badge badge-pill badge-warning">En servicio</span>
                                     </td>
                                 @endif
-                                <td><a href="{{ route('compras.updateProducto.vista', $stoc->id) }}"
+                                {{-- <td><a href="{{ route('compras.updateProducto.vista', $compra->id) }}"
                                     class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
-                                </td>
+                                </td> --}}
 
                                 {{-- @if (Auth::user()->rol == "admin")
                                 <td><a href="{{ route('compras.update.vista', $stoc->id) }}"
@@ -99,12 +93,12 @@
                                 @endif --}}
 
                             </tr>
-                        @endif
+                        {{-- @endif --}}
                     @endforeach
 
                 </tbody>
             </table>
-        {{ $stock->links() }}
+        {{ $compras->links() }}
 
         </div>
 

@@ -256,13 +256,13 @@ return [
             'role'        => 'admin'
 
         ],
-        [
-            'text' => 'Devolución de productos',
-            'url'  => 'devolucion/list',
-            'icon' => 'fas fa-fw fa-share fa-flip-horizontal',
-            'role'        => 'admin'
+        // [
+        //     'text' => 'Devolución de productos',
+        //     'url'  => 'devolucion/list',
+        //     'icon' => 'fas fa-fw fa-share fa-flip-horizontal',
+        //     'role'        => 'admin'
 
-        ],
+        // ],
         [
             'text' => 'Pedidos',
             'url'  => 'clientes/list',
@@ -270,13 +270,13 @@ return [
             'role'        => 'servicios'
 
         ],
-        [
-            'text' => 'Proveedores',
-            'url'  => 'proveedor/list',
-            'icon' => 'fas fa-fw fa-truck',
-            'role'        => 'admin'
+        // [
+        //     'text' => 'Proveedores',
+        //     'url'  => 'proveedor/list',
+        //     'icon' => 'fas fa-fw fa-truck',
+        //     'role'        => 'admin'
 
-        ],
+        // ],
         [
             'text' => 'Ubicaciones',
             'url'  => 'ubicacion/lista',
@@ -284,13 +284,13 @@ return [
             'role'        => 'admin'
 
         ],
-        [
-            'text'    => 'Stock',
-            'url'     => 'stock/list',
-            'icon'    => 'fas fa-fw fa-warehouse',
-            'role'        => 'admin',
+        // [
+        //     'text'    => 'Stock',
+        //     'url'     => 'stock/list',
+        //     'icon'    => 'fas fa-fw fa-warehouse',
+        //     'role'        => 'admin',
 
-        ],
+        // ],
 
         [
             'text' => 'Entrega',

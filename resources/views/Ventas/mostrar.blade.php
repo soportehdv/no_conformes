@@ -62,14 +62,14 @@
             <div class="col-sm-12">
                 <a href="{{ route('ventas.create.vista') }}" class="btn btn-success mb-2"><i
                         class="fas fa-clipboard-check"></i> Entregar</a>
-<br>
+                <br>
             </div>
-            
+
             <br>
             </form>
 
 
-        </div>        
+        </div>
         <br>
         <table class="table table-striped table-res">
             <thead>
@@ -78,6 +78,7 @@
                     <th scope="col">Responsable</th>
                     <th scope="col">producto</th>
                     <th scope="col">Fecha entrega</th>
+                    <th scope="col">Cantidad entregada</th>
                     <th scope="col">Ubicacion</th>
 
                     {{-- <th scope="col">Acción</th> --}}
@@ -91,21 +92,34 @@
                         <td>{{ $venta->cliente }}</td>
                         <td>{{ $venta->serial }}</td>
                         <td>{{ $venta->Fecha }}</td>
-                        @foreach($ubicacion as $ubi)
-                            @if($ubi->id == $venta->ubicacion)
-                            <td>{{ $ubi->nombre }}</td>
-                            @endif                        
-                        @endforeach
-                        {{-- <td><a href="{{ route('ventas.detalle', $venta->id) }}" class="btn btn-success mb-2"> <i
+                        <td>{{ $venta->unidades }} <span class="center badge badge-pill badge-success">
+                                @foreach ($ubicacion as $ubi)
+                                    @if ($ubi->id == $venta->ubicacion)
+                                        {{ $ubi->nombre }}
+                                    @endif
+                                @endforeach
+                </span></td>
+                <td>
+                    @foreach($compras as $compra)
+                     @if($venta->serial == $compra->serial)
+                        <a href="{{ route('compras.updateProducto.vista', [$compra->id , $venta->id] ) }}" class="btn btn-primary mb-2"><i class="fas fa-edit"></i>
+                        </a>
+
+                    @endif
+                    @endforeach
+                </td>
+
+                {{-- <td><a href="{{ route('ventas.detalle', $venta->id) }}" class="btn btn-success mb-2"> <i
                                     class="fas fa-ete"></i> Detalle</a>
                         </td> --}}
 
-                    </tr>
+
+                </tr>
                 @endforeach
             </tbody>
-        </table>  
-        
-            {{ $ventas->links() }}
-        
+        </table>
+
+        {{ $ventas->links() }}
+
     </div>
 @endsection

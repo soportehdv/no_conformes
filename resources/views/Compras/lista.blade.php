@@ -61,7 +61,7 @@
                         <td>{{ $compra->largo }}</td>
                         <td style="text-transform: uppercase">{{ $compra->color }}</td>
                         <td>{{ $compra->tela }}</td>
-                        <td>{{ $compra->uni }}</td>
+                        <td>{{ $compra->unidades}}</td>
                         <td><a href="{{ route('compras.update.vista', $compra->id) }}"
                                 class="btn btn-success mb-2"><i class="fas fa-edit"></i> Editar</a>
                         </td>

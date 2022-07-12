@@ -27,7 +27,7 @@
         @endforeach
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('compras.updateProducto', $compras->id) }}">
+                <form method="POST" action="{{ route('compras.updateProducto', [$compras->id, $ventas->id]) }}">
                     @csrf
                     <style>
                         .padding_center {
@@ -68,23 +68,12 @@
                     </style>
 
                     <div class="form-group">
+                        <h3>Cantidad de {{ $compras->elemento }} {{ $compras->caracteristicas }}, con codigo {{ $compras->serial }} va a recibir</h3>
+                        <br>
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="">Estado </label>
-                                <select id="estado_id" name="estado_id" class="form-control">
-                                    <option value="">Seleccioné una estado del producto</option>
-                                    @foreach ($estado as $estad)
-                                        <option value="{{ $estad->id }}"
-                                            @if ($compras->estado_id === $estad->id) selected='selected' @endif>
-                                            {{ $estad->estado }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-4">
-                                <label for="">Ubicacion </label>
-                                <select id="ubicacion" name="ubicacion" class="form-control">
-                                        <option value="Bodega">Bodega</option>
-                                </select>
+                                <label for="">Unidades </label>
+                                <input type="number" min="1" max="{{ $ventas->unidades }}" class="form-control" name="unidades" required>
                             </div>
                         </div>
 
