@@ -87,34 +87,36 @@
             </thead>
             <tbody>
                 @foreach ($ventas as $venta)
-                    <tr>
-                        <th scope="row">{{ $venta->id }}</th>
-                        <td>{{ $venta->cliente }}</td>
-                        <td>{{ $venta->serial }}</td>
-                        <td>{{ $venta->Fecha }}</td>
-                        <td>{{ $venta->unidades }} <span class="center badge badge-pill badge-success">
-                                @foreach ($ubicacion as $ubi)
-                                    @if ($ubi->id == $venta->ubicacion)
-                                        {{ $ubi->nombre }}
+                    @if ($venta->unidades != 0)
+                        <tr>
+                            <th scope="row">{{ $venta->id }}</th>
+                            <td>{{ $venta->cliente }}</td>
+                            <td>{{ $venta->serial }}</td>
+                            <td>{{ $venta->Fecha }}</td>
+                            <td>{{ $venta->unidades }} <span class="center badge badge-pill badge-success">
+                                    @foreach ($ubicacion as $ubi)
+                                        @if ($ubi->id == $venta->ubicacion)
+                                            {{ $ubi->nombre }}
+                                        @endif
+                                    @endforeach
+                                </span></td>
+                            <td>
+                                @foreach ($compras as $compra)
+                                    @if ($venta->serial == $compra->serial)
+                                        <a href="{{ route('compras.updateProducto.vista', [$compra->id, $venta->id]) }}"
+                                            class="btn btn-primary mb-2"><i class="fas fa-edit"></i>
+                                        </a>
                                     @endif
                                 @endforeach
-                </span></td>
-                <td>
-                    @foreach($compras as $compra)
-                     @if($venta->serial == $compra->serial)
-                        <a href="{{ route('compras.updateProducto.vista', [$compra->id , $venta->id] ) }}" class="btn btn-primary mb-2"><i class="fas fa-edit"></i>
-                        </a>
+                            </td>
 
-                    @endif
-                    @endforeach
-                </td>
-
-                {{-- <td><a href="{{ route('ventas.detalle', $venta->id) }}" class="btn btn-success mb-2"> <i
+                            {{-- <td><a href="{{ route('ventas.detalle', $venta->id) }}" class="btn btn-success mb-2"> <i
                                     class="fas fa-ete"></i> Detalle</a>
                         </td> --}}
 
 
-                </tr>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

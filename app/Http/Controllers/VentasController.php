@@ -115,18 +115,19 @@ class VentasController extends Controller
 
     public function createVenta(Request $request)
     {
+        // dd($request->all());
         $unidades = $request->input('unidades');
         $stock_id = $request->input('stock_id');
         $cliente_id = $request->input('cliente_id');
         $user_id = $request->input('user');
-        // dd($cliente_id);
+        // dd($stock_id);
 
             // enviamos varios datos de ventas
             for ($i=0; $i < count($cliente_id); $i++){
                 // dd(count($cliente_id));
                 $stock   = Stock::where('id', $stock_id[$i])->first();
-                $compras = Compras::where('id', $stock_id[$i])->first();
-                // dd($stock->id);
+                $compras = Compras::where('serial', $stock_id[$i])->first();
+                // dd($compras->elemento);
 
                 // condicion si no hay suficientes productos
                 if ($unidades[$i] > $compras->unidades) {
@@ -141,7 +142,7 @@ class VentasController extends Controller
 
                     $datasave =[
                         'cliente_id'  => $cliente_id[$i],
-                        'producto_id' => $stock_id[$i],
+                        'producto_id' => $compras->id,
                         'user_id'     => $user_id[$i],
                         'unidades'     => $unidades[$i],
                         'created_at'  => Carbon::now()->toDateTimeString(),

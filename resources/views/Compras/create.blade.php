@@ -26,10 +26,26 @@
             @endif
         @endforeach
         <button class="btn btn-primary" type="button" onclick="mifuncion()">Escanear</button>
-<br>
-
-        <video id="preview" style="display: none"></video>
         <br>
+        {{-- <div class="row"> --}}
+            <div class="col-sm-12" align="center">
+                <video id="preview" style="display: none" class="p-1 border active"></video>
+            </div>
+        {{-- </div> --}}
+        <br>
+        <style>
+            #preview {
+                width: 100%;
+                margin: 0px auto;
+            }
+            @media only screen and (min-width: 1000px) {
+            /* styles for browsers larger than 1440px; */
+            #preview {
+                width: 350px;
+                margin: 0px auto;
+            }
+            }
+        </style>
         <script type="text/javascript">
             function mifuncion() {
                 $("#preview").show();
@@ -109,26 +125,23 @@
                             <div class="col-sm-3">
                                 <label for="exampleInputEmail1">Serial </label>
                                 <input type="text" autocomplete="on" class="form-control upper" name="serial"
-                                    id="hola" value=""
-                                    aria-describedby="emailHelp" placeholder="Serial" required>
+                                    id="hola" value="" aria-describedby="emailHelp" placeholder="Serial"
+                                    required>
                                 <ul id="lista_id"></ul>
                             </div>
                             <div class="col-sm-3">
                                 <label for="">Elemento </label>
-                                <input type="text" class="form-control upper" name="elemento"
-                                    value=""
+                                <input type="text" class="form-control upper" name="elemento" value=""
                                     placeholder="Elemento">
                             </div>
                             <div class="col-sm-3">
                                 <label for="">Caracteristicas </label>
-                                <input type="text" class="form-control upper" name="caracteristicas"
-                                    value=""
+                                <input type="text" class="form-control upper" name="caracteristicas" value=""
                                     placeholder="Caracteristicas">
                             </div>
                             <div class="col-sm-3">
                                 <label for="">Cantidad </label>
-                                <input type="number" class="form-control upper" name="cantidad"
-                                    value=""
+                                <input type="number" class="form-control upper" name="cantidad" value=""
                                     placeholder="Cantidad">
                             </div>
                         </div>
@@ -138,26 +151,22 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="">Ancho </label>
-                                <input type="text" class="form-control upper" name="ancho"
-                                    value=""
+                                <input type="text" class="form-control upper" name="ancho" value=""
                                     placeholder="Ancho">
                             </div>
                             <div class="col-sm-3">
                                 <label for="">largo </label>
-                                <input type="text" class="form-control upper" name="largo"
-                                    value=""
+                                <input type="text" class="form-control upper" name="largo" value=""
                                     placeholder="largo">
                             </div>
                             <div class="col-sm-3">
                                 <label for="">color </label>
-                                <input type="text" class="form-control upper" name="color"
-                                    value=""
+                                <input type="text" class="form-control upper" name="color" value=""
                                     placeholder="color">
                             </div>
                             <div class="col-sm-3">
                                 <label for="">tela </label>
-                                <input type="text" class="form-control upper" name="tela"
-                                    value=""
+                                <input type="text" class="form-control upper" name="tela" value=""
                                     placeholder="tela">
                             </div>
                         </div>

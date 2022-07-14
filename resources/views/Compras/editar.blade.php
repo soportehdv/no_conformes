@@ -25,6 +25,51 @@
                 </div>
             @endif
         @endforeach
+        <button class="btn btn-primary" type="button" onclick="mifuncion()">Escanear</button>
+        <br>
+        {{-- <div class="row"> --}}
+            <div class="col-sm-12" align="center">
+                <video id="preview" style="display: none" class="p-1 border active"></video>
+            </div>
+        {{-- </div> --}}
+        <br>
+        <style>
+            #preview {
+                width: 100%;
+                margin: 0px auto;
+            }
+            @media only screen and (min-width: 1000px) {
+            /* styles for browsers larger than 1440px; */
+            #preview {
+                width: 350px;
+                margin: 0px auto;
+            }
+            }
+        </style>
+        <script type="text/javascript">
+            function mifuncion() {
+                $("#preview").show();
+                let scanner = new Instascan.Scanner({
+                    video: document.getElementById('preview')
+                });
+                scanner.addListener('scan', function(content) {
+                    // alert(content);
+                    document.getElementById('hola').value = content;
+                    scanner.stop();
+                    $("#preview").hide();
+
+                });
+                Instascan.Camera.getCameras().then(function(cameras) {
+                    if (cameras.length > 0) {
+                        scanner.start(cameras[0]);
+                    } else {
+                        console.error('No cameras found.');
+                    }
+                }).catch(function(e) {
+                    console.error(e);
+                });
+            }
+        </script>
         <div class="card">
             <div class="card-body">
                 <form method="POST" action="{{ route('compras.update', $compras->id) }}">
@@ -129,6 +174,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <script>
     $('.selectpicker').selectpicker({
         style: 'btn-default'

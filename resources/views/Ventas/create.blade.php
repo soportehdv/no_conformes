@@ -8,11 +8,6 @@
         </div>
 
     </div>
-    {{-- <link rel='stylesheet prefetch'
-        href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css'>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script> --}}
-
 
 @endsection
 
@@ -32,130 +27,183 @@
         @endif
     @endforeach
     <div class="container">
-        <div class="card">
-            <div class="card-body">
-                <form method="POST" action="{{ route('ventas.create') }}">
-                    @csrf
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <button type="submit" class="btn btn-success mt-3 float-left"><i class="fa fa-reply-all"
+        <div class="row">
+            <div class="card col-sm-5" style="margin-right: 2%; margin-left: 3%;">
+                <div class="card-body">
+                    <form method="POST" action="{{ route('ventas.create') }}">
+                        @csrf
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <a class="btn btn-danger" href="{{ URL::previous() }}">Atras</a>
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary" type="button" onclick="mifuncion()">Escanear</button>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-sm-12" align="center">
+                            <video id="preview" style="display: none" class="p-1 border active">
+                            </video>
+                            <button id="frenos" class="btn btn-primary" style="display: none" type="button" onclick="frenar()">Cerrar</button>
+
+                        </div>
+                        <style>
+                            #preview {
+                                width: 100%;
+                                margin: 0px auto;
+                            }
+
+                            @media only screen and (min-width: 1000px) {
+
+                                /* styles for browsers larger than 1440px; */
+                                #preview {
+                                    width: 350px;
+                                    margin: 0px auto;
+                                }
+                            }
+
+                            .btn-finalizar {
+                                left: 14px;
+                                position: relative;
+                            }
+                        </style>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="">Se entrega a :</label>
+                                <select class="form-control" name="cliente_id[]" id="select-pendiente" required>
+                                    @foreach ($clientes as $cliente)
+                                        @if ($cliente->entregado != 0)
+                                            <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="">Producto :</label>
+                                <input type="text" class="form-control" name="stock_id[]" id="hola" required>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="">Unidades :</label>
+                                <input type="number" min="1" class="form-control" name="unidades[]" required>
+                                <input type="hidden" class="form-control" name="user[]"
+                                    value='{{ Auth::user()->id }}'required>
+
+                            </div>
+                        </div>
+                        {{-- <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Se entrega a :</th>
+                                    <th>Producto</th>
+                                    <th>Unidades</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <select class="form-control" name="cliente_id[]" id="select-pendiente" required>
+                                            @foreach ($clientes as $cliente)
+                                                @if ($cliente->entregado != 0)
+                                                    <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="stock_id[]" id="hola" required>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button class="btn btn-primary" type="button" onclick="mifuncion()">Escanear</button>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <input type="number" min="1" class="form-control" name="unidades[]" required>
+                                    </th>
+                                    <input type="hidden" class="form-control" name="user[]" value='{{Auth::user()->id}}'required>
+                                </tr>
+
+                            </tbody>
+
+                        </table> --}}
+                        <script type="text/javascript">
+                            function mifuncion() {
+                                $("#preview").show();
+                                $("#frenos").show();
+                                let scanner = new Instascan.Scanner({
+                                    video: document.getElementById('preview')
+                                });
+                                scanner.addListener('scan', function(content) {
+                                    // alert(content);
+                                    document.getElementById('hola').value = content;
+                                    scanner.stop();
+                                    $("#preview").hide();
+
+                                });
+                                Instascan.Camera.getCameras().then(function(cameras) {
+                                    if (cameras.length > 0) {
+                                        scanner.start(cameras[0]);
+                                    } else {
+                                        console.error('No cameras found.');
+                                    }
+                                }).catch(function(e) {
+                                    console.error(e);
+                                });
+                            }
+                            function frenar() {
+                                let scanner = new Instascan.Scanner({});
+                                scanner.stop();
+                                $("#preview").hide();
+                                $("#frenos").hide();
+
+                            }
+                        </script>
+                        <div class="col-sm-12 btn-finalizar">
+                            <button type="submit" class="btn btn-success mt-3 float-right"><i class="fa fa-reply-all"
                                     aria-hidden="true"></i> Finalizar entrega</button>
-
                         </div>
+                    </form>
 
-                        <div class="col-sm-9">
-
-                            <a class="btn btn-danger mt-3 float-right" href="{{ URL::previous() }}">Atras</a>
-                        </div>
-                    </div>
-
+                </div>
+            </div>
+            <div class="card col-sm-6">
+                <div class="card-body">
                     <br>
-
-
-                    <table class="table">
+                    <h3 align="center">Pedidos pendientes</h3>
+                    <table class="table table-striped table-res">
                         <thead>
                             <tr>
-                                <th>Se entrega a :</th>
-                                <th>Producto</th>
-                                <th>Unidades</th>
-                                <th><a href="javascript:void(0)" class="btn btn-success addRow">+</a></th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Responsable</th>
+                                <th scope="col">producto</th>
+                                <th scope="col">Un.</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>
-                                    <select class="form-control" name="cliente_id[]" id="select-pendiente" required>
-                                        @foreach ($clientes as $cliente)
-                                            @if ($cliente->entregado != 0)
-                                                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </th>
-                                <th>
-                                    <select class="form-control" name="stock_id[]" required>
-                                        @foreach ($compras as $compra)
-                                            @if ($compra->unidades != 0)
-                                                <option value="{{ $compra->id }}">{{ $compra->elemento }}, {{ $compra->caracteristicas }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </th>
-                                <th>
-                                    <input type="number" min="1" class="form-control" name="unidades[]" required>
-                                </th>
-                                <input type="hidden" class="form-control" name="user[]" value='{{Auth::user()->id}}'required>
-                                <th><a href="javascript:void(0)" class="btn btn-danger deleteRow">-</a></th>
-                            </tr>
-
+                            @foreach ($clientes as $cliente)
+                                @if ($cliente->entregado != 0)
+                                    <tr>
+                                        <th scope="row">{{ $cliente->id }}</th>
+                                        <td>{{ $cliente->nombre }}</td>
+                                        <td>{{ $cliente->tipo }}</td>
+                                        <td>{{ $cliente->entregado }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
                         </tbody>
-
                     </table>
-                    <script>
-                        $('thead').on('click', '.addRow', function(){
-                            var tr =
-                            "<tr>"+
-                            "    <th>"+
-                            "        <select class='form-control' name='cliente_id[]' id='select-pendiente' required>"+
-                            "            @foreach ($clientes as $cliente)"+
-                            "                @if ($cliente->entregado != 0)"+
-                            "                    <option value='{{ $cliente->id }}'>{{ $cliente->nombre }}</option>"+
-                            "                @endif"+
-                            "            @endforeach"+
-                            "        </select>"+
-                            "    </th>"+
-                            "    <th>"+
-                            "        <select class='form-control' name='stock_id[]' required>"+
-                            "            @foreach ($compras as $compra)"+
-                            "                @if ($compra->unidades != 0)"+
-                            "                    <option value='{{ $compra->id }}'>{{ $compra->elemento }}, {{ $compra->caracteristicas }}</option>"+
-                            "                @endif"+
-                            "            @endforeach"+
-                            "        </select>"+
-                            "    </th>"+
-                            "    <th>"+
-                            "        <input type='number' min='1' class='form-control' name='unidades[]' required>"+
-                            "    </th>"+
-                            "    <input type='hidden' class='form-control' name='user[]' value='{{Auth::user()->id}}'required>"+
-                            "    <th><a href='javascript:void(0)' class='btn btn-danger deleteRow'>-</a></th>                                "+
-                            "</tr>"
-                            $('tbody').append(tr);
-                        });
-                        $('tbody').on('click', '.deleteRow', function(){
-                            $(this).parent().parent().remove();
-                        });
-                    </script>
-                </form>
-                <br>
-                <h3 align="center">Pedidos pendientes</h3>
-
-                        <div class="row" style="font-weight: 700" align="center">
-                            <div class="col-sm-3">ID</div>
-                            <div class="col-sm-3">Responsable</div>
-                            <div class="col-sm-3">Producto</div>
-                            <div class="col-sm-3">Cantidad</div>
-                        </div>
-
-
-                        <div class="row" align="center">
-
-                        @foreach ($clientes as $cliente)
-                            @if ($cliente->entregado != 0)
-                                {{-- <tr> --}}
-                                    <div class="col-sm-3">{{ $cliente->id }}</div>
-                                    <div class="col-sm-3">{{ $cliente->nombre }}</div>
-                                    <div class="col-sm-3">{{ $cliente->tipo }}</div>
-                                    <div class="col-sm-3">{{ $cliente->entregado }}</div>
-
-
-                                {{-- </tr> --}}
-                            @endif
-                        @endforeach
-                        </div>
-
+                </div>
             </div>
         </div>
-
     </div>
 
 @endsection
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
