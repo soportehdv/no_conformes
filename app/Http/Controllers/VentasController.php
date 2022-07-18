@@ -121,6 +121,17 @@ class VentasController extends Controller
         $cliente_id = $request->input('cliente_id');
         $user_id = $request->input('user');
         // dd($stock_id);
+        $existencia = DB::table('compras')
+        ->select('serial')
+        ->where('serial', '=', $stock_id)
+        ->exists();
+
+        // dd($existencia);
+        if ($existencia == false) {
+
+            $request->session()->flash('alert-danger', "El producto ingresado, No existe ");
+            return redirect()->back();
+        }
 
             // enviamos varios datos de ventas
             for ($i=0; $i < count($cliente_id); $i++){

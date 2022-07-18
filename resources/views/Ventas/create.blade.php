@@ -44,7 +44,8 @@
                         <div class="col-sm-12" align="center">
                             <video id="preview" style="display: none" class="p-1 border active">
                             </video>
-                            <button id="frenos" class="btn btn-primary" style="display: none" type="button" onclick="frenar()">Cerrar</button>
+                            <button id="frenos" class="btn btn-primary" style="display: none" type="button"
+                                onclick="frenar()">Cerrar</button>
 
                         </div>
                         <style>
@@ -83,7 +84,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="">Producto :</label>
-                                <input type="text" class="form-control" name="stock_id[]" id="hola" required>
+                                <input type="text" class="form-control" name="stock_id[]" id="hola" required disabled>
                             </div>
                         </div>
                         <br>
@@ -146,6 +147,8 @@
                                     document.getElementById('hola').value = content;
                                     scanner.stop();
                                     $("#preview").hide();
+                                    $("#frenos").hide();
+
 
                                 });
                                 Instascan.Camera.getCameras().then(function(cameras) {
@@ -158,9 +161,8 @@
                                     console.error(e);
                                 });
                             }
+
                             function frenar() {
-                                let scanner = new Instascan.Scanner({});
-                                scanner.stop();
                                 $("#preview").hide();
                                 $("#frenos").hide();
 
