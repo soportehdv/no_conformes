@@ -106,24 +106,29 @@
                     </style>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <label for="exampleInputEmail1">Serial </label>
                                 <input type="text" autocomplete="on" class="form-control upper" name="serial"
                                     id="hola" value="{{ $compras->serial }}"
                                     aria-describedby="emailHelp" placeholder="Serial" required>
                                 <ul id="lista_id"></ul>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <label for="">Elemento </label>
                                 <input type="text" class="form-control upper" name="elemento"
                                     value="{{ $compras->elemento }}"
                                     placeholder="Elemento">
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-3">
                                 <label for="">Caracteristicas </label>
                                 <input type="text" class="form-control upper" name="caracteristicas"
                                     value="{{ $compras->caracteristicas }}"
                                     placeholder="Caracteristicas">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="">Cantidad </label>
+                                <input type="number" class="form-control upper" name="cantidad" value=""
+                                    placeholder="Cantidad">
                             </div>
                         </div>
 

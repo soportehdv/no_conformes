@@ -52,12 +52,14 @@ class VentasController extends Controller
         if ($request->get('filtro') == null) { //Todas
             $ubicacion = Ubicacion::all();
             $compras = Compras::all();
+            $user = User::all();
+            $clientes = Clientes::all();
             $query= trim($request->get('search'));
             $ventas = Ventas::join('clientes', 'clientes.id', '=', 'ventas.cliente_id')
                 ->join('users', 'users.id', '=', 'ventas.user_id')
                 ->join('compras', 'compras.id', '=', 'ventas.producto_id')
-                ->select('ventas.id', 'ventas.unidades', 'clientes.nombre AS cliente', 'clientes.departamento AS ubicacion', 'users.name AS Vendedor', 'ventas.created_at AS Fecha', 'compras.serial AS serial')
-                ->where('serial','LIKE', '%' . $query . '%')
+                ->select('ventas.id', 'ventas.unidades', 'ventas.nombre', 'ventas.cargorecibe', 'ventas.devolucion', 'clientes.responsable_id AS cliente', 'clientes.departamento AS ubicacion', 'users.name AS Vendedor', 'ventas.created_at AS Fecha', 'compras.serial AS serial')
+                ->where('clientes.departamento','LIKE', '%' . $query . '%')
                 ->orderby('ventas.created_at', 'desc')
                 ->simplePaginate(10);
 
@@ -67,6 +69,8 @@ class VentasController extends Controller
                     'ubicacion' => $ubicacion,
                     'ventas' => $ventas,
                     'compras' => $compras,
+                    'clientes' => $clientes,
+                    'user' => $user,
 
                 ]);
         }
@@ -102,6 +106,7 @@ class VentasController extends Controller
         $clientes = Clientes::all();
         $compras = Compras::all();
         $tipo = Tipo::all();
+        $user = User::all();
 
 
         return view('Ventas/create', [
@@ -109,6 +114,7 @@ class VentasController extends Controller
             'stocks'  => $stocks,
             'compras' => $compras,
             'tipo' => $tipo,
+            'user' => $user,
 
         ]);
     }
@@ -120,7 +126,6 @@ class VentasController extends Controller
         $stock_id = $request->input('stock_id');
         $cliente_id = $request->input('cliente_id');
         $user_id = $request->input('user');
-        // dd($stock_id);
         $existencia = DB::table('compras')
         ->select('serial')
         ->where('serial', '=', $stock_id)
@@ -154,12 +159,16 @@ class VentasController extends Controller
                     $datasave =[
                         'cliente_id'  => $cliente_id[$i],
                         'producto_id' => $compras->id,
+                        'nombre'      =>  $request->input('name'),
+                        'cargorecibe' => $request->input('cargorecibe'),
                         'user_id'     => $user_id[$i],
-                        'unidades'     => $unidades[$i],
+                        'unidades'    => $unidades[$i],
+                        'devolucion'    => $unidades[$i],
                         'created_at'  => Carbon::now()->toDateTimeString(),
                         'updated_at'  => Carbon::now()->toDateTimeString()
                     ];
                 // enviamos varios datos al stock
+
                     $datasave2 =[
                         'unidades'    => $compras->unidades - $unidades[$i],
                         'estado_ubi'  => $ubicacions->nombre,
@@ -186,7 +195,7 @@ class VentasController extends Controller
                 // envio a la base de datos
                     DB::table('ventas')->insert($datasave);
                     DB::table('stock')->where('stock.id', $stock_id[$i])->update($datasave2);
-                    DB::table('compras')->where('compras.id', $stock_id[$i])->update($datasave3);
+                    DB::table('compras')->where('compras.serial', $stock_id[$i])->update($datasave3);
                     DB::table('clientes')->where('clientes.id', $cliente_id[$i])->update($datasave4);
                     DB::table('detalle_ventas')->insert($datasave5);
 

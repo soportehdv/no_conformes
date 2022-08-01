@@ -16,9 +16,7 @@ class CreateClientesTable extends Migration
         Schema::create('clientes', function (Blueprint $table) {
                 $table->id();
                 $table->integer('responsable_id')->unsigned();
-                $table->string('nombre');
                 $table->string('estado')->nullable()->default("pendiente");
-                $table->string('cargorecibe')->nullable();
                 $table->string('direccion')->nullable();
                 $table->integer('departamento')->unsigned();
                 $table->string('registro')->nullable();
@@ -26,9 +24,9 @@ class CreateClientesTable extends Migration
                 $table->integer('cantidad')->unsigned();
                 $table->integer('entregado')->unsigned();
 
-               
+
                 $table->timestamps();
-            
+
         });
     }
 

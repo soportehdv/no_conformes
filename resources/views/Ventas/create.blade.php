@@ -72,9 +72,16 @@
                             <div class="col-sm-12">
                                 <label for="">Se entrega a :</label>
                                 <select class="form-control" name="cliente_id[]" id="select-pendiente" required>
+                                    <option value="">selecciones un responsable</option>
                                     @foreach ($clientes as $cliente)
                                         @if ($cliente->entregado != 0)
-                                            <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                                            <option value="{{ $cliente->id }}">
+                                                @foreach ($user as $us)
+                                                    @if($us->id == $cliente->responsable_id)
+                                                        {{ $us->name }}
+                                                    @endif
+                                                @endforeach
+                                            </option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -84,17 +91,39 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="">Producto :</label>
-                                <input type="text" class="form-control" name="stock_id[]" id="hola" required disabled>
+                                <input type="text" class="form-control" name="stock_id[]" id="hola" placeholder="Serial" required>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="">Unidades :</label>
-                                <input type="number" min="1" class="form-control" name="unidades[]" required>
+                                <input type="number" min="1" class="form-control" name="unidades[]" placeholder="Cantidad" required>
                                 <input type="hidden" class="form-control" name="user[]"
-                                    value='{{ Auth::user()->id }}'required>
+                                    value='{{ Auth::user()->id }}' required>
 
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nombre recibe </label>
+                                <input type="text" class="form-control" name="name"
+                                    value="" placeholder="Nombre" required>
+                            </div>
+                        </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Cargo recibe</label>
+                                        <input type="text" class="form-control" name="cargorecibe"
+                                            value="" placeholder="Cargo recibe" required>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {{-- <table class="table">
@@ -194,7 +223,17 @@
                                 @if ($cliente->entregado != 0)
                                     <tr>
                                         <th scope="row">{{ $cliente->id }}</th>
-                                        <td>{{ $cliente->nombre }}</td>
+                                        <td>
+                                            @foreach ($clientes as $cliente)
+                                            @if ($cliente->entregado != 0)
+                                                    @foreach ($user as $us)
+                                                        @if($us->id == $cliente->responsable_id)
+                                                            {{ $us->name }}
+                                                        @endif
+                                                    @endforeach
+                                            @endif
+                                        @endforeach
+                                        </td>
                                         <td>{{ $cliente->tipo }}</td>
                                         <td>{{ $cliente->entregado }}</td>
                                     </tr>

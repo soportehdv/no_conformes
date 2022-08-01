@@ -151,8 +151,8 @@ class ComprasController extends Controller
 
 
         $Compras->estado_id =  1;
-        $Compras->unidades = 1;
-        $Compras->uni = 1;
+        $Compras->unidades = $request->input('cantidad');
+        $Compras->uni = $request->input('cantidad');
         $Compras->elemento = $request->input('elemento');
         $Compras->caracteristicas = $request->input('caracteristicas');
         $Compras->ancho = $request->input('ancho');
@@ -229,7 +229,7 @@ class ComprasController extends Controller
         //Guardamos en el ventas
 
 
-        $ventas->unidades = $ventas->unidades - $request->input('unidades');
+        $ventas->devolucion = $ventas->devolucion - $request->input('unidades');
         $ventas->save();
 
 

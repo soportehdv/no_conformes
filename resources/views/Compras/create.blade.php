@@ -144,6 +144,7 @@
                                 <input type="number" class="form-control upper" name="cantidad" value=""
                                     placeholder="Cantidad">
                             </div>
+                            
                         </div>
 
                         <br>

@@ -67,25 +67,6 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Nombre recibe </label>
-                                <input type="text" class="form-control" name="name"
-                                    value="{{ $cliente->nombre }}" placeholder="Nombre">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Cargo recibe</label>
-                                    <input type="text" class="form-control" name="cargorecibe"
-                                        value="{{ $cliente->cargorecibe }}" placeholder="Cargo recibe">
-                                </div>
-
-
-                            </div>
-                        </div>
 
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -95,8 +76,6 @@
                             </div>
 
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-4">
                             <label for="">Pedido </label>
                             <select id="tipo" name="tipo" class="form-control" required>
@@ -118,9 +97,8 @@
                             </div>
 
                         </div>
+
                     </div>
-
-
 
                     <div class="row">
                         <div class="col-sm-8">
@@ -131,7 +109,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <a style="float:right" class="btn btn-primary" href="{{ URL::previous() }}">Regresar</a>
+                            <a style="float:right" class="btn btn-danger" href="{{ URL::previous() }}">Regresar</a>
                         </div>
 
 

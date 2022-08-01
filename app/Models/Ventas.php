@@ -15,6 +15,9 @@ class Ventas extends Model
         'producto_id',
         'user_id',
         'unidades',
+        'nombre',
+        'cargorecibe',
+        'devolucion',
 
     ];
 }

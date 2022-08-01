@@ -77,9 +77,12 @@
                     <th scope="col">ID</th>
                     <th scope="col">Responsable</th>
                     <th scope="col">producto</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Cargo</th>
                     <th scope="col">Fecha entrega</th>
-                    <th scope="col">Cantidad entregada</th>
-                    <th scope="col">Ubicacion</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Servicio</th>
+                    <th scope="col">Devolucion</th>
 
                     {{-- <th scope="col">Acción</th> --}}
 
@@ -90,16 +93,29 @@
                     @if ($venta->unidades != 0)
                         <tr>
                             <th scope="row">{{ $venta->id }}</th>
-                            <td>{{ $venta->cliente }}</td>
+                            <td>
+                                @foreach ($user as $us)
+                                    @if ($us->id == $venta->cliente)
+                                        {{ $us->name }}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>{{ $venta->serial }}</td>
+                            <td>{{ $venta->nombre }}</td>
+                            <td>{{ $venta->cargorecibe }}</td>
                             <td>{{ $venta->Fecha }}</td>
-                            <td>{{ $venta->unidades }} <span class="center badge badge-pill badge-success">
+                            <td>{{ $venta->unidades }} </td>
+                            <td>
+                                <span class="center badge badge-pill badge-success">
+                                    {{ $venta->devolucion }} en
                                     @foreach ($ubicacion as $ubi)
                                         @if ($ubi->id == $venta->ubicacion)
                                             {{ $ubi->nombre }}
                                         @endif
                                     @endforeach
-                                </span></td>
+                                </span>
+
+                            </td>
                             <td>
                                 @foreach ($compras as $compra)
                                     @if ($venta->serial == $compra->serial)
@@ -108,11 +124,9 @@
                                         </a>
                                     @endif
                                 @endforeach
+
                             </td>
 
-                            {{-- <td><a href="{{ route('ventas.detalle', $venta->id) }}" class="btn btn-success mb-2"> <i
-                                    class="fas fa-ete"></i> Detalle</a>
-                        </td> --}}
 
 
                         </tr>

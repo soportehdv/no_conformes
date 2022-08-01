@@ -13,14 +13,12 @@ class Clientes extends Model
 
     protected $fillable = [
         'responsable_id',
-        'nombre',
         'estado',
-        'cargorecibe',   
         'departamento',
         'telefono',
         'tipo',
         'cantidad',
         'entregado',
-        
+
     ];
 }

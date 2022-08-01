@@ -52,39 +52,19 @@ $array = ['Coordinador', 'Camillero', 'Emfermero', 'administracion', 'otros'];
                             @endforeach
                         </select>
                     </div>
+
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Nombre recibe </label>
-                            <input type="text" class="form-control" name="name"
-                                value="" placeholder="Nombre" required>
+                            <label for="exampleInputEmail1">Telefono </label>
+                            <input type="text" class="form-control" name="registro"
+                                value="" placeholder="Telefono" required>
                         </div>
+
                     </div>
+
                 </div>
 
                     <div class="row">
-
-
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Cargo recibe</label>
-                                    <input type="text" class="form-control" name="cargorecibe"
-                                        value="" placeholder="Cargo recibe" required>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Telefono </label>
-                                <input type="text" class="form-control" name="registro"
-                                    value="" placeholder="Telefono" required>
-                            </div>
-
-                        </div>
-
                         <div class="col-sm-4">
                             <label for="">Pedido </label>
                             <select id="tipo" name="tipo" class="form-control" required>
@@ -95,9 +75,6 @@ $array = ['Coordinador', 'Camillero', 'Emfermero', 'administracion', 'otros'];
 
                             </select>
                         </div>
-
-                    </div>
-                    <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Cantidad </label>
@@ -106,7 +83,9 @@ $array = ['Coordinador', 'Camillero', 'Emfermero', 'administracion', 'otros'];
                             </div>
 
                         </div>
+
                     </div>
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">

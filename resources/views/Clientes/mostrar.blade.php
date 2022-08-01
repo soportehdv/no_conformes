@@ -28,7 +28,7 @@
                     <label>Ordenar por:</label>
                     <select class="form-control" name="filtro">
                         <option value="1">Más recientes </option>
-                        <option value="2">Alfabeticamente </option>
+                        <option value="2">Tipos </option>
                         <option value="3">Estados </option>
 
 
@@ -60,8 +60,7 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Responsable</th>
-                        <th scope="col" style="background-color:#343a40; color:white;">Recibió</th>
-                        <th scope="col">Ubicación</th>
+                        <th scope="col" style="background-color:#343a40; color:white;">Ubicación</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Tipo</th>
@@ -81,7 +80,6 @@
                         <tr>
                             <th scope="row">{{ $cliente->id }}</th>
                             <td>{{ $cliente->responsable }}</td>
-                            <td>{{ $cliente->nombre }}</td>
                             <td>{{ $cliente->ubicacion }}</td>
                             <td>{{ $cliente->registro }}</td>
                             @if ($cliente->entregado != 0)
@@ -137,15 +135,14 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Responsable</th>
-                        <th scope="col">Cargo</th>
-                        <th scope="col">Recibió</th>
-                        <th scope="col">Cargo</th>
                         <th scope="col">Ubicación</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Tipo</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Observación</th>
+                        <th scope="col">Cant.</th>
+                        <th scope="col">pend.</th>
+                        <th scope="col">ubicación</th>
+                        <th scope="col">Comentario</th>
 
 
                         @if (Auth::user()->rol == 'admin')
@@ -161,11 +158,8 @@
                                 <th scope="row">{{ $cliente->id }}</th>
                                 <td>{{ $cliente->responsable }}</td>
                                 <td>{{ $cliente->cargo }}</td>
-                                <td>{{ $cliente->nombre }}</td>
-                                <td>{{ $cliente->cargorecibe }}</td>
-                                <td>{{ $cliente->ubicacion }}</td>
                                 <td>{{ $cliente->registro }}</td>
-                                @if ($cliente->estado === 'pendiente')
+                                @if ($cliente->entregado != 0)
                                     <td>
                                         <span class="badge badge-pill badge-danger">Pendiente</span>
                                     </td>
@@ -176,6 +170,9 @@
                                 @endif
                                 <td>{{$cliente->tipo}}</td>
                                 <td>{{$cliente->cantidad}}</td>
+                                <td>{{$cliente->entregado}}</td>
+
+                                <td>{{ $cliente->ubicacion }}</td>
                                 <td style="max-width: 100px;
                             font-size: 16px;
                             overflow: hidden;

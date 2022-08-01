@@ -30,11 +30,11 @@ class ClientesController extends Controller
                 $query= trim($request->get('search'));
                 $clientes = Clientes::join('users', 'users.id', '=', 'clientes.responsable_id')
                 ->join('ubicacions', 'ubicacions.id', '=', 'clientes.departamento')
-                ->select('users.name AS responsable', 'users.cargo AS cargo', 'ubicacions.nombre AS ubicacion', 'clientes.*')
-                ->where('clientes.nombre','LIKE', '%' . $query . '%')
+                ->select('clientes.*', 'users.name AS responsable', 'users.cargo AS cargo', 'ubicacions.nombre AS ubicacion', 'clientes.estado')
+                ->where('clientes.departamento','LIKE', '%' . $query . '%')
                 ->orderBy('id', 'asc')
                 // ->get();
-                ->simplePaginate(10);
+                ->simplePaginate(20);
 
             }
             return view('Clientes/mostrar', [
@@ -42,31 +42,31 @@ class ClientesController extends Controller
                 'search' => $query
             ]);
 
-        
+
         } else
-            if($request->get('filtro') == 1){ //mas reciente                
+            if($request->get('filtro') == 1){ //mas reciente
                 $clientes = Clientes::join('users', 'users.id', '=', 'clientes.responsable_id')
                 ->join('ubicacions', 'ubicacions.id', '=', 'clientes.departamento')
-                ->select('users.name AS responsable', 'users.cargo AS cargo', 'ubicacions.nombre AS ubicacion', 'clientes.*')
+                ->select('clientes.*', 'users.name AS responsable', 'users.cargo AS cargo', 'ubicacions.nombre AS ubicacion', 'clientes.estado')
                 ->orderby('updated_at', 'desc')
                 // ->get();
-                ->simplePaginate(10);
+                ->simplePaginate(20);
 
-                
+
                 return view('Clientes/mostrar', [
                     'clientes' => $clientes
                 ]);
             }else
-                
+
                     if ($request->get('filtro') == 2){//Alfabetico
                         $clientes = Clientes::join('users', 'users.id', '=', 'clientes.responsable_id')
                         ->join('ubicacions', 'ubicacions.id', '=', 'clientes.departamento')
-                        ->select('users.name AS responsable', 'users.cargo AS cargo', 'ubicacions.nombre AS ubicacion', 'clientes.*')
-                        ->orderby('nombre', 'asc')
+                        ->select('clientes.*', 'users.name AS responsable', 'users.cargo AS cargo', 'ubicacions.nombre AS ubicacion', 'clientes.estado' )
+                        ->orderby('tipo', 'desc')
                         // ->get();
-                        ->simplePaginate(10);
+                        ->simplePaginate(20);
 
-                        
+
                         return view('Clientes/mostrar', [
                             'clientes' => $clientes
                         ]);
@@ -75,17 +75,17 @@ class ClientesController extends Controller
                                 $clientes = Clientes::join('users', 'users.id', '=', 'clientes.responsable_id')
                                 ->join('ubicacions', 'ubicacions.id', '=', 'clientes.departamento')
                                 ->select('users.name AS responsable', 'users.cargo AS cargo', 'ubicacions.nombre AS ubicacion', 'clientes.*')
-                                ->orderby('estado', 'desc')
+                                ->orderby('entregado','desc')
                                 // ->get();
-                                ->simplePaginate(10);
+                                ->simplePaginate(20);
 
-                                
+
                                 return view('Clientes/mostrar', [
                                     'clientes' => $clientes
                                 ]);
                             }
 
-       
+
     }
 
     public function create()
@@ -107,7 +107,6 @@ class ClientesController extends Controller
 
         //validamos los datos
         $validate = Validator::make($request->all(), [
-            'name'      => 'required',
             'departamento'      => 'required',
 
 
@@ -126,8 +125,6 @@ class ClientesController extends Controller
 
         $clientes = new Clientes();
         $clientes->responsable_id = Auth::user()->id;
-        $clientes->nombre =  $request->input('name');
-        $clientes->cargorecibe =  $request->input('cargorecibe');
         $clientes->departamento = $request->input('departamento');
         $clientes->registro = $request->input('registro');
         $clientes->tipo = $request->input('tipo');
@@ -147,7 +144,7 @@ class ClientesController extends Controller
     public function update($id)
     {
         $clientes = Clientes::where('id', $id)->first();
-        $ubicacion = Ubicacion::all();        
+        $ubicacion = Ubicacion::all();
         $compras = Compras::all();
         $user = User::all();
 
@@ -159,7 +156,7 @@ class ClientesController extends Controller
             'user' => $user,
         ]);
     }
-    
+
     public function updateClientes(Request $request, $clientes_id)
     {
         // dd($request->all());
@@ -168,7 +165,7 @@ class ClientesController extends Controller
 
         //validamos los datos
         $validate = Validator::make($request->all(), [
-            
+
             'estado'      => 'required',
 
 
@@ -182,7 +179,7 @@ class ClientesController extends Controller
         }
         $ubicacion = Ubicacion::all();
 
-        
+
         // $clientes->responsable_id = $request->input('responsable');
         $clientes->nombre =  $request->input('name');
         $clientes->estado =  $request->input('estado');
@@ -201,7 +198,7 @@ class ClientesController extends Controller
         return redirect()->route('clientes.lista');
     }
 
-    
+
 
     public function getOneClient(Request $request)
     {
