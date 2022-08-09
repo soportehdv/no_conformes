@@ -23,8 +23,8 @@ class CreateComprasTable extends Migration
             $table->integer('uni');
             $table->string('elemento');
             $table->string('caracteristicas');
-            $table->string('ancho');
-            $table->string('largo');
+            $table->decimal('ancho',5,2);
+            $table->decimal('largo',5,2);
             $table->string('color');
             $table->string('tela');
 

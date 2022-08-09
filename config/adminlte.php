@@ -298,6 +298,12 @@ return [
             'icon' => 'fas fa-fw fa-dolly',
             'role' => 'admin'
         ],
+        [
+            'text' => 'historial de lavado',
+            'url'  => 'lavado/todas',
+            'icon' => 'fas fa-fw fa-hospital ',
+            'role' => 'admin'
+        ],
         // [
         //     'text' => 'Lotes',
         //     'url'  => 'lotes/todos',
@@ -395,12 +401,12 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js',
                 ],
             ],
         ],

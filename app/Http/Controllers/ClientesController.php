@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Models\Clientes;
-use App\Models\Compras;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Lotes;
 use App\Models\Stock;
-use App\Models\User;
+use App\Models\Compras;
+use App\Models\Clientes;
 use App\Models\Ubicacion;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ClientesController extends Controller
 {
@@ -104,14 +106,11 @@ class ClientesController extends Controller
 
     public function createClientes(Request $request)
     {
+        // dd($request->all());
 
         //validamos los datos
         $validate = Validator::make($request->all(), [
             'departamento'      => 'required',
-
-
-
-
         ]);
 
         if ($validate->fails()) {
@@ -122,19 +121,37 @@ class ClientesController extends Controller
 
         $ubicacion = Ubicacion::all();
 
-
-        $clientes = new Clientes();
-        $clientes->responsable_id = Auth::user()->id;
-        $clientes->departamento = $request->input('departamento');
-        $clientes->registro = $request->input('registro');
-        $clientes->tipo = $request->input('tipo');
-        $clientes->cantidad = $request->input('cantidad');
-        $clientes->entregado = $request->input('cantidad');
-        $clientes->direccion = $request->input('direccion');
+        $cantidad = $request->input('cantidad');
+        $tipo = $request->input('tipo');
+        $departamento = $request->input('departamento');
+        $registro = $request->input('registro');
+        $direccion = $request->input('direccion');
 
 
 
-        $clientes->save();
+
+        //recorremos todos lo datos
+        for($i=0; $i < count($cantidad); $i++){
+
+            // $clientes = new Clientes();
+            $datasave =[
+                'responsable_id' => Auth::user()->id,
+                'departamento' => $departamento[0],
+                'registro' => $registro[0],
+                'tipo' => $tipo[$i],
+                'cantidad' => $cantidad[$i],
+                'entregado' => $cantidad[$i],
+                'direccion' => $direccion[0],
+                'created_at'  => Carbon::now()->toDateTimeString(),
+                'updated_at'  => Carbon::now()->toDateTimeString()
+            ];
+
+            // envio a la base de datos
+            // dd($datasave);
+            DB::table('clientes')->insert($datasave);
+        }
+
+
 
         $request->session()->flash('alert-success', 'Cliente registrado con exito!');
 

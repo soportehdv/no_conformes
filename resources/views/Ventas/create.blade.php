@@ -224,15 +224,13 @@
                                     <tr>
                                         <th scope="row">{{ $cliente->id }}</th>
                                         <td>
-                                            @foreach ($clientes as $cliente)
                                             @if ($cliente->entregado != 0)
-                                                    @foreach ($user as $us)
-                                                        @if($us->id == $cliente->responsable_id)
-                                                            {{ $us->name }}
-                                                        @endif
-                                                    @endforeach
+                                                @foreach ($user as $us)
+                                                    @if($us->id == $cliente->responsable_id)
+                                                        {{ $us->name }}
+                                                    @endif
+                                                @endforeach
                                             @endif
-                                        @endforeach
                                         </td>
                                         <td>{{ $cliente->tipo }}</td>
                                         <td>{{ $cliente->entregado }}</td>

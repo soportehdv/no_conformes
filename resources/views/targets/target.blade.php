@@ -1,6 +1,8 @@
 @extends('adminlte::page')
 @section('title', 'Inicio')
 
+@section('plugins.Chartjs', true)
+
 @section('content_header')
     <div class="card" style="height:4em;">
         <div class="card-header">
@@ -49,9 +51,9 @@
                         $jj = 0;
                     @endphp
                     @foreach ($compras as $compra)
-                            @php
-                                $jj = $jj + $compra->unidades;
-                            @endphp
+                        @php
+                            $jj = $jj + $compra->unidades;
+                        @endphp
                     @endforeach
                     <h3>{{ $jj }}</h3>
                     <p>Total productos </p>
@@ -71,10 +73,10 @@
                     @endphp
                     @foreach ($ventas as $venta)
                         {{-- @if ($stoc->estado_id === 3) --}}
-                            @php
-                                // $i= $loop->count
-                                $k = $k + $venta->unidades;
-                            @endphp
+                        @php
+                            // $i= $loop->count
+                            $k = $k + $venta->unidades;
+                        @endphp
                         {{-- @endif --}}
                     @endforeach
                     <h3>{{ $k }}</h3>
@@ -89,7 +91,6 @@
             </div>
         </div>
         <br>
-        {{--  --}}
         <style>
             .flexbox-container {
                 display: -ms-flex;
@@ -101,7 +102,6 @@
                 width: 33.3%;
                 padding: 10px;
             }
-
         </style>
 
     </div>
