@@ -29,7 +29,7 @@
         <br>
         {{-- <div class="row"> --}}
             <div class="col-sm-12" align="center">
-                <video id="preview" style="display: none" class="p-1 border active"></video>
+                <video id="preview" style="display: none" class="p-1 border active" ></video>
             </div>
         {{-- </div> --}}
         <br>
@@ -50,7 +50,9 @@
             function mifuncion() {
                 $("#preview").show();
                 let scanner = new Instascan.Scanner({
-                    video: document.getElementById('preview')
+                    video: document.getElementById('preview'),
+                    mirror: false,
+                    scanPeriod: 6
                 });
                 scanner.addListener('scan', function(content) {
                     // alert(content);
@@ -61,7 +63,7 @@
                 });
                 Instascan.Camera.getCameras().then(function(cameras) {
                     if (cameras.length > 0) {
-                        scanner.start(cameras[0]);
+                        scanner.start(cameras[1]);
                     } else {
                         console.error('No cameras found.');
                     }

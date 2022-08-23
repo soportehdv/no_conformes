@@ -107,8 +107,8 @@
                     $j=0;
                     $suma=0;
                 @endphp
-                @foreach ($ventas2 as $venta)
-                    @if ($venta->unidades != 0)
+                @foreach ($ubicacion as $venta)
+                    {{-- @if ($venta->unidades != 0) --}}
                         <tr>
                             @php
                                 $j=$j+1;
@@ -124,7 +124,7 @@
                             </td>
                             <td>{{ DB::table('ventas')->where('cliente_id', $j)->sum('unidades') }} </td>
                         </tr>
-                    @endif
+                    {{-- @endif --}}
                 @endforeach
             </tbody>
         </table>

@@ -170,7 +170,9 @@
                                 $("#preview").show();
                                 $("#frenos").show();
                                 let scanner = new Instascan.Scanner({
-                                    video: document.getElementById('preview')
+                                    video: document.getElementById('preview'),
+                                    mirror: false,
+                                    scanPeriod: 6
                                 });
                                 scanner.addListener('scan', function(content) {
                                     // alert(content);
@@ -183,7 +185,7 @@
                                 });
                                 Instascan.Camera.getCameras().then(function(cameras) {
                                     if (cameras.length > 0) {
-                                        scanner.start(cameras[0]);
+                                        scanner.start(cameras[1]);
                                     } else {
                                         console.error('No cameras found.');
                                     }
