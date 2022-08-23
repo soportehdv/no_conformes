@@ -185,7 +185,7 @@ class VentasController extends Controller
         // enviamos datos a compras
             $datasave3 =[
                 'unidades'    => $tipos->unidades - (int)$unidades,
-                'estado_ubi'  => $ubicacions->nombre,
+                // 'estado_ubi'  => $ubicacions->nombre,
             ];
         // Cambiamos el estado en clientes
             $datasave4 =[

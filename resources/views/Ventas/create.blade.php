@@ -127,44 +127,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Se entrega a :</th>
-                                    <th>Producto</th>
-                                    <th>Unidades</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>
-                                        <select class="form-control" name="cliente_id[]" id="select-pendiente" required>
-                                            @foreach ($clientes as $cliente)
-                                                @if ($cliente->entregado != 0)
-                                                    <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </th>
-                                    <th>
-                                        <div class="row">
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="stock_id[]" id="hola" required>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <button class="btn btn-primary" type="button" onclick="mifuncion()">Escanear</button>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <input type="number" min="1" class="form-control" name="unidades[]" required>
-                                    </th>
-                                    <input type="hidden" class="form-control" name="user[]" value='{{Auth::user()->id}}'required>
-                                </tr>
-
-                            </tbody>
-
-                        </table> --}}
+                        
                         <script type="text/javascript">
                             function mifuncion() {
                                 $("#preview").show();
