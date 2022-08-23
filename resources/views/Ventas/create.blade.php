@@ -71,7 +71,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="">Se entrega a :</label>
-                                <select class="form-control" name="cliente_id[]" id="select-pendiente" required>
+                                <select class="form-control" name="cliente_id" id="select-pendiente" required>
                                     <option value="">selecciones un responsable</option>
                                     @foreach ($clientes as $cliente)
                                         @if ($cliente->entregado != 0)
@@ -81,6 +81,7 @@
                                                         {{ $us->name }}
                                                     @endif
                                                 @endforeach
+                                                , {{ $cliente->elemento }} - {{ $cliente->caracteristicas }}
                                             </option>
                                         @endif
                                     @endforeach
@@ -91,15 +92,15 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="">Producto :</label>
-                                <input type="text" class="form-control" name="stock_id[]" id="hola" placeholder="Serial" required>
+                                <input type="text" class="form-control" name="stock_id" id="hola" placeholder="Serial" required>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="">Unidades :</label>
-                                <input type="number" min="1" class="form-control" name="unidades[]" placeholder="Cantidad" required>
-                                <input type="hidden" class="form-control" name="user[]"
+                                <input type="number" min="1" class="form-control" name="unidades" placeholder="Cantidad" required>
+                                <input type="hidden" class="form-control" name="user"
                                     value='{{ Auth::user()->id }}' required>
 
                             </div>
@@ -232,7 +233,7 @@
                                                 @endforeach
                                             @endif
                                         </td>
-                                        <td>{{ $cliente->tipo }}</td>
+                                        <td>{{ $cliente->elemento }} - {{ $cliente->caracteristicas }}</td>
                                         <td>{{ $cliente->entregado }}</td>
                                     </tr>
                                 @endif

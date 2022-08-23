@@ -97,13 +97,18 @@ class VentasController extends Controller
 
     public function create()
     {
+        $clientes = Clientes::join('compras', 'compras.id', '=', 'clientes.tipo')
+        ->select('clientes.*', 'compras.elemento AS elemento', 'compras.caracteristicas AS caracteristicas')
+        ->get();
+
+
 
 
         $stocks = Stock::join('compras', 'compras.id', '=', 'stock.compra_id')
             ->select('stock.*', 'compras.serial as producto')
             ->get();
 
-        $clientes = Clientes::all();
+        // $clientes = Clientes::all();
         $compras = Compras::all();
         $tipo = Tipo::all();
         $user = User::all();
@@ -121,7 +126,6 @@ class VentasController extends Controller
 
     public function createVenta(Request $request)
     {
-        // dd($request->all());
         $unidades = $request->input('unidades');
         $stock_id = $request->input('stock_id');
         $cliente_id = $request->input('cliente_id');
@@ -130,78 +134,81 @@ class VentasController extends Controller
         ->select('serial')
         ->where('serial', '=', $stock_id)
         ->exists();
+        $mismo =  DB::table('clientes')->where('id', $cliente_id)->first();
+        $tipos =  DB::table('compras')->where('id', $mismo->tipo)->first();
 
-        // dd($existencia);
+
+
+        // condicion para saber si coinciden los productos
+        if ($tipos->serial != $stock_id) {
+            $request->session()->flash('alert-danger', "No coinciden los productos ");
+            return redirect()->back();
+        }
+        // condicion para saber si el codigo existe
         if ($existencia == false) {
-
             $request->session()->flash('alert-danger', "El producto ingresado, No existe ");
             return redirect()->back();
         }
 
-            // enviamos varios datos de ventas
-            for ($i=0; $i < count($cliente_id); $i++){
-                // dd(count($cliente_id));
-                $stock   = Stock::where('id', $stock_id[$i])->first();
-                $compras = Compras::where('serial', $stock_id[$i])->first();
-                // dd($compras->elemento);
+        $stock   = Stock::where('id', $stock_id)->first();
+        $compras = Compras::where('serial', $stock_id)->first();
 
-                // condicion si no hay suficientes productos
-                if ($unidades[$i] > $compras->unidades) {
+        // condicion si no hay suficientes productos
+        if ((int)$unidades > $tipos->unidades) {
 
-                    $request->session()->flash('alert-danger', "No hay suficientes $compras->producto, quedan solo $compras->unidades ");
-                    return redirect()->back();
-                }
-                else
-                {
-                    $clientes = Clientes::where('id', $cliente_id[$i])->first();
-                    $ubicacions = Ubicacion::where('id', $clientes->departamento)->first();
+            $request->session()->flash('alert-danger', "No hay suficientes $tipos->elemento - $tipos->caracteristicas, quedan solo $tipos->unidades ");
+            return redirect()->back();
+        }
+        else
+        {
+            $clientes = Clientes::where('id', $cliente_id)->first();
+            $ubicacions = Ubicacion::where('id', $clientes->departamento)->first();
 
-                    $datasave =[
-                        'cliente_id'  => $cliente_id[$i],
-                        'producto_id' => $compras->id,
-                        'nombre'      =>  $request->input('name'),
-                        'cargorecibe' => $request->input('cargorecibe'),
-                        'user_id'     => $user_id[$i],
-                        'unidades'    => $unidades[$i],
-                        'devolucion'    => $unidades[$i],
-                        'created_at'  => Carbon::now()->toDateTimeString(),
-                        'updated_at'  => Carbon::now()->toDateTimeString()
-                    ];
-                // enviamos varios datos al stock
+        // enviamos datos a ventas
+            $datasave =[
+                'cliente_id'  => $cliente_id,
+                'producto_id' => $tipos->id,
+                'nombre'      =>  $request->input('name'),
+                'cargorecibe' => $request->input('cargorecibe'),
+                'user_id'     => $user_id,
+                'unidades'    => (int)$unidades,
+                'devolucion'    => (int)$unidades,
+                'created_at'  => Carbon::now()->toDateTimeString(),
+                'updated_at'  => Carbon::now()->toDateTimeString()
+            ];
+        // enviamos datos al stock
+            $datasave2 =[
+                'unidades'    => $tipos->unidades - (int)$unidades,
+                'estado_ubi'  => $ubicacions->nombre,
+                'estado_id'   => 3,
+            ];
+        // enviamos datos a compras
+            $datasave3 =[
+                'unidades'    => $tipos->unidades - (int)$unidades,
+                'estado_ubi'  => $ubicacions->nombre,
+            ];
+        // Cambiamos el estado en clientes
+            $datasave4 =[
+                // 'estado'    => 'entregado',
+                'entregado' => $clientes->entregado - $unidades //descontamos de la tabla de entregados
+            ];
+        // factura o historial
+            $datasave5 =[
+                'producto_id' => $unidades,
+                'venta_id'     => $user_id, //usuario quien entrega
+                'created_at'  => Carbon::now()->toDateTimeString(),
+                'updated_at'  => Carbon::now()->toDateTimeString()
+            ];
 
-                    $datasave2 =[
-                        'unidades'    => $compras->unidades - $unidades[$i],
-                        'estado_ubi'  => $ubicacions->nombre,
-                        'estado_id'   => 3,
-                    ];
-                // enviamos varios datos al stock
-                    $datasave3 =[
-                        'unidades'    => $compras->unidades - $unidades[$i],
-                        'estado_ubi'  => $ubicacions->nombre,
-                    ];
-                // Cambiamos el estado
-                    $datasave4 =[
-                        // 'estado'    => 'entregado',
-                        'entregado' => $clientes->entregado - $unidades[$i] //descontamos de la tabla de entregados
-                    ];
-                // factura o historial
-                    $datasave5 =[
-                        'producto_id' => $stock_id[$i],
-                        'venta_id'     => $user_id[$i], //usuario quien entrega
-                        'created_at'  => Carbon::now()->toDateTimeString(),
-                        'updated_at'  => Carbon::now()->toDateTimeString()
-                    ];
-
-                // envio a la base de datos
-                    DB::table('ventas')->insert($datasave);
-                    DB::table('stock')->where('stock.id', $stock_id[$i])->update($datasave2);
-                    DB::table('compras')->where('compras.serial', $stock_id[$i])->update($datasave3);
-                    DB::table('clientes')->where('clientes.id', $cliente_id[$i])->update($datasave4);
-                    DB::table('detalle_ventas')->insert($datasave5);
-
-            }
+        // envio a la base de datos
+            DB::table('ventas')->insert($datasave);
+            DB::table('stock')->where('stock.id', $tipos->id)->update($datasave2);
+            DB::table('compras')->where('compras.id', $tipos->id)->update($datasave3);
+            DB::table('clientes')->where('clientes.id', $cliente_id)->update($datasave4);
+            DB::table('detalle_ventas')->insert($datasave5);
 
         }
+
         $request->session()->flash('alert-success', 'Entrega realizada con exito!');
         return redirect()->route('ventas.lista', ['filtro' => 4]);
 
