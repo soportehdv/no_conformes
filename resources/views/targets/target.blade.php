@@ -61,7 +61,7 @@
                 <div class="icon">
                     <i class="fas fa-fw fa-warehouse"></i>
                 </div>
-                <a href="{{ route('stock.list') }}" class="small-box-footer">
+                <a href="{{ route('compras.lista') }}" class="small-box-footer">
                     Ver <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -85,12 +85,49 @@
                 <div class="icon">
                     <i class="fas fa-fw fa-dolly"></i>
                 </div>
-                <a href="{{ route('stock.list') }}" class="small-box-footer">
+                <a href="{{ route('ventas.lista') }}" class="small-box-footer">
                     Ver <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>
         </div>
         <br>
+        <table class="table table-striped table-res">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Servicio</th>
+                    <th scope="col">Total</th>
+
+                    {{-- <th scope="col">Acción</th> --}}
+
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $j=0;
+                    $suma=0;
+                @endphp
+                @foreach ($ubicacion as $venta)
+                    {{-- @if ($venta->unidades != 0) --}}
+                        <tr>
+                            @php
+                                $j=$j+1;
+                            @endphp
+                            <th scope="row">{{ $j }}</th>
+                            <td>
+                                @foreach ($ubicacion as $ubi)
+                                        @if ($ubi->id == $j)
+                                            {{ $ubi->nombre }}
+                                        @endif
+                                @endforeach
+
+                            </td>
+                            <td>{{ DB::table('ventas')->where('cliente_id', $j)->sum('unidades') }} </td>
+                        </tr>
+                    {{-- @endif --}}
+                @endforeach
+            </tbody>
+        </table>
         <style>
             .flexbox-container {
                 display: -ms-flex;

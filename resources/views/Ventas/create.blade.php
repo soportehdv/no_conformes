@@ -71,7 +71,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="">Se entrega a :</label>
-                                <select class="form-control" name="cliente_id[]" id="select-pendiente" required>
+                                <select class="form-control" name="cliente_id" id="select-pendiente" required>
                                     <option value="">selecciones un responsable</option>
                                     @foreach ($clientes as $cliente)
                                         @if ($cliente->entregado != 0)
@@ -81,6 +81,7 @@
                                                         {{ $us->name }}
                                                     @endif
                                                 @endforeach
+                                                , {{ $cliente->elemento }} - {{ $cliente->caracteristicas }}
                                             </option>
                                         @endif
                                     @endforeach
@@ -91,15 +92,15 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="">Producto :</label>
-                                <input type="text" class="form-control" name="stock_id[]" id="hola" placeholder="Serial" required>
+                                <input type="text" class="form-control" name="stock_id" id="hola" placeholder="Serial" required>
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="">Unidades :</label>
-                                <input type="number" min="1" class="form-control" name="unidades[]" placeholder="Cantidad" required>
-                                <input type="hidden" class="form-control" name="user[]"
+                                <input type="number" min="1" class="form-control" name="unidades" placeholder="Cantidad" required>
+                                <input type="hidden" class="form-control" name="user"
                                     value='{{ Auth::user()->id }}' required>
 
                             </div>
@@ -126,50 +127,15 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Se entrega a :</th>
-                                    <th>Producto</th>
-                                    <th>Unidades</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>
-                                        <select class="form-control" name="cliente_id[]" id="select-pendiente" required>
-                                            @foreach ($clientes as $cliente)
-                                                @if ($cliente->entregado != 0)
-                                                    <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </th>
-                                    <th>
-                                        <div class="row">
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="stock_id[]" id="hola" required>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <button class="btn btn-primary" type="button" onclick="mifuncion()">Escanear</button>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <input type="number" min="1" class="form-control" name="unidades[]" required>
-                                    </th>
-                                    <input type="hidden" class="form-control" name="user[]" value='{{Auth::user()->id}}'required>
-                                </tr>
-
-                            </tbody>
-
-                        </table> --}}
+                        
                         <script type="text/javascript">
                             function mifuncion() {
                                 $("#preview").show();
                                 $("#frenos").show();
                                 let scanner = new Instascan.Scanner({
-                                    video: document.getElementById('preview')
+                                    video: document.getElementById('preview'),
+                                    mirror: false,
+                                    scanPeriod: 6
                                 });
                                 scanner.addListener('scan', function(content) {
                                     // alert(content);
@@ -182,7 +148,7 @@
                                 });
                                 Instascan.Camera.getCameras().then(function(cameras) {
                                     if (cameras.length > 0) {
-                                        scanner.start(cameras[0]);
+                                        scanner.start(cameras[1]);
                                     } else {
                                         console.error('No cameras found.');
                                     }
@@ -232,7 +198,7 @@
                                                 @endforeach
                                             @endif
                                         </td>
-                                        <td>{{ $cliente->tipo }}</td>
+                                        <td>{{ $cliente->elemento }} - {{ $cliente->caracteristicas }}</td>
                                         <td>{{ $cliente->entregado }}</td>
                                     </tr>
                                 @endif

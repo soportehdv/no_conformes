@@ -88,7 +88,7 @@ $array = ['Coordinador', 'Camillero', 'Emfermero', 'administracion', 'otros'];
                                     <select id="tipo" name="tipo[]" class="form-control" required>
                                         <option value="">Seleccioné un tipo de elemento</option>
                                         @foreach ($compras as $compra)
-                                            <option value="{{ $compra->elemento }}, {{ $compra->caracteristicas }}">
+                                            <option value="{{ $compra->id }}">
                                                 {{ $compra->elemento }}, {{ $compra->caracteristicas }}</option>
                                         @endforeach
 
@@ -112,7 +112,7 @@ $array = ['Coordinador', 'Camillero', 'Emfermero', 'administracion', 'otros'];
                             "        <select id='tipo' name='tipo[]' class='form-control' required>"+
                             "            <option value=''>Seleccioné un tipo de elemento</option>"+
                             "            @foreach ($compras as $compra)"+
-                            "                <option value='{{ $compra->elemento }}, {{ $compra->caracteristicas }}'>"+
+                            "                <option value='{{ $compra->id }}'>"+
                             "                    {{ $compra->elemento }}, {{ $compra->caracteristicas }}</option>"+
                             "            @endforeach"+
                             "        </select>"+

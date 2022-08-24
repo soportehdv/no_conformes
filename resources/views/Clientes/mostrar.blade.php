@@ -92,7 +92,7 @@
                                 </td>
                             @endif
 
-                            <td>{{$cliente->tipo}}</td>
+                            <td>{{$cliente->elemento}}, {{ $cliente->caracteristicas }}</td>
                             <td>{{$cliente->cantidad}}</td>
                             <td>{{$cliente->entregado}}</td>
                             <td style="max-width: 100px;
@@ -135,7 +135,7 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Responsable</th>
-                        <th scope="col">Ubicación</th>
+                        <th scope="col">Cargo</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Tipo</th>
@@ -168,7 +168,7 @@
                                         <span class="badge badge-pill badge-success">Entregado</span>
                                     </td>
                                 @endif
-                                <td>{{$cliente->tipo}}</td>
+                                <td>{{$cliente->elemento}}, {{ $cliente->caracteristicas }}</td>
                                 <td>{{$cliente->cantidad}}</td>
                                 <td>{{$cliente->entregado}}</td>
 

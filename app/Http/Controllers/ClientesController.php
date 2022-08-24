@@ -32,7 +32,8 @@ class ClientesController extends Controller
                 $query= trim($request->get('search'));
                 $clientes = Clientes::join('users', 'users.id', '=', 'clientes.responsable_id')
                 ->join('ubicacions', 'ubicacions.id', '=', 'clientes.departamento')
-                ->select('clientes.*', 'users.name AS responsable', 'users.cargo AS cargo', 'ubicacions.nombre AS ubicacion', 'clientes.estado')
+                ->join('compras', 'compras.id', '=', 'clientes.tipo')
+                ->select('clientes.*', 'users.name AS responsable', 'users.cargo AS cargo', 'compras.elemento AS elemento', 'compras.caracteristicas AS caracteristicas', 'ubicacions.nombre AS ubicacion', 'clientes.estado')
                 ->where('clientes.departamento','LIKE', '%' . $query . '%')
                 ->orderBy('id', 'asc')
                 // ->get();
