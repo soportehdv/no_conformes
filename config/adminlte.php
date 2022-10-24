@@ -298,12 +298,12 @@ return [
             'icon' => 'fas fa-fw fa-dolly',
             'role' => 'admin'
         ],
-        [
-            'text' => 'historial de lavado',
-            'url'  => 'lavado/todas',
-            'icon' => 'fas fa-fw fa-hospital ',
-            'role' => 'admin'
-        ],
+        // [
+        //     'text' => 'historial de lavado',
+        //     'url'  => 'lavado/todas',
+        //     'icon' => 'fas fa-fw fa-hospital ',
+        //     'role' => 'admin'
+        // ],
         // [
         //     'text' => 'Lotes',
         //     'url'  => 'lotes/todos',

@@ -97,13 +97,13 @@ Route::get('nombres/lista', [App\Http\Controllers\listapreciosController::class,
 Route::get('nombres/update/{precio_id}', [App\Http\Controllers\listapreciosController::class, 'update'])->name('listaprecios.update.vista');
 Route::post('nombres/update/{precio_id}', [App\Http\Controllers\listapreciosController::class, 'updatelistaprecios'])->name('listaprecios.update');
 
-//Lista de precios
-Route::get('lavado/create', [App\Http\Controllers\listaLavadoController::class, 'create'])->name('listalavado.create.vista');
-Route::post('lavado/create', [App\Http\Controllers\listaLavadoController::class, 'createlistalavado'])->name('listalavado.create');
-Route::get('lavado/todas', [App\Http\Controllers\listaLavadoController::class, 'getlistalavado'])->name('listalavado.lista');
-Route::get('lavado/update/{precio_id}', [App\Http\Controllers\listaLavadoController::class, 'update'])->name('listalavado.update.vista');
-Route::post('lavado/update/{precio_id}', [App\Http\Controllers\listaLavadoController::class, 'updatelistalavado'])->name('listalavado.update');
-Route::get('lavado/fecha', [App\Http\Controllers\listaLavadoController::class, 'fechaVista'])->name('listalavado.fecha');
+// //Lista de precios
+// Route::get('lavado/create', [App\Http\Controllers\listaLavadoController::class, 'create'])->name('listalavado.create.vista');
+// Route::post('lavado/create', [App\Http\Controllers\listaLavadoController::class, 'createlistalavado'])->name('listalavado.create');
+// Route::get('lavado/todas', [App\Http\Controllers\listaLavadoController::class, 'getlistalavado'])->name('listalavado.lista');
+// Route::get('lavado/update/{precio_id}', [App\Http\Controllers\listaLavadoController::class, 'update'])->name('listalavado.update.vista');
+// Route::post('lavado/update/{precio_id}', [App\Http\Controllers\listaLavadoController::class, 'updatelistalavado'])->name('listalavado.update');
+// Route::get('lavado/fecha', [App\Http\Controllers\listaLavadoController::class, 'fechaVista'])->name('listalavado.fecha');
 
 //Fracciones
 Route::get('fracciones/create', [App\Http\Controllers\FraccionesController::class, 'create'])->name('fracciones.create.vista');
