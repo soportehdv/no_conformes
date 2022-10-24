@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Inventario-HDV',
+    'title' => 'HDV',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Inventario</b>-Lavanderia',
+    'logo' => '<b>Servicio</b>-No Conforme',
     'logo_img' => 'vendor/adminlte/dist/img/logoHDV.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
