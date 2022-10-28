@@ -125,18 +125,23 @@
 
                         <div class="row">
                             <div class="col-sm-3">
-                                <label for="exampleInputEmail1">Serial </label>
-                                <input type="text" autocomplete="on" class="form-control upper" name="serial"
-                                    id="hola" value="" aria-describedby="emailHelp" placeholder="Serial"
-                                    required>
-                                <ul id="lista_id"></ul>
+                                <label for="exampleInputEmail1">Fecha de reporte </label>
+                                <input type="date" autocomplete="on" class="form-control upper" name="fReporte"
+                                    id="fReporte" value="" aria-describedby="emailHelp" required>
                             </div>
                             <div class="col-sm-3">
-                                <label for="">Elemento </label>
-                                <input type="text" class="form-control upper" name="elemento" value=""
-                                    placeholder="Elemento">
+                                <label for="">Proceso :</label>
+                                <select class="form-control" name="aServicio" id="Aservicio" required>
+                                    <option value="">Seleciona un proceso</option>
+                                    @foreach ($subProceso as $sp)
+                                            <option value="{{ $sp->id }}">
+                                                        {{ $sp->documento }}
+                                            </option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="col-sm-3">
+
+                            {{-- <div class="col-sm-3">
                                 <label for="">Caracteristicas </label>
                                 <input type="text" class="form-control upper" name="caracteristicas" value=""
                                     placeholder="Caracteristicas">
@@ -145,13 +150,13 @@
                                 <label for="">Cantidad </label>
                                 <input type="number" class="form-control upper" name="cantidad" value=""
                                     placeholder="Cantidad">
-                            </div>
+                            </div> --}}
 
                         </div>
 
                         <br>
 
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-sm-3">
                                 <label for="">Ancho </label>
                                 <input type="text" class="form-control upper" name="ancho" value=""
@@ -172,7 +177,7 @@
                                 <input type="text" class="form-control upper" name="tela" value=""
                                     placeholder="tela">
                             </div>
-                        </div>
+                        </div> --}}
 
                     </div>
                     <input class="btn btn-success float-right" type="submit" value="Ingresar" />

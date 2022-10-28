@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Compras;
+use App\Models\Tipo;
 use App\Models\Stock;
 use App\Models\Ventas;
-use App\Models\Fracciones;
-use App\Models\Ubicacion;
+use App\Models\Compras;
 use App\Models\Estados;
-use App\Models\Tipo;
+use App\Models\Ubicacion;
+use App\Models\Fracciones;
+use Illuminate\Http\Request;
+use App\Models\subcategorias;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Subcategoria;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -50,6 +53,7 @@ class ComprasController extends Controller
         $estado = Estados::all();
         $Ubicacion = Ubicacion::all();
         $tipo = Tipo::all();
+        $subProceso = subcategorias::on('calidad')->get();
 
 
 
@@ -57,7 +61,7 @@ class ComprasController extends Controller
             'estado' => $estado,
             'ubicacion' => $Ubicacion,
             'tipo' => $tipo,
-
+            'subProceso' => $subProceso
         ]);
     }
 

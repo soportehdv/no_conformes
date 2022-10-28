@@ -55,14 +55,14 @@ Route::post('clientes/entrega/{cliente_id}', [App\Http\Controllers\ClientesContr
 Route::get('clientes/list/{filtro?}', [App\Http\Controllers\ClientesController::class, 'getClientes'])->name('clientes.lista');
 
 //Ventas
-Route::get('ventas/todas/{filtro?}/{fecha_inicio?}/{fecha_final?}/{id?}', [App\Http\Controllers\VentasController::class, 'getVentas'])->name('ventas.lista');
-Route::get('ventas/create', [App\Http\Controllers\VentasController::class, 'create'])->name('ventas.create.vista');
-Route::post('ventas/create', [App\Http\Controllers\VentasController::class, 'createVenta'])->name('ventas.create');
+// Route::get('ventas/todas/{filtro?}/{fecha_inicio?}/{fecha_final?}/{id?}', [App\Http\Controllers\VentasController::class, 'getVentas'])->name('ventas.lista');
+// Route::get('ventas/create', [App\Http\Controllers\VentasController::class, 'create'])->name('ventas.create.vista');
+// Route::post('ventas/create', [App\Http\Controllers\VentasController::class, 'createVenta'])->name('ventas.create');
 
 
 // Route::get('ventas/fecha', [App\Http\Controllers\VentasController::class, 'fechaVista'])->name('ventas.fecha');
-Route::get('ventas/descargar/{filtro?}/{fecha_inicio?}/{fecha_final?}/{id?}', [App\Http\Controllers\VentasController::class, 'export'])->name('ventas.descargar');
-Route::get('ventar/fecha', [App\Http\Controllers\VentasController::class, 'fechaVista'])->name('ventas.fecha');
+// Route::get('ventas/descargar/{filtro?}/{fecha_inicio?}/{fecha_final?}/{id?}', [App\Http\Controllers\VentasController::class, 'export'])->name('ventas.descargar');
+// Route::get('ventar/fecha', [App\Http\Controllers\VentasController::class, 'fechaVista'])->name('ventas.fecha');
 
 //Precios
 Route::get('precios/create', [App\Http\Controllers\Precios_productosController::class, 'create'])->name('precios.create.vista');
@@ -131,4 +131,4 @@ Route::post('ubicacion/update/{ubicacion_id}', [App\Http\Controllers\ubicacionCo
 Route::get('targets/target', [App\Http\Controllers\TargetController::class, 'gettarget'])->name('listatarget.target');
 
 
-Route::get('ventas/admin/invoice/{categoria}',[App\Http\Controllers\InvoiceController::class, 'sacaSub']);
+// Route::get('ventas/admin/invoice/{categoria}',[App\Http\Controllers\InvoiceController::class, 'sacaSub']);

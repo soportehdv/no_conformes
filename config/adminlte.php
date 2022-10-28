@@ -292,12 +292,12 @@ return [
 
         // ],
 
-        [
-            'text' => 'Entrega',
-            'url'  => 'ventas/todas',
-            'icon' => 'fas fa-fw fa-dolly',
-            'role' => 'admin'
-        ],
+        // [
+        //     'text' => 'Entrega',
+        //     'url'  => 'ventas/todas',
+        //     'icon' => 'fas fa-fw fa-dolly',
+        //     'role' => 'admin'
+        // ],
         // [
         //     'text' => 'historial de lavado',
         //     'url'  => 'lavado/todas',
