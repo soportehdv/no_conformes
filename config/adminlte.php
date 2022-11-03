@@ -250,8 +250,8 @@ return [
             'role'        => 'admin'
         ],
         [
-            'text' => 'Ingresar producto',
-            'url'  => 'compras/lista',
+            'text' => 'No Conformes',
+            'url'  => 'NConformes/lista',
             'icon' => 'fas fa-fw fa-share',
             'role'        => 'admin'
 

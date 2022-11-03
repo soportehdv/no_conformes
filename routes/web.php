@@ -89,6 +89,15 @@ Route::get('compras/updateCar/{compra_id}', [App\Http\Controllers\ComprasControl
 
 Route::get('compras/lista', [App\Http\Controllers\ComprasController::class, 'getCompras'])->name('compras.lista');
 
+//No conformes
+Route::get('NConformes/lista', [App\Http\Controllers\NconformeController::class, 'getNConformes'])->name('NConformes.lista');
+Route::get('NConformes/create', [App\Http\Controllers\NconformeController::class, 'createN'])->name('NConformes.create.vista');
+Route::post('NConformes/create', [App\Http\Controllers\NconformeController::class, 'createNoConforme'])->name('NConformes.create');
+
+Route::post('NConformes/subcategorias', [App\Http\Controllers\NconformeController::class, 'subcategorias']);
+
+
+
 
 //Lista de precios
 Route::get('nombres/create', [App\Http\Controllers\listapreciosController::class, 'create'])->name('listaprecios.create.vista');
