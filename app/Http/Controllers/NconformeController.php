@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Mail;
 use App\Models\Tipo;
-use App\Models\Stock;
+use App\Models\User;
 use App\Models\Ventas;
 use App\Models\Compras;
 use App\Models\Estados;
@@ -11,6 +11,7 @@ use App\Models\Ubicacion;
 use App\Models\Fracciones;
 use App\Models\subcategorias;
 use App\Models\NConforme;
+use App\Models\Files;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Subcategoria;
@@ -33,7 +34,10 @@ class NconformeController extends Controller
 
     public function getNConformes(Request $request)
     {
-            $NConformes = NConforme::all();
+            $NConformes = NConforme::join('users', 'users.id', '=', 'NConformes.proceso')
+                ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
+                ->select('users.cargo as Aservicio', 'user.cargo as servicio', 'NConformes.*')
+                ->get();
 
             return view('NConformes/lista', [
                 'NConformes' => $NConformes,
@@ -41,9 +45,7 @@ class NconformeController extends Controller
     }
     public function createN()
     {
-        // $subcategorias = Subcategorias::on('calidad')->whereId("6")->get();
-        //     dd($subcategorias);
-        $subProceso = subcategorias::on('calidad')->get();
+        $subProceso = user::all();
 
 
         return view('NConformes/create', [
@@ -54,10 +56,17 @@ class NconformeController extends Controller
     public function createNoConforme(Request $request)
     {
         // dd($request->all());
-
-        //validamos los datos
+        //inicio donde validamos los datos
         $validate = Validator::make($request->all(), [
-            'serial'      => 'required',
+            'reportado'     => 'required',
+            'fReporte'      => 'required',
+            'proceso'       => 'required',
+            'reportante'    => 'required',
+            'nCreportado'   => 'required',
+            'nCproceso'     => 'required',
+            'nCdescripcion' => 'required',
+            'nCacciones'    => 'required',
+            'accion'        => 'required',
 
         ]);
 
@@ -66,67 +75,142 @@ class NconformeController extends Controller
 
             return redirect()->back();
         }
+        // finalizacion de validación de datos
+
+        // guardamos en la base de datos
+        $noC = new NConforme();
+        $noC->reportado     = $request->input('reportado');
+        $noC->fReporte      = $request->input('fReporte');
+        $noC->proceso       = $request->input('proceso');
+        $noC->reportante    = $request->input('reportante');
+        $noC->nCreportado   = $request->input('nCreportado');
+        $noC->nCproceso     = $request->input('nCproceso');
+        $noC->nCdescripcion = $request->input('nCdescripcion');
+        $noC->nCacciones    = $request->input('nCacciones');
+        $noC->accion        = $request->input('accion');
+        $noC->save();
+
+        if($request->file != null){
+            // dd("hola-mundo");
+            $file = new Files();
+            $file->nombre       = $request->file->getClientOriginalName();
+            $file->extension    = $request->file->getClientOriginalExtension();
+            $file->ruta         = str_replace(" ","_",date('Y-m-d').'_'.$file->nombre);
+            $tipo               = explode('/', $request->file->getClientMimeType() );
+            $file->mime         = $tipo[0];
+            $file->size         = number_format($request->file->getSize()/1024,2,',','.');
+            /*primero muevo el archivo antes de generar un registro en la bd por si se presenta fallos de permisos en la subida, no me genere
+            registros basura en la bd*/
+            $request->file->move( public_path('files/biblioteca'), $file->ruta);
+            $file->aDescripcion  = $request->input('aDescripcion');
+
+            $NConforme = NConforme::all();
+            $noCon = $NConforme->last()->id;
+            $file->noConforme    = $noCon;
+            $file->save();
 
 
-        $Compras = new Compras();
 
-        $Compras->serial = $request->input('serial');
+        }
+
+        //inicio de codigo para envio de notificacion del correo electronico
+        // ultimo dato
+        $NConforme = NConforme::all();
+        $cod = $NConforme->last()->id;
+
+        if($request->file != null){
+
+        $data = array(
+            // datos con archivos
+            'reportado'         =>  $request->reportado,
+            'fReporte'          =>  $request->fReporte,
+            'proceso'           =>  $request->proceso,
+            'reportante'        =>  $request->reportante,
+            'nCreportado'       =>  $request->nCreportado,
+            'nCproceso'         =>  $request->nCproceso,
+            'nCdescripcion'     =>  $request->nCdescripcion,
+            'nCacciones'        =>  $request->nCacciones,
+            'accion'            =>  $request->accion,
+            'file'              =>  $request->file,
+            'aDescripcion'      =>  $request->aDescripcion,
+
+        );
+        }
+        else{
+        $data = array(
+
+            'reportado'         =>  $request->reportado,
+            'fReporte'          =>  $request->fReporte,
+            'proceso'           =>  $request->proceso,
+            'reportante'        =>  $request->reportante,
+            'nCreportado'       =>  $request->nCreportado,
+            'nCproceso'         =>  $request->nCproceso,
+            'nCdescripcion'     =>  $request->nCdescripcion,
+            'nCacciones'        =>  $request->nCacciones,
+            'accion'            =>  $request->accion,
+        );
+
+        }
+
+        try {
 
 
-        $Compras->estado_id =  1;
-        $Compras->unidades = $request->input('cantidad');
-        $Compras->uni = $request->input('cantidad');
-        $Compras->elemento = $request->input('elemento');
-        $Compras->caracteristicas = $request->input('caracteristicas');
-        $Compras->ancho = $request->input('ancho');
-        $Compras->largo = $request->input('largo');
-        $Compras->color = $request->input('color');
-        $Compras->tela = $request->input('tela');
+            Mail::send('Emails.pqrd', $data, function ($message) use ($request) {
+                $message->from('sistemas.soportehdv2@gmail.com', 'HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO');
+                $message->to($request->user, $request->nombre)->subject('Remitente');
+                $message->cc($request->email, 'Hospital Villavicencio');
+                $message->subject('Notificación nuevo PQRSF de: ' . $request->nombre . ' asunto: ' . $request->asunto );
+            });
 
-        $Compras->status = 1;
 
-        $Compras->save();
 
-        //Guardamos en el stock
+        } catch (\Exception $e) {
+            return back()->with('status2', 'Falló envio de PQRD, por favor intente mas tarde.');
+        }
 
-        $stock = new Stock();
-        $stock->estado_id =  1;
-        $stock->unidades = $request->input('cantidad');
-        $stock->uni = $request->input('cantidad');
-        $stock->compra_id = $Compras->id;
-
-        $stock->status = 1;
-
-        $stock->save();
-
+        return back()->with('status', '¡PQRD enviado exitosamente!');
+        //Finalización para enviar al correo electronico
 
         $request->session()->flash('alert-success', 'Producto registrado con exito!');
-
-        return redirect()->route('compras.lista');
+        return redirect()->route('NConformes.lista');
     }
+
     public function update($id)
     {
-        $compras = Compras::where('id', $id)->first();
+        $NConforme = NConforme::where('id', $id)->first();
         $estado = Estados::all();
+        $user = User::all();
 
         // $fracciones = Fracciones::all();
 
-        return view('Compras/editar', [
-            'compras' => $compras,
+        return view('NConformes/editar', [
+            'NConforme' => $NConforme,
             'estado' => $estado,
+            'user' => $user,
 
             // 'fracciones' => $fracciones
         ]);
     }
-    public function updatecompras(Request $request, $compra_id)
+    public function updateNoConformes(Request $request, $nC_id)
     {
 
-        $Compras = Compras::where('id', $compra_id)->first();
-        $stock = Stock::where('id', $compra_id)->first();
+        // $Compras = Compras::where('id', $compra_id)->first();
+        // $stock = Stock::where('id', $compra_id)->first();
+        $noC = NConforme::where('id', $nC_id)->first();
+
 
 
         $validate = Validator::make($request->all(), [
-            'unidades'      => 'color',
+            'reportado'     => 'required',
+            'fReporte'      => 'required',
+            'proceso'       => 'required',
+            'reportante'    => 'required',
+            'nCreportado'   => 'required',
+            'nCproceso'     => 'required',
+            'nCdescripcion' => 'required',
+            'nCacciones'    => 'required',
+            'accion'        => 'required',
+
         ]);
 
         if ($validate->fails()) {
@@ -135,41 +219,33 @@ class NconformeController extends Controller
             return redirect()->back();
         }
 
-        //validamos los datos
-        // $Compras = new Compras();
-        $Compras->serial = $request->input('serial');
+        // $noC = new NConforme();
+        $noC->reportado     = $request->input('reportado');
+        $noC->fReporte      = $request->input('fReporte');
+        $noC->proceso       = $request->input('proceso');
+        $noC->reportante    = $request->input('reportante');
+        $noC->nCreportado   = $request->input('nCreportado');
+        $noC->nCproceso     = $request->input('nCproceso');
+        $noC->nCdescripcion = $request->input('nCdescripcion');
+        $noC->nCacciones    = $request->input('nCacciones');
+        $noC->accion        = $request->input('accion');
+        if($request->file != null){
+            // $archivo = new Files();
+            $Dname       = $request->file->getClientOriginalName();
+            $Dextension  = $request->file->getClientOriginalExtension();
+            $noC->file       = str_replace(" ","_",date('Y-m-d').'_'.$Dname);
+            $tipo        = explode('/', $request->file->getClientMimeType() );
+            $Dmime       = $tipo[0];
+            $Dsize       = number_format($request->file->getSize()/1024,2,',','.');
+            /*primero muevo el archivo antes de generar un registro en la bd por si se presenta fallos de permisos en la subida, no me genere
+            registros basura en la bd*/
+            $request->file->move( public_path('files/biblioteca'), $noC->file);
+        }
+        $noC->aDescripcion  = $request->input('aDescripcion');
+        $noC->save();
 
-
-        $Compras->estado_id =  1;
-        $Compras->unidades = $request->input('cantidad');
-        $Compras->uni = $request->input('cantidad');
-        $Compras->elemento = $request->input('elemento');
-        $Compras->caracteristicas = $request->input('caracteristicas');
-        $Compras->ancho = $request->input('ancho');
-        $Compras->largo = $request->input('largo');
-        $Compras->color = $request->input('color');
-        $Compras->tela = $request->input('tela');
-
-        $Compras->status = 1;
-
-
-        $Compras->save();
-
-
-        //Guardamos en el stock
-
-        // $stock->estado_id =  1;
-        // $stock->unidades = 1;
-        // $stock->uni = 1;
-        // $stock->compra_id = $Compras->id;
-
-        // $stock->status = 1;
-
-        // $stock->save();
-
-        $request->session()->flash('alert-success', 'Ingreso actualizado con exito!');
-
-        return redirect()->route('compras.lista');
+        $request->session()->flash('alert-success', 'No conforme actualizado con exito!');
+        return redirect()->route('NConformes.lista');
     }
     public function updateProducto($compra_id, $id_venta)
     {
@@ -235,30 +311,11 @@ class NconformeController extends Controller
 
         return redirect()->route('ventas.lista');
     }
-    public function updatecomprasCar($id){
-        $compras = Compras::where('id', $id)->first();
-        $stock   = Stock  ::where('id', $id)->first();
-
-        //validamos los datos
-
-        $compras->status =  0;
-        $compras->save();
-
-
-        //Guardamos en el stock
-
-        $stock->status =  0;
-        $stock->save();
-
-        return redirect()->back();
-
-
-    }
 
 
     public function subcategorias(Request $request){
         if(isset($request->texto)){
-            $subcategorias = Subcategorias::on('calidad')->whereId($request->texto)->get();
+            $subcategorias = user::whereId($request->texto)->get();
             return response()->json(
                 [
                     'lista' => $subcategorias,

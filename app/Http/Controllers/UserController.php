@@ -22,28 +22,11 @@ class UserController extends Controller
 
     public function getUser(Request $request)
     {
-
-        if($request){
-
-            $query= trim($request->get('search'));
-            $user= User::where('name','LIKE', '%' . $query . '%')
-            ->orderBy('id', 'asc')
-            // ->get();
-            ->simplePaginate(10);
-
+            $user= User::all();
 
             return view('user/lista', [
                 'users' => $user,
-                'search' => $query
             ]);
-
-        }
-
-        // $user = User::all();
-
-        // return view('user/lista', [
-        //     'users' => $user
-        // ]);
     }
 
     public function create()

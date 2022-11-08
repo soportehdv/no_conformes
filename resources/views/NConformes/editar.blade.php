@@ -1,10 +1,10 @@
 @extends('adminlte::page')
-@section('title', 'Crear No Conforme')
+@section('title', 'Editar No Conforme')
 
 @section('content_header')
     <div class="card" style="height:4em;">
         <div class="card-header">
-            <h2>Crear No Conforme</h2>
+            <h2>Modificar No Conforme</h2>
         </div>
 
     </div>
@@ -23,7 +23,7 @@
             @endif
         @endforeach
         <br>
-        <form method="POST" action="{{ route('NConformes.create') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('NConformes.update', $NConforme->id) }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <div class="card">
@@ -35,34 +35,32 @@
                             <div class="col-sm-6">
                                 <label for="">Reportado por : </label>
                                 <input type="text" class="form-control upper" name="reportado" id="reportado"
-                                    value="" placeholder="Nombre del reportante">
+                                    value="{{ $NConforme->reportado }}" placeholder="Nombre del reportante">
                             </div>
                             <div class="col-sm-6">
                                 <label for="exampleInputEmail1">Fecha de reporte : </label>
                                 <input type="datetime-local" autocomplete="on" class="form-control upper" name="fReporte"
-                                    id="fReporte" value="" aria-describedby="emailHelp" required>
+                                    id="fReporte" value="{{ $NConforme->fReporte }}" aria-describedby="emailHelp" required>
                             </div>
                         </div>
                         <br>
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <label for="">Proceso : </label>
                                 <select class="form-control" name="proceso" id="proceso" required>
                                     <option value="">Seleciona un proceso</option>
-                                    @foreach ($subProceso as $sp)
-                                        @if ($loop->index != 0)
-                                            <option value="{{ $sp->id }}">
-                                                {{ $sp->cargo }}
-                                            </option>
-                                        @endif
+                                    @foreach ($user as $us)
+                                        <option value="{{ $us->id }}"
+                                            @if ($NConforme->proceso == $us->id) selected='selected' @endif>
+                                            {{ $us->cargo }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-sm-6">
                                 <label for="">Coordinador : </label>
                                 <input type="text" class="form-control upper" id="reportante" name="reportante"
-                                    value="">
+                                    value="{{ $NConforme->reportante }}">
                             </div>
                         </div>
 
@@ -79,10 +77,11 @@
                                 <label for="">Proceso : </label>
                                 <select class="form-control" name="nCproceso" id="nCproceso" required>
                                     <option value="">Seleciona un proceso</option>
-                                    @foreach ($subProceso as $sp)
+                                    @foreach ($user as $us)
                                         @if ($loop->index != 0)
-                                            <option value="{{ $sp->id }}">
-                                                {{ $sp->cargo }}
+                                            <option value="{{ $us->id }}"
+                                                @if ($NConforme->nCproceso == $us->id) selected='selected' @endif>
+                                                {{ $us->cargo }}
                                             </option>
                                         @endif
                                     @endforeach
@@ -91,7 +90,7 @@
                             <div class="col-sm-6">
                                 <label for="">Area de servicio : </label>
                                 <input type="text" class="form-control upper" name="nCreportado" id="nCreportado"
-                                    value="" placeholder="Cantidad">
+                                    value="{{ $NConforme->nCreportado }}" placeholder="Cantidad">
                             </div>
                         </div>
                         <br>
@@ -99,7 +98,7 @@
                             <div class="col-sm-12">
                                 <label for="">Descripción del servicio no conforme : </label>
                                 <textarea type="textarea" class="form-control upper" name="nCdescripcion" id="nCdescripcion" value=""
-                                    placeholder="Describa lo sucedido"></textarea>
+                                    placeholder="Describa lo sucedido">{{ $NConforme->nCdescripcion }}</textarea>
                             </div>
                         </div>
                         <br>
@@ -107,7 +106,7 @@
                             <div class="col-sm-12">
                                 <label for="">Acciones realizadas y fecha de realización : </label>
                                 <textarea type="textarea" class="form-control upper" name="nCacciones" id="nCacciones" value=""
-                                    placeholder="(Corrección inicial efectuada)"></textarea>
+                                    placeholder="(Corrección inicial efectuada)">{{ $NConforme->nCacciones }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -122,14 +121,26 @@
                             <div class="col-sm-12">
                                 <label for="">¿Requiere iniciar Acción Correctiva y/o Preventiva?</label>
                                 <br>
+                                @if ($NConforme->accion === "no")
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" name="accion" id="no" class="custom-control-input" value="no" selected>
+                                    <label for="no" class="custom-control-label">No </label>
+                                </div>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" name="accion" id="si" class="custom-control-input" value="si">
                                     <label for="si" class="custom-control-label">Si </label>
                                 </div>
+                                @else
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" name="accion" id="no" class="custom-control-input" value="no">
                                     <label for="no" class="custom-control-label">No </label>
                                 </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" name="accion" id="si" class="custom-control-input" value="si" selected>
+                                    <label for="si" class="custom-control-label">Si </label>
+                                </div>
+                                @endif
+
                             </div>
                         </div>
                         <br>
@@ -143,7 +154,7 @@
                             <div class="col-sm-6">
                                 <label for="">Breve descripción del archivo adjunto : </label>
                                 <textarea type="textarea" class="form-control upper" name="aDescripcion" id="aDescripcion" value=""
-                                    placeholder="Descripción corta"></textarea>
+                                    placeholder="Descripción corta">{{ $NConforme->aDescripcion }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -162,7 +173,7 @@
 
 <script>
     $(document).on('change', '#proceso', (e) => {
-        fetch('subcategorias', {
+        fetch('../subcategorias', {
             method: 'POST',
             body: JSON.stringify({
                 texto: e.target.value
@@ -186,7 +197,7 @@
     });
 
     $(document).on('change', '#nCproceso', (e) => {
-        fetch('subcategorias', {
+        fetch('../subcategorias', {
             method: 'POST',
             body: JSON.stringify({
                 texto: e.target.value

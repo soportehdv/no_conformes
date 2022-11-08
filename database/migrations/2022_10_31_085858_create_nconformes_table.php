@@ -15,16 +15,18 @@ class CreateNconformesTable extends Migration
     {
         Schema::create('nconformes', function (Blueprint $table) {
             $table->id();
-            $table->date('fReporte');
-            $table->string('proceso');
             $table->string('reportado');
-            $table->string('descripcion');
-            $table->string('correccion');
-            $table->date('fCorreccion');
+            $table->datetime('fReporte');
+            $table->string('proceso');
             $table->string('reportante');
+            $table->string('nCreportado');
+            $table->string('nCproceso');
+            $table->string('nCdescripcion');
+            $table->string('nCacciones');
             $table->string('accion');
-            $table->string('nDueñoP');
-            $table->string('fDueñoP');
+            $table->string('file')->nullable();
+            $table->string('aDescripcion');
+            $table->string('status')->default('registrada');
             $table->timestamps();
         });
 
