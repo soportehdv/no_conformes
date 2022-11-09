@@ -24,9 +24,8 @@ class CreateNconformesTable extends Migration
             $table->string('nCdescripcion');
             $table->string('nCacciones');
             $table->string('accion');
-            $table->string('file')->nullable();
-            $table->string('aDescripcion');
             $table->string('status')->default('registrada');
+            $table->integer('imagen');
             $table->timestamps();
         });
 

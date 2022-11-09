@@ -42,11 +42,12 @@
                                 <input type="datetime-local" autocomplete="on" class="form-control upper" name="fReporte"
                                     id="fReporte" value="" aria-describedby="emailHelp" required>
                             </div>
+                            <input type="hidden" name="user" id="user" value="jhonrymat@gmail.com">
                         </div>
                         <br>
 
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label for="">Proceso : </label>
                                 <select class="form-control" name="proceso" id="proceso" required>
                                     <option value="">Seleciona un proceso</option>
@@ -59,9 +60,14 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label for="">Coordinador : </label>
                                 <input type="text" class="form-control upper" id="reportante" name="reportante"
+                                    value="">
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="">Correo : </label>
+                                <input type="text" class="form-control upper" id="correo" name="correo"
                                     value="">
                             </div>
                         </div>

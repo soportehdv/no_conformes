@@ -34,13 +34,15 @@ class NconformeController extends Controller
 
     public function getNConformes(Request $request)
     {
+            $files      = Files::all();
             $NConformes = NConforme::join('users', 'users.id', '=', 'NConformes.proceso')
                 ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
                 ->select('users.cargo as Aservicio', 'user.cargo as servicio', 'NConformes.*')
                 ->get();
-
+            // dd($NConformes);
             return view('NConformes/lista', [
                 'NConformes' => $NConformes,
+                'files'      => $files,
             ]);
     }
     public function createN()
@@ -88,10 +90,14 @@ class NconformeController extends Controller
         $noC->nCdescripcion = $request->input('nCdescripcion');
         $noC->nCacciones    = $request->input('nCacciones');
         $noC->accion        = $request->input('accion');
+        if($request->file != null){
+            $noC->imagen        = 1;
+        }else{
+            $noC->imagen        = 0;
+        }
         $noC->save();
 
         if($request->file != null){
-            // dd("hola-mundo");
             $file = new Files();
             $file->nombre       = $request->file->getClientOriginalName();
             $file->extension    = $request->file->getClientOriginalExtension();
@@ -112,6 +118,7 @@ class NconformeController extends Controller
 
 
         }
+
 
         //inicio de codigo para envio de notificacion del correo electronico
         // ultimo dato
@@ -157,8 +164,8 @@ class NconformeController extends Controller
 
             Mail::send('Emails.pqrd', $data, function ($message) use ($request) {
                 $message->from('sistemas.soportehdv2@gmail.com', 'HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO');
-                $message->to($request->user, $request->nombre)->subject('Remitente');
-                $message->cc($request->email, 'Hospital Villavicencio');
+                $message->to($request->user, $request->reportado)->subject('Remitente');
+                $message->cc($request->user, 'Hospital Villavicencio');
                 $message->subject('Notificación nuevo PQRSF de: ' . $request->nombre . ' asunto: ' . $request->asunto );
             });
 
@@ -331,5 +338,11 @@ class NconformeController extends Controller
 
         }
 
+    }
+
+    public function download($id){
+        $files = Files::find($id);
+        $pathtoFile = public_path().'/'.'files/biblioteca'.'/'.$files->ruta;
+        return response()->download($pathtoFile);
     }
 }

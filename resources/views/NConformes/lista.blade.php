@@ -52,8 +52,8 @@
                     <td>{{ $nC->reportante }}, {{ $nC->Aservicio }}</td>
                     <td>{{ $nC->nCreportado }}, {{ $nC->servicio }}</td>
                     <td>{{ $nC->status }}</td>
-                    <td><a href="{{ route('NConformes.update.vista', $nC->id) }}" class="btn btn-success btn-sm mb-2"><i
-                                class="fas fa-edit"></i></a>
+                    <td><a href="{{ route('NConformes.update.vista', $nC->id) }}"
+                            class="btn btn-success btn-sm mb-2"><i class="fas fa-edit"></i></a>
                         <a data-toggle="modal" data-target="#modal-show-{{ $nC->id }}"
                             class="btn btn-warning btn-sm mb-2">
                             <i class="fa fa-eye"></i>
@@ -80,131 +80,54 @@
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Id
-                                            <b>{{ $nC->id  }}</b>
+                                            <b>{{ $nC->id }}</b>
                                         </li>
                                         <li class="list-group-item">Fecha de no conforme:
                                             <b>{{ $nC->fReporte }}</b>
                                         </li>
-                                        <li class="list-group-item">Quien se queja: <b>{{ $nC->reportante }}, {{ $nC->Aservicio }}</b>
+                                        <li class="list-group-item">Quien se queja: <b>{{ $nC->reportante }},
+                                                {{ $nC->Aservicio }}</b>
                                         </li>
-                                        <li class="list-group-item">De quien se queja: <b>{{ $nC->nCreportado }}, {{ $nC->servicio }}</b></li>
+                                        <li class="list-group-item">De quien se queja: <b>{{ $nC->nCreportado }},
+                                                {{ $nC->servicio }}</b></li>
                                         <li class="list-group-item">Descripción:
-                                            <b>{{ $nC->aDescripcion }}</b>
+                                            <b>{{ $nC->nCdescripcion }}</b>
                                         </li>
-                                        <li class="list-group-item">Acciones realizadas y fecha de realizacion: <b>{{ $nC->nCacciones }}</b></li>
+                                        <li class="list-group-item">Acciones realizadas y fecha de realizacion:
+                                            <b>{{ $nC->nCacciones }}</b>
+                                        </li>
                                         <li class="list-group-item">Requiere iniciar Acción Correptiva y/o Preventiva?:
                                             <b>{{ $nC->accion }}</b>
                                         </li>
-                                        @if ($nC->status == "registrada")
+                                        @if ($nC->status == 'registrada')
                                             <li class="list-group-item">Estado :
                                                 <b>{{ $nC->status }}</b>
                                             </li>
                                         @endif
                                     </ul>
                                 </div>
-                                {{-- @if ($documento->name != null)
-                                    <div class="bajardoc">
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <a href="{{ asset('files/biblioteca/' . $documento->ruta) }}"
-                                                        title="{{ $documento->nombre }} ({{ $documento->updated_at }})."
-                                                        target="blank">
-                                                        <img src="http://www.hdv.gov.co/files/biblioteca/2022-09-27_7271042.png"
-                                                            alt="{{ $documento->nombre }} ({{ $documento->updated_at }})."
-                                                            title="{{ $documento->nombre }} ({{ $documento->updated_at }})."
-                                                            width="100" height="100"
-                                                            class="mimethumb img-fluid">
-                                                    </a>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="row">
-                                                        <a href="{{ asset('files/biblioteca/' . $documento->ruta) }}"
-                                                            title="{{ $documento->nombre }}."
-                                                            target="blank">{{ $documento->nombre }}.</a>
-                                                    </div>
-                                                    <div class="row">
-                                                        <a class="descarga"
-                                                            href="{{ asset('documentos/download/' . $documento->id) }}">{{ $documento->size }}
-                                                            KB, Descargar</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            @if ($documento->name_edit != null && $documento->extension_edit == 'doc')
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <a href="{{ asset('files/biblioteca/' . $documento->ruta_edit) }}"
-                                                            title="{{ $documento->nombre }}." target="blank">
-                                                            <img src="http://www.hdv.gov.co/files/biblioteca/2022-09-27_337932.png"
-                                                                alt="{{ $documento->nombre }}."
-                                                                title="{{ $documento->nombre }}." width="100"
-                                                                height="100" class="mimethumb img-fluid">
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="row">
-                                                            <a href="{{ asset('files/biblioteca/' . $documento->ruta_edit) }}"
-                                                                title="{{ $documento->nombre }}."
-                                                                target="blank">{{ $documento->nombre }}.</a>
-                                                        </div>
-                                                        <div class="row">
-                                                            <a class="descarga"
-                                                                href="{{ asset('documentos/download/' . $documento->id) }}">{{ $documento->size_edit }}
-                                                                KB, Descargar</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @elseif($documento->name_edit != null)
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <a href="{{ asset('files/biblioteca/' . $documento->ruta_edit) }}"
-                                                            title="{{ $documento->nombre }}." target="blank">
-                                                            <img src="https://www.hdv.gov.co/files/biblioteca/2022-09-27_337958.png"
-                                                                alt="{{ $documento->nombre }}."
-                                                                title="{{ $documento->nombre }}." width="100"
-                                                                height="100" class="mimethumb img-fluid">
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="row">
-                                                            <a href="{{ asset('files/biblioteca/' . $documento->ruta_edit) }}"
-                                                                title="{{ $documento->nombre }}."
-                                                                target="blank">{{ $documento->nombre }}.</a>
-                                                        </div>
-                                                        <div class="row">
-                                                            <a class="descarga"
-                                                                href="{{ asset('documentos/download/' . $documento->id) }}">{{ $documento->size_edit }}
-                                                                KB, Descargar</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @else
-                                                <br><br>
-                                                <h6> No sé a subido archivos editables para este documento </h6>
+
+                                <div class="card" style="width: 100%;">
+                                    <div class="card-header bg-primary text-white" align="center">
+                                        Archivos adjuntos
+                                    </div>
+                                    @if ($nC->imagen == 1)
+                                        @foreach ($files as $file)
+                                            @if ($file->noConforme == $nC->id)
+                                                <ul>
+                                                    {{-- <li>{{ $file->aDescripcion }}</li> --}}
+                                                    <br>
+                                                    @include('NConformes.IFimagenes')
+                                                </ul>
                                             @endif
-                                        </div>
-                                    </div>
-                                    <h5 align="center"><b>Previsualización</b></h5>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div align="center">
-                                                @if ($documento->mime == 'image')
-                                                    <img src="{{ asset('files/biblioteca/' . $documento->ruta) }}"
-                                                        height="200px" width="300px" alt="imagenes">
-                                                @endif
-                                                @if ($documento->extension == 'pdf')
-                                                    <embed src="{{ asset('files/biblioteca/' . $documento->ruta) }}"
-                                                        type="application/pdf" width="100%" height="600px" />
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
-                                    <br><br>
-                                    <h6> No sé a subido archivos para este documento </h6>
-                                @endif --}}
+                                        @endforeach
+                                    @else
+                                        <br><br>
+                                        <h6> No sé a subido archivos para este no conforme </h6>
+                                    @endif
+                                </div>
+                                {{-- ejemplo --}}
+
 
                             </div>
                             <div class="modal-footer">
