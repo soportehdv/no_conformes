@@ -63,8 +63,6 @@ class NconformeController extends Controller
             'reportado'     => 'required',
             'fReporte'      => 'required',
             'proceso'       => 'required',
-            'reportante'    => 'required',
-            'nCreportado'   => 'required',
             'nCproceso'     => 'required',
             'nCdescripcion' => 'required',
             'nCacciones'    => 'required',
@@ -84,8 +82,6 @@ class NconformeController extends Controller
         $noC->reportado     = $request->input('reportado');
         $noC->fReporte      = $request->input('fReporte');
         $noC->proceso       = $request->input('proceso');
-        $noC->reportante    = $request->input('reportante');
-        $noC->nCreportado   = $request->input('nCreportado');
         $noC->nCproceso     = $request->input('nCproceso');
         $noC->nCdescripcion = $request->input('nCdescripcion');
         $noC->nCacciones    = $request->input('nCacciones');
@@ -132,8 +128,6 @@ class NconformeController extends Controller
             'reportado'         =>  $request->reportado,
             'fReporte'          =>  $request->fReporte,
             'proceso'           =>  $request->proceso,
-            'reportante'        =>  $request->reportante,
-            'nCreportado'       =>  $request->nCreportado,
             'nCproceso'         =>  $request->nCproceso,
             'nCdescripcion'     =>  $request->nCdescripcion,
             'nCacciones'        =>  $request->nCacciones,
@@ -149,8 +143,6 @@ class NconformeController extends Controller
             'reportado'         =>  $request->reportado,
             'fReporte'          =>  $request->fReporte,
             'proceso'           =>  $request->proceso,
-            'reportante'        =>  $request->reportante,
-            'nCreportado'       =>  $request->nCreportado,
             'nCproceso'         =>  $request->nCproceso,
             'nCdescripcion'     =>  $request->nCdescripcion,
             'nCacciones'        =>  $request->nCacciones,
@@ -159,23 +151,23 @@ class NconformeController extends Controller
 
         }
 
-        try {
+        // try {
 
 
-            Mail::send('Emails.pqrd', $data, function ($message) use ($request) {
-                $message->from('sistemas.soportehdv2@gmail.com', 'HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO');
-                $message->to($request->user, $request->reportado)->subject('Remitente');
-                $message->cc($request->user, 'Hospital Villavicencio');
-                $message->subject('Notificación nuevo PQRSF de: ' . $request->nombre . ' asunto: ' . $request->asunto );
-            });
+        //     Mail::send('Emails.pqrd', $data, function ($message) use ($request) {
+        //         $message->from('sistemas.soportehdv2@gmail.com', 'HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO');
+        //         $message->to($request->user, $request->reportado)->subject('Remitente');
+        //         $message->cc($request->user, 'Hospital Villavicencio');
+        //         $message->subject('Notificación nuevo PQRSF de: ' . $request->nombre . ' asunto: ' . $request->asunto );
+        //     });
 
 
 
-        } catch (\Exception $e) {
-            return back()->with('status2', 'Falló envio de PQRD, por favor intente mas tarde.');
-        }
+        // } catch (\Exception $e) {
+        //     return back()->with('status2', 'Falló envio de PQRD, por favor intente mas tarde.');
+        // }
 
-        return back()->with('status', '¡PQRD enviado exitosamente!');
+        // return back()->with('status', '¡PQRD enviado exitosamente!');
         //Finalización para enviar al correo electronico
 
         $request->session()->flash('alert-success', 'Producto registrado con exito!');
@@ -211,8 +203,6 @@ class NconformeController extends Controller
             'reportado'     => 'required',
             'fReporte'      => 'required',
             'proceso'       => 'required',
-            'reportante'    => 'required',
-            'nCreportado'   => 'required',
             'nCproceso'     => 'required',
             'nCdescripcion' => 'required',
             'nCacciones'    => 'required',
@@ -230,8 +220,6 @@ class NconformeController extends Controller
         $noC->reportado     = $request->input('reportado');
         $noC->fReporte      = $request->input('fReporte');
         $noC->proceso       = $request->input('proceso');
-        $noC->reportante    = $request->input('reportante');
-        $noC->nCreportado   = $request->input('nCreportado');
         $noC->nCproceso     = $request->input('nCproceso');
         $noC->nCdescripcion = $request->input('nCdescripcion');
         $noC->nCacciones    = $request->input('nCacciones');
@@ -247,8 +235,8 @@ class NconformeController extends Controller
             /*primero muevo el archivo antes de generar un registro en la bd por si se presenta fallos de permisos en la subida, no me genere
             registros basura en la bd*/
             $request->file->move( public_path('files/biblioteca'), $noC->file);
+            $noC->aDescripcion  = $request->input('aDescripcion');
         }
-        $noC->aDescripcion  = $request->input('aDescripcion');
         $noC->save();
 
         $request->session()->flash('alert-success', 'No conforme actualizado con exito!');
@@ -257,19 +245,14 @@ class NconformeController extends Controller
     public function updateProducto($compra_id, $id_venta)
     {
 
-        $compras = Compras::where('id', $compra_id)->first();
+        $NConforme = NConforme::where('id', $id)->first();
         $estado = Estados::all();
-        $ventas = ventas::where('id', $id_venta)->first();
-        $ubicacion = Ubicacion::all();
-
-        $fracciones = Fracciones::all();
+        $user = User::all();
 
         return view('Compras/editarProducto', [
-            'compras' => $compras,
+            'NConforme' => $NConforme,
             'estado' => $estado,
-            'ubicacion' => $ubicacion,
-            'ventas' => $ventas,
-
+            'user' => $user,
         ]);
     }
     public function updatecomprasProducto(Request $request, $compra_id, $id_venta)

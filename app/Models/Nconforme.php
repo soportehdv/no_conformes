@@ -15,8 +15,6 @@ class Nconforme extends Model
         'reportado',
         'fReporte',
         'proceso',
-        'reportante',
-        'nCreportado',
         'nCproceso',
         'nCdescripcion',
         'nCacciones',

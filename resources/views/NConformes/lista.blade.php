@@ -49,8 +49,8 @@
                 <tr>
                     <th>{{ $nC->id }}</th>
                     <td>{{ $nC->fReporte }}</td>
-                    <td>{{ $nC->reportante }}, {{ $nC->Aservicio }}</td>
-                    <td>{{ $nC->nCreportado }}, {{ $nC->servicio }}</td>
+                    <td>{{ $nC->Aservicio }}</td>
+                    <td>{{ $nC->servicio }}</td>
                     <td>{{ $nC->status }}</td>
                     <td><a href="{{ route('NConformes.update.vista', $nC->id) }}"
                             class="btn btn-success btn-sm mb-2"><i class="fas fa-edit"></i></a>
@@ -59,7 +59,6 @@
                             <i class="fa fa-eye"></i>
                         </a>
                     </td>
-
                 </tr>
                 {{-- modal show --}}
                 <div class="modal fade" id="modal-show-{{ $nC->id }}" tabindex="-1" role="dialog"

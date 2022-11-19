@@ -52,15 +52,19 @@
                                     @foreach ($user as $us)
                                         <option value="{{ $us->id }}"
                                             @if ($NConforme->proceso == $us->id) selected='selected' @endif>
-                                            {{ $us->cargo }}
+                                            {{ $us->proceso }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-sm-6">
                                 <label for="">Coordinador : </label>
-                                <input type="text" class="form-control upper" id="reportante" name="reportante"
-                                    value="{{ $NConforme->reportante }}">
+                                @foreach ($user as $us)
+                                    @if ($us->id == $NConforme->proceso)
+                                        <input type="text" class="form-control upper" id="reportante" name="reportante"
+                                            value="{{ $us->name }}" disabled>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
 
@@ -88,9 +92,13 @@
                                 </select>
                             </div>
                             <div class="col-sm-6">
-                                <label for="">Area de servicio : </label>
-                                <input type="text" class="form-control upper" name="nCreportado" id="nCreportado"
-                                    value="{{ $NConforme->nCreportado }}" placeholder="Cantidad">
+                                <label for="">Coordinador : </label>
+                                @foreach ($user as $us)
+                                    @if ($us->id == $NConforme->nCproceso)
+                                        <input type="text" class="form-control upper" id="nCreportado" name="nCreportado"
+                                            value="{{ $us->name }}" disabled>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                         <br>
@@ -121,24 +129,28 @@
                             <div class="col-sm-12">
                                 <label for="">¿Requiere iniciar Acción Correctiva y/o Preventiva?</label>
                                 <br>
-                                @if ($NConforme->accion === "no")
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="accion" id="no" class="custom-control-input" value="no" selected>
-                                    <label for="no" class="custom-control-label">No </label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="accion" id="si" class="custom-control-input" value="si">
-                                    <label for="si" class="custom-control-label">Si </label>
-                                </div>
+                                @if ($NConforme->accion === 'no')
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="accion" id="no" class="custom-control-input"
+                                            value="no" checked>
+                                        <label for="no" class="custom-control-label">No </label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="accion" id="si" class="custom-control-input"
+                                            value="si">
+                                        <label for="si" class="custom-control-label">Si </label>
+                                    </div>
                                 @else
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="accion" id="no" class="custom-control-input" value="no">
-                                    <label for="no" class="custom-control-label">No </label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="accion" id="si" class="custom-control-input" value="si" selected>
-                                    <label for="si" class="custom-control-label">Si </label>
-                                </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="accion" id="no" class="custom-control-input"
+                                            value="no">
+                                        <label for="no" class="custom-control-label">No </label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="accion" id="si" class="custom-control-input"
+                                            value="si" checked>
+                                        <label for="si" class="custom-control-label">Si </label>
+                                    </div>
                                 @endif
 
                             </div>

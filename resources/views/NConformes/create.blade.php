@@ -42,7 +42,7 @@
                                 <input type="datetime-local" autocomplete="on" class="form-control upper" name="fReporte"
                                     id="fReporte" value="" aria-describedby="emailHelp" required>
                             </div>
-                            <input type="hidden" name="user" id="user" value="jhonrymat@gmail.com">
+                            {{-- <input type="hidden" name="user" id="user" value="jhonrymat@gmail.com"> --}}
                         </div>
                         <br>
 
@@ -63,15 +63,16 @@
                             <div class="col-sm-4">
                                 <label for="">Coordinador : </label>
                                 <input type="text" class="form-control upper" id="reportante" name="reportante"
-                                    value="">
+                                    value="" disabled>
+
                             </div>
                             <div class="col-sm-4">
                                 <label for="">Correo : </label>
                                 <input type="text" class="form-control upper" id="correo" name="correo"
-                                    value="">
+                                    value="" disabled>
+                                <input type="hidden" name="correoOculto" id="correoOculto" value="">
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -81,7 +82,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label for="">Proceso : </label>
                                 <select class="form-control" name="nCproceso" id="nCproceso" required>
                                     <option value="">Seleciona un proceso</option>
@@ -94,10 +95,17 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-sm-6">
-                                <label for="">Area de servicio : </label>
+                            <div class="col-sm-4">
+                                <label for="">Responsable : </label>
                                 <input type="text" class="form-control upper" name="nCreportado" id="nCreportado"
-                                    value="" placeholder="Cantidad">
+                                    value="" placeholder="Responsable" disabled>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="">Correo : </label>
+                                <input type="text" class="form-control upper" name="correoR" id="correoR"
+                                    value="" placeholder="Correo" disabled>
+                                <input type="hidden" name="correoOculto2" id="correoOculto2" value="">
+
                             </div>
                         </div>
                         <br>
@@ -184,9 +192,12 @@
         }).then(data => {
             for (let i in data.lista) {
                 var opciones = data.lista[i].name;
+                var opciones2 = data.lista[i].email;
             }
             // console.log(opciones)
             $('#reportante').val(opciones);
+            $('#correo').val(opciones2);
+            $('#correoOculto').val(opciones2);
 
         }).catch(error => console.error(error));
     });
@@ -208,9 +219,13 @@
         }).then(data => {
             for (let i in data.lista) {
                 var opciones = data.lista[i].name;
+                var opciones2 = data.lista[i].email;
+
             }
             // console.log(opciones)
             $('#nCreportado').val(opciones);
+            $('#correoR').val(opciones2);
+            $('#correoOculto2').val(opciones2);
 
         }).catch(error => console.error(error));
     });

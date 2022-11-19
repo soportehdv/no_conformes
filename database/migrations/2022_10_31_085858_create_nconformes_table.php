@@ -18,8 +18,6 @@ class CreateNconformesTable extends Migration
             $table->string('reportado');
             $table->datetime('fReporte');
             $table->string('proceso');
-            $table->string('reportante');
-            $table->string('nCreportado');
             $table->string('nCproceso');
             $table->string('nCdescripcion');
             $table->string('nCacciones');
