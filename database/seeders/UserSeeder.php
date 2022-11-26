@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Admin',
             'cargo' => 'Administrador',
+            'proceso'   => 'Sistemas',
             'email' => 'jhonrymat@gmail.com',
             'password' => bcrypt('1234'),
             'rol' => 'admin'
@@ -57,7 +58,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name'      => 'Eduardo Garcia',
             'cargo'     => 'Coordinador Estadistica',
-            'proceso'   => 'Estadistia',
+            'proceso'   => 'Estadistica',
             'email'     => 'jhonrymat@gmail.com',
             'password'  => bcrypt('1234'),
             'rol'       => 'servicios'

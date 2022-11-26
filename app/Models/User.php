@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function adminlte_desc(){
         return "Usuario";
     }
-}
+
+    public function Nconformes(){
+        return $this->hashMany('App\Models\Nconforme');
+    }
+ }

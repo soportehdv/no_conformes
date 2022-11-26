@@ -250,23 +250,16 @@ return [
             'role'        => 'admin'
         ],
         [
-            'text' => 'No Conformes',
-            'url'  => 'NConformes/lista',
-            'icon' => 'fas fa-fw fa-share',
-            'role'        => 'admin'
+            'text'        => 'No Conformes',
+            'url'         => 'NConformes/lista',
+            'icon'        => 'fas fa-fw fa-share',
+            'role'        => 'servicios'
 
         ],
-        // [
-        //     'text' => 'Devolución de productos',
-        //     'url'  => 'devolucion/list',
-        //     'icon' => 'fas fa-fw fa-share fa-flip-horizontal',
-        //     'role'        => 'admin'
-
-        // ],
         [
-            'text' => 'Pedidos',
-            'url'  => 'clientes/list',
-            'icon' => 'fas fa-fw fa-chalkboard-teacher',
+            'text'        => 'Notificaciones',
+            'url'         => 'NConformes/index',
+            'icon'        => 'fas fa-fw fa-bell',
             'role'        => 'servicios'
 
         ],
@@ -277,13 +270,13 @@ return [
         //     'role'        => 'admin'
 
         // ],
-        [
-            'text' => 'Ubicaciones',
-            'url'  => 'ubicacion/lista',
-            'icon' => 'fas fa-fw fa-map-marker-alt',
-            'role'        => 'admin'
+        // [
+        //     'text' => 'Ubicaciones',
+        //     'url'  => 'ubicacion/lista',
+        //     'icon' => 'fas fa-fw fa-map-marker-alt',
+        //     'role'        => 'admin'
 
-        ],
+        // ],
         // [
         //     'text'    => 'Stock',
         //     'url'     => 'stock/list',

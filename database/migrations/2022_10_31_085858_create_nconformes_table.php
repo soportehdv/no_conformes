@@ -18,7 +18,7 @@ class CreateNconformesTable extends Migration
             $table->string('reportado');
             $table->datetime('fReporte');
             $table->string('proceso');
-            $table->string('nCproceso');
+            $table->foreignId('nCproceso')->constrained;
             $table->string('nCdescripcion');
             $table->string('nCacciones');
             $table->string('accion');

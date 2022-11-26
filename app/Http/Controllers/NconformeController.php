@@ -4,23 +4,21 @@ namespace App\Http\Controllers;
 use Mail;
 use App\Models\Tipo;
 use App\Models\User;
+use App\Models\Files;
 use App\Models\Ventas;
 use App\Models\Compras;
 use App\Models\Estados;
+use App\Models\NConforme;
 use App\Models\Ubicacion;
 use App\Models\Fracciones;
-use App\Models\subcategorias;
-use App\Models\NConforme;
-use App\Models\Files;
 use Illuminate\Http\Request;
+use App\Models\subcategorias;
+use App\Events\NconformeEvent;
 use Illuminate\Support\Facades\DB;
+use App\Listeners\NconformeListener;
 use App\Http\Controllers\Subcategoria;
 use Illuminate\Support\Facades\Validator;
-
-
-
-
-
+use App\Notifications\NconformeNotification;
 
 
 class NconformeController extends Controller
@@ -28,7 +26,7 @@ class NconformeController extends Controller
     public function __construct()
         {
             $this->middleware('auth');
-            $this->middleware('admin');
+            // $this->middleware('admin');
 
         }
 
@@ -169,7 +167,9 @@ class NconformeController extends Controller
 
         // return back()->with('status', '¡PQRD enviado exitosamente!');
         //Finalización para enviar al correo electronico
-
+        // User::where('id', $noC->nCproceso)->first()->notify(new NconformeNotification($noC));
+        // User::where('id', 5)->first()->notify(new NconformeNotification($noC));
+        event(new NconformeEvent($noC));
         $request->session()->flash('alert-success', 'Producto registrado con exito!');
         return redirect()->route('NConformes.lista');
     }
@@ -327,5 +327,22 @@ class NconformeController extends Controller
         $files = Files::find($id);
         $pathtoFile = public_path().'/'.'files/biblioteca'.'/'.$files->ruta;
         return response()->download($pathtoFile);
+    }
+
+    public function index(){
+        $Nconformenotificacion = auth()->user()->unreadNotifications;
+
+        return view('NConformes.notificacion',[
+            'Nconformenotificacion' => $Nconformenotificacion,
+        ]);
+    }
+
+    public function markNotification(Request $request)
+    {
+        auth()->user()->unreadNotifications
+                ->when($request->input('id'), function($query) use ($request){
+                    return $query->where('id', $request->input('id'));
+                })->markAsRead();
+        return response()->noContent();
     }
 }

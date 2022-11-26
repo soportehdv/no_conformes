@@ -24,4 +24,7 @@ class Nconforme extends Model
         'status'
 
     ];
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
 }

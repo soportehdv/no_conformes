@@ -23,6 +23,7 @@ class UserController extends Controller
     public function getUser(Request $request)
     {
             $user= User::all();
+            // dd(User::all());
 
             return view('user/lista', [
                 'users' => $user,

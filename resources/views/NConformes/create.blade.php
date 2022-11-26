@@ -51,10 +51,10 @@
                                 <label for="">Proceso : </label>
                                 <select class="form-control" name="proceso" id="proceso" required>
                                     <option value="">Seleciona un proceso</option>
-                                    @foreach ($subProceso as $sp)
-                                        @if ($loop->index != 0)
-                                            <option value="{{ $sp->id }}">
-                                                {{ $sp->cargo }}
+                                    @foreach ($subProceso as $us)
+                                        @if (Auth::user()->id == $us->id)
+                                            <option value="{{ $us->id }}">
+                                                {{ $us->cargo }}
                                             </option>
                                         @endif
                                     @endforeach

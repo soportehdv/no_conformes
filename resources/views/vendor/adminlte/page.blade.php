@@ -70,5 +70,6 @@
 @section('adminlte_js')
     @stack('js')
     @yield('js')
+    @yield('scripts')
     @yield('jsDataTable')
 @stop
