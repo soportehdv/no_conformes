@@ -35,7 +35,7 @@ class NconformeController extends Controller
             $files      = Files::all();
             $NConformes = NConforme::join('users', 'users.id', '=', 'NConformes.proceso')
                 ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
-                ->select('users.cargo as Aservicio', 'user.cargo as servicio', 'NConformes.*')
+                ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformes.*')
                 ->get();
             // dd($NConformes);
             return view('NConformes/lista', [
@@ -43,6 +43,19 @@ class NconformeController extends Controller
                 'files'      => $files,
             ]);
     }
+    public function enviadosConformes(Request $request){
+            $files      = Files::all();
+            $NConformes = NConforme::join('users', 'users.id', '=', 'NConformes.proceso')
+                ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
+                ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformes.*')
+                ->get();
+            // dd($NConformes);
+            return view('NConformes/enviados', [
+                'NConformes' => $NConformes,
+                'files'      => $files,
+            ]);
+    }
+
     public function createN()
     {
         $subProceso = user::all();
@@ -172,6 +185,27 @@ class NconformeController extends Controller
         event(new NconformeEvent($noC));
         $request->session()->flash('alert-success', 'Producto registrado con exito!');
         return redirect()->route('NConformes.lista');
+    }
+
+    public function vista($id)
+    {
+
+        $NConforme = NConforme::where('id', $id)->first();
+        $estado = Estados::all();
+        $user = User::all();
+        $user2 = User::all();
+
+
+        // $fracciones = Fracciones::all();
+
+        return view('NConformes/vista', [
+            'NConforme' => $NConforme,
+            'estado' => $estado,
+            'user' => $user,
+            'user2' => $user2,
+
+            // 'fracciones' => $fracciones
+        ]);
     }
 
     public function update($id)
@@ -345,4 +379,50 @@ class NconformeController extends Controller
                 })->markAsRead();
         return response()->noContent();
     }
+
+    public function createT($user, $NConforme)
+    {
+        $user = user::all();
+        $NConformes = NConforme::all();
+
+
+        return view('NConformes.tramite', [
+            'user'       => $user,
+            'NConformes' => $NConformes
+        ]);
+    }
+
+    public function createTramite(Request $request)
+    {
+
+        //validamos los datos
+        $validate = request()->validate( [
+            'name'      => 'required',
+            'cargo'     => 'required',
+            'email'     => 'required',
+            'rol'       => 'required',
+            'password'  => ['required','min:6','confirmed'],
+        ],[
+            'name.required'      => 'El campo nombre es obligatorio',
+            'cargo.required'      => 'El campo cargo es obligatorio',
+            'email.required'      => 'El campo correo es obligatorio',
+            'rol.required'      => 'El campo rol es obligatorio',
+            'password.required'  => 'El campo contraseña es obligatorio',
+            'password.min'  => 'La contraseña debe tener al menos 6 caracteres',
+            'password.confirmed'  => 'Las contraseñas no coinciden',
+        ]);
+
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->cargo = $request->input('cargo');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        $user->rol = $request->input('rol');
+        $user->save();
+        $request->session()->flash('alert-success', 'Usuario registrado con exito!');
+
+
+        return redirect()->route('user.lista');
+    }
+
 }

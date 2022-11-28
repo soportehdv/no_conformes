@@ -1,10 +1,10 @@
 @extends('adminlte::page')
-@section('title', 'No Conformes')
+@section('title', 'No Conformes Recibidos')
 
 @section('content_header')
     <div class="card" style="height:4em;">
         <div class="card-header">
-            <h2>No Conformes</h2>
+            <h2>No Conformes Recibidos</h2>
         </div>
 
     </div>
@@ -46,7 +46,7 @@
         </thead>
         <tbody>
             @foreach ($NConformes as $nC)
-                @if ($nC->nCproceso == auth()->user()->id && auth()->user()->rol != 'admin')
+                @if ($nC->proceso == auth()->user()->id)
                     <tr>
                         <th>{{ $nC->id }}</th>
                         <td>{{ $nC->fReporte }}</td>
@@ -54,29 +54,9 @@
                         <td>{{ $nC->servicio }}</td>
                         <td>{{ $nC->status }}</td>
                         <td><a href="{{ route('NConformes.update.vista', $nC->id) }}"
-                                class="btn btn-success btn-sm mb-2" title="Editar"><i class="fas fa-edit"></i></a>
-                            <a href="{{ route('tramite.create') }}" class="btn btn-primary btn-sm mb-2" title="Tramitar"><i
-                                    class="fa fa-briefcase"></i></a>
+                                class="btn btn-success btn-sm mb-2"><i class="fas fa-edit"></i></a>
                             <a data-toggle="modal" data-target="#modal-show-{{ $nC->id }}"
-                                class="btn btn-warning btn-sm mb-2" title="Ver">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {{-- admin --}}
-                @elseif (auth()->user()->rol == 'admin')
-                    <tr>
-                        <th>{{ $nC->id }}</th>
-                        <td>{{ $nC->fReporte }}</td>
-                        <td>{{ $nC->Aservicio }}</td>
-                        <td>{{ $nC->servicio }}</td>
-                        <td>{{ $nC->status }}</td>
-                        <td><a href="{{ route('NConformes.update.vista', $nC->id) }}"
-                                class="btn btn-success btn-sm mb-2" title="Editar"><i class="fas fa-edit"></i></a>
-                            <a href="{{ route('tramite.create', [$nC->proceso , $nC->id]) }}" class="btn btn-primary btn-sm mb-2" title="Tramitar"><i
-                                    class="fa fa-briefcase"></i></a>
-                            <a data-toggle="modal" data-target="#modal-show-{{ $nC->id }}"
-                                class="btn btn-warning btn-sm mb-2" title="Ver">
+                                class="btn btn-warning btn-sm mb-2">
                                 <i class="fa fa-eye"></i>
                             </a>
                         </td>

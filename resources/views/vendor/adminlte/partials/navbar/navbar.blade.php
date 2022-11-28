@@ -25,10 +25,18 @@
                     </span>
                 @endif
             </a>
+            @php
+                $hola = 0;
+            @endphp
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-header">Notificaciones no leídas</span>
+                <span class="dropdown-header"><b>Notificaciones no leídas</b></span>
                 @forelse (auth()->user()->unreadNotifications as $notification)
-                    <a href="#" class="dropdown-item">
+                    {{-- {{ dd($notification->id) }} --}}
+                    @php
+                        $hola = $notification->data['noConformeID'];
+                    @endphp
+                    <button class="dropdown-item mark-as-read btn btn-sm btn-dark" type="submit" data-id="{{ $notification->id }}"
+                        style="overflow: hidden;text-overflow: ellipsis;">
                         <i class="fas fa-envelope mr-2"></i>
                         @foreach (App\Models\User::all() as $us)
                             @if ($us->id == $notification->data['proceso'])
@@ -37,14 +45,15 @@
                         @endforeach
                         <span
                             class="float-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
-                    </a>
+                    </button>
                 @empty
                     <span class="ml-3 pull-right text-muted text-sm">Sin notificaciones por leer </span>
                 @endforelse
                 <div class="dropdown-divider"></div>
-                <span class="dropdown-header">notificaciones leídas</span>
+                <span class="dropdown-header"><b>notificaciones leídas</b></span>
                 @forelse (auth()->user()->readNotifications as $notification)
-                    <a href="#" class="dropdown-item">
+                    <a href="{{ route('NConformes.vista', $notification->data['noConformeID']) }}" class="dropdown-item"
+                        style="overflow: hidden;text-overflow: ellipsis;">
                         <i class="fas fa-users mr-2"></i>
                         @foreach (App\Models\User::all() as $us)
                             @if ($us->id == $notification->data['proceso'])
@@ -55,12 +64,13 @@
                             class="float-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
                     </a>
                 @empty
-                    <span class="float-right text-muted text-sm">Sin notificaciones leidas </span>
+                    <span class="ml-3 pull-right text-muted text-sm">Sin notificaciones leidas </span>
                 @endforelse
 
 
                 <div class="dropdown-divider"></div>
-                <a href="{{ route('markAsRead') }}" class="dropdown-item dropdown-footer">Marcar todas como leídas</a>
+                <a href="{{ route('markAsRead') }}" class="dropdown-item dropdown-footer bg-primary">Marcar todas como
+                    leídas</a>
             </div>
         </li>
     </ul>
@@ -89,3 +99,32 @@
     </ul>
 
 </nav>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+    function sendMarkRequest(id = null) {
+        return $.ajax("{{ route('markNotification') }}", {
+            method: 'POST',
+            data: {
+                _token: "{{ csrf_token() }}",
+                id
+            }
+        });
+    }
+    $(function() {
+        $('.mark-as-read').click(function() {
+            let request = sendMarkRequest($(this).data('id'));
+            var id_Nc = "<?php echo $hola; ?>";
+            request.done(() => {
+                $(this).parents('div.alert').remove();
+                window.location.href = "<?php echo URL::to('NConformes/vista/"+id_Nc+"'); ?>";
+            });
+        });
+        $('#mark-all').click(function() {
+            let request = sendMarkRequest();
+            request.done(() => {
+                $('div.alert').remove();
+                location.reload();
+            })
+        });
+    });
+</script>

@@ -73,3 +73,5 @@
     @yield('scripts')
     @yield('jsDataTable')
 @stop
+
+

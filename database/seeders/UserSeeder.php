@@ -51,9 +51,9 @@ class UserSeeder extends Seeder
             'name'      => 'Silvia Alexandra Sandoval Candela',
             'cargo'     => 'Coordinador de Calidad',
             'proceso'   => 'Gestion de Calidad',
-            'email'     => 'jhonrymat@gmail.com',
+            'email'     => 'calidad@gmail.com',
             'password'  => bcrypt('1234'),
-            'rol'       => 'servicios'
+            'rol'       => 'admin'
         ]);
         DB::table('users')->insert([
             'name'      => 'Eduardo Garcia',

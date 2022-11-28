@@ -194,7 +194,6 @@
                 var opciones = data.lista[i].name;
                 var opciones2 = data.lista[i].email;
             }
-            // console.log(opciones)
             $('#reportante').val(opciones);
             $('#correo').val(opciones2);
             $('#correoOculto').val(opciones2);
@@ -222,7 +221,6 @@
                 var opciones2 = data.lista[i].email;
 
             }
-            // console.log(opciones)
             $('#nCreportado').val(opciones);
             $('#correoR').val(opciones2);
             $('#correoOculto2').val(opciones2);

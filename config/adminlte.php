@@ -250,9 +250,16 @@ return [
             'role'        => 'admin'
         ],
         [
-            'text'        => 'No Conformes',
+            'text'        => 'No Conformes Recibidos',
             'url'         => 'NConformes/lista',
             'icon'        => 'fas fa-fw fa-share',
+            'role'        => 'servicios'
+
+        ],
+        [
+            'text'        => 'No Conformes Enviados',
+            'url'         => 'NConformes/enviados',
+            'icon'        => 'fas fa-fw fa-truck',
             'role'        => 'servicios'
 
         ],
@@ -263,13 +270,6 @@ return [
             'role'        => 'servicios'
 
         ],
-        // [
-        //     'text' => 'Proveedores',
-        //     'url'  => 'proveedor/list',
-        //     'icon' => 'fas fa-fw fa-truck',
-        //     'role'        => 'admin'
-
-        // ],
         // [
         //     'text' => 'Ubicaciones',
         //     'url'  => 'ubicacion/lista',

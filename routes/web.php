@@ -32,7 +32,9 @@ Route::get('user/list', [App\Http\Controllers\UserController::class, 'getUser'])
 
 //No conformes
 Route::get('NConformes/lista', [App\Http\Controllers\NconformeController::class, 'getNConformes'])->name('NConformes.lista');
+Route::get('NConformes/enviados', [App\Http\Controllers\NconformeController::class, 'enviadosConformes'])->name('NConformes.enviados');
 Route::get('NConformes/index', [App\Http\Controllers\NconformeController::class, 'index'])->name('NConformes.index');
+Route::get('NConformes/vista/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'vista'])->name('NConformes.vista');
 Route::get('NConformes/create', [App\Http\Controllers\NconformeController::class, 'createN'])->name('NConformes.create.vista');
 Route::post('NConformes/create', [App\Http\Controllers\NconformeController::class, 'createNoConforme'])->name('NConformes.create');
 Route::get('NConformes/update/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'update'])->name('NConformes.update.vista');
@@ -40,6 +42,10 @@ Route::post('NConformes/update/{NConformes_id}', [App\Http\Controllers\Nconforme
 
 Route::post('NConformes/subcategorias', [App\Http\Controllers\NconformeController::class, 'subcategorias']);
 Route::get('NConformes/download/{id}', [App\Http\Controllers\NconformeController::class, 'download'])->name('NConformes.download');
+
+//tramite
+Route::get('tramite/create/{usuario}/{Nconfome}', [App\Http\Controllers\NconformeController::class, 'createT'])->name('tramite.create.vista');
+Route::post('tramite/create/{usuario}/{Nconfome}', [App\Http\Controllers\NconformeController::class, 'createTramite'])->name('tramite.create');
 
 Route::get('markAsRead', function(){
     auth()->user()->unreadNotifications->markAsRead();

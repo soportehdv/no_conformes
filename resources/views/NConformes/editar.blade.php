@@ -202,7 +202,6 @@
             for (let i in data.lista) {
                 var opciones = data.lista[i].name;
             }
-            // console.log(opciones)
             $('#reportante').val(opciones);
 
         }).catch(error => console.error(error));
@@ -226,7 +225,6 @@
             for (let i in data.lista) {
                 var opciones = data.lista[i].name;
             }
-            // console.log(opciones)
             $('#nCreportado').val(opciones);
 
         }).catch(error => console.error(error));
