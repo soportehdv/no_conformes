@@ -34,6 +34,8 @@ class NconformeController extends Controller
     public function getNConformes(Request $request)
     {
             $files      = Files::all();
+            $tramite    = Tramite::all();
+            $estados    = Estados::all();
             $NConformes = NConforme::join('users', 'users.id', '=', 'NConformes.proceso')
                 ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
                 ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformes.*')
@@ -42,10 +44,14 @@ class NconformeController extends Controller
             return view('NConformes/lista', [
                 'NConformes' => $NConformes,
                 'files'      => $files,
+                'tramite'    => $tramite,
+                'estados'    => $estados,
             ]);
     }
     public function enviadosConformes(Request $request){
             $files      = Files::all();
+            $tramite    = Tramite::all();
+            $estados    = Estados::all();
             $NConformes = NConforme::join('users', 'users.id', '=', 'NConformes.proceso')
                 ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
                 ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformes.*')
@@ -54,6 +60,8 @@ class NconformeController extends Controller
             return view('NConformes/enviados', [
                 'NConformes' => $NConformes,
                 'files'      => $files,
+                'tramite'    => $tramite,
+                'estados'    => $estados,
             ]);
     }
 
@@ -63,7 +71,7 @@ class NconformeController extends Controller
 
 
         return view('NConformes/create', [
-            'subProceso' => $subProceso
+            'subProceso' => $subProceso,
         ]);
     }
 
@@ -177,7 +185,7 @@ class NconformeController extends Controller
         // User::where('id', $noC->nCproceso)->first()->notify(new NconformeNotification($noC));
         // User::where('id', 5)->first()->notify(new NconformeNotification($noC));
         event(new NconformeEvent($noC));
-        $request->session()->flash('alert-success', 'Producto registrado con exito!');
+        $request->session()->flash('alert-success', 'No conforme registrado con exito!');
         return redirect()->route('NConformes.lista');
     }
 
@@ -374,15 +382,13 @@ class NconformeController extends Controller
         return response()->noContent();
     }
 
-    public function createT($user, $NConforme)
+    public function createT($NConforme)
     {
-        $user = user::where('id', $user)->first();
         $NConforme = NConforme::where('id', $NConforme)->first();
 
 
 
         return view('NConformes.tramite', [
-            'user'       => $user,
             'NConforme' => $NConforme
         ]);
     }
@@ -399,8 +405,7 @@ class NconformeController extends Controller
         ]);
 
         $tramite = new Tramite;
-        $tramite->proceso       = $request->input('proceso');
-        $tramite->nCproceso     = $request->input('nCproceso');
+        $tramite->nConforme     = $request->input('nConforme');
         $tramite->tramite       = $request->input('tramite');
         $tramite->observacion   = $request->input('observacion');
         if($request->file != null){

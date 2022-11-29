@@ -12,8 +12,7 @@ class Tramite extends Model
     protected $table = "tramites";
 
     protected $fillable = [
-        'proceso',
-        'nCproceso',
+        'nConforme',
         'tramite',
         'observacion',
         'file',

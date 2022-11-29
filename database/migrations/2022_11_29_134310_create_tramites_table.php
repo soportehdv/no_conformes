@@ -15,8 +15,7 @@ class CreateTramitesTable extends Migration
     {
         Schema::create('tramites', function (Blueprint $table) {
             $table->id();
-            $table->integer('proceso');
-            $table->integer('nCproceso');
+            $table->integer('nConforme');
             $table->integer('tramite');
             $table->string('observacion');
             $table->integer('file');

@@ -1,10 +1,10 @@
 @extends('adminlte::page')
-@section('title', 'No Conformes Recibidos')
+@section('title', 'No Conformes Enviados')
 
 @section('content_header')
     <div class="card" style="height:4em;">
         <div class="card-header">
-            <h2>No Conformes Recibidos</h2>
+            <h2>No Conformes Enviados</h2>
         </div>
 
     </div>
@@ -53,8 +53,9 @@
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
                         <td>{{ $nC->status }}</td>
-                        <td><a href="{{ route('NConformes.update.vista', $nC->id) }}"
-                                class="btn btn-success btn-sm mb-2"><i class="fas fa-edit"></i></a>
+                        <td>
+                            {{-- <a href="{{ route('NConformes.update.vista', $nC->id) }}"
+                                class="btn btn-success btn-sm mb-2"><i class="fas fa-edit"></i></a> --}}
                             <a data-toggle="modal" data-target="#modal-show-{{ $nC->id }}"
                                 class="btn btn-warning btn-sm mb-2">
                                 <i class="fa fa-eye"></i>
@@ -127,7 +128,43 @@
                                         <h6> No sé a subido archivos para este no conforme </h6>
                                     @endif
                                 </div>
-                                {{-- ejemplo --}}
+                                {{-- tramites --}}
+                                {{-- tramites --}}
+                                <div class="card" style="width: 100%;">
+                                    <div class="card-header text-black" align="center">
+                                        <b>Tramites realizados</b>
+                                    </div>
+                                    <br>
+                                    <div id="accordion">
+                                        @forelse ($tramite as $tra)
+                                            @if ($tra->nConforme == $nC->id)
+                                                <div class="card">
+                                                    <div class="card-header btn btn-link bg-info"
+                                                        id="{{ $tra->id }}" data-toggle="collapse"
+                                                        data-target="#collapseOn{{ $loop->index }}"
+                                                        aria-expanded="true"
+                                                        aria-controls="collapseOn{{ $loop->index }}">
+                                                        <h5 class="mb-0">
+                                                            @foreach ($estados as $est)
+                                                                @if ($est->id == $tra->tramite)
+                                                                    {{ $est->estado }}
+                                                                @endif
+                                                            @endforeach
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseOn{{ $loop->index }}" class="collapse"
+                                                        aria-labelledby="{{ $tra->id }}" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            {{ $tra->observacion }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @empty
+                                            {{-- no hay nada que mostrar --}}
+                                        @endforelse
+                                    </div>
+                                </div>
 
 
                             </div>

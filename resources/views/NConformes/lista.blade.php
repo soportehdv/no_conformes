@@ -1,13 +1,26 @@
 @extends('adminlte::page')
-@section('title', 'No Conformes')
+@if (auth()->user()->rol == 'admin')
+    @section('title', 'No Conformes generales')
 
-@section('content_header')
-    <div class="card" style="height:4em;">
-        <div class="card-header">
-            <h2>No Conformes</h2>
+    @section('content_header')
+        <div class="card" style="height:4em;">
+            <div class="card-header">
+                <h2>No Conformes generales</h2>
+            </div>
+
         </div>
+    @else
+    @section('title', 'No Conformes Recibidos')
 
-    </div>
+    @section('content_header')
+        <div class="card" style="height:4em;">
+            <div class="card-header">
+                <h2>No Conformes Recibidos</h2>
+            </div>
+
+        </div>
+    @endif
+
 @section('cssDataTable')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
 @endsection
@@ -19,7 +32,8 @@
 
 
 <div class="container">
-    <a href="{{ route('NConformes.create.vista') }}" class="btn btn-primary mb-2"><i class="fas fa-plus-circle"></i> Añadir
+    <a href="{{ route('NConformes.create.vista') }}" class="btn btn-primary mb-2"><i class="fas fa-plus-circle"></i>
+        Añadir
         nuevo</a>
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
         @if (Session::has('alert-' . $msg))
@@ -53,10 +67,11 @@
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
                         <td>{{ $nC->status }}</td>
-                        <td><a href="{{ route('NConformes.update.vista', $nC->id) }}"
-                                class="btn btn-success btn-sm mb-2" title="Editar"><i class="fas fa-edit"></i></a>
-                            <a href="{{ route('tramite.create', [$nC->proceso , $nC->id]) }}" class="btn btn-primary btn-sm mb-2" title="Tramitar"><i
-                                    class="fa fa-briefcase"></i></a>
+                        <td>
+                            {{-- <a href="{{ route('NConformes.update.vista', $nC->id) }}"
+                                class="btn btn-success btn-sm mb-2" title="Editar"><i class="fas fa-edit"></i></a> --}}
+                            <a href="{{ route('tramite.create', $nC->id) }}" class="btn btn-primary btn-sm mb-2"
+                                title="Tramitar"><i class="fa fa-briefcase"></i></a>
                             <a data-toggle="modal" data-target="#modal-show-{{ $nC->id }}"
                                 class="btn btn-warning btn-sm mb-2" title="Ver">
                                 <i class="fa fa-eye"></i>
@@ -71,10 +86,11 @@
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
                         <td>{{ $nC->status }}</td>
-                        <td><a href="{{ route('NConformes.update.vista', $nC->id) }}"
+                        <td>
+                            <a href="{{ route('NConformes.update.vista', $nC->id) }}"
                                 class="btn btn-success btn-sm mb-2" title="Editar"><i class="fas fa-edit"></i></a>
-                            <a href="{{ route('tramite.create', [$nC->proceso , $nC->id]) }}" class="btn btn-primary btn-sm mb-2" title="Tramitar"><i
-                                    class="fa fa-briefcase"></i></a>
+                            <a href="{{ route('tramite.create', $nC->id) }}" class="btn btn-primary btn-sm mb-2"
+                                title="Tramitar"><i class="fa fa-briefcase"></i></a>
                             <a data-toggle="modal" data-target="#modal-show-{{ $nC->id }}"
                                 class="btn btn-warning btn-sm mb-2" title="Ver">
                                 <i class="fa fa-eye"></i>
@@ -147,9 +163,42 @@
                                         <h6> No sé a subido archivos para este no conforme </h6>
                                     @endif
                                 </div>
-                                {{-- ejemplo --}}
-
-
+                                {{-- tramites --}}
+                                <div class="card" style="width: 100%;">
+                                    <div class="card-header text-black" align="center">
+                                        <b>Tramites realizados</b>
+                                    </div>
+                                    <br>
+                                    <div id="accordion">
+                                        @forelse ($tramite as $tra)
+                                            @if ($tra->nConforme == $nC->id)
+                                                <div class="card">
+                                                    <div class="card-header btn btn-link bg-info"
+                                                        id="{{ $tra->id }}" data-toggle="collapse"
+                                                        data-target="#collapseOn{{ $loop->index }}"
+                                                        aria-expanded="true"
+                                                        aria-controls="collapseOn{{ $loop->index }}">
+                                                        <h5 class="mb-0">
+                                                            @foreach ($estados as $est)
+                                                                @if ($est->id == $tra->tramite)
+                                                                    {{ $est->estado }}
+                                                                @endif
+                                                            @endforeach
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseOn{{ $loop->index }}" class="collapse"
+                                                        aria-labelledby="{{ $tra->id }}" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            {{ $tra->observacion }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @empty
+                                            {{-- no hay nada que mostrar --}}
+                                        @endforelse
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>

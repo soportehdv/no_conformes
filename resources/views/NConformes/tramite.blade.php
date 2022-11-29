@@ -45,7 +45,7 @@
                 </select>
                 <br>
                 <div id="asignar" style="display: none;">
-                    <form action="{{ route('tramite.create', [$NConforme->proceso, $NConforme->id]) }}" method="POST"
+                    <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
@@ -77,8 +77,6 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="tramite" id="tramite" value="1">
-                                    <input type="hidden" name="proceso" id="proceso" value="{{ $NConforme->proceso }}">
-                                    <input type="hidden" name="nCproceso" id="nCproceso" value="{{ $NConforme->nCproceso }}">
                                     <input type="hidden" name="nConforme" id="nConforme" value="{{ $NConforme->id }}">
                                 </div>
                             </div>
@@ -88,7 +86,7 @@
                     </form>
                 </div>
                 <div id="responder" style="display: none;">
-                    <form action="{{ route('tramite.create', [$NConforme->proceso, $NConforme->id]) }}" method="POST"
+                    <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
@@ -120,8 +118,6 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="tramite" id="tramite" value="2">
-                                    <input type="hidden" name="proceso" id="proceso" value="{{ $NConforme->proceso }}">
-                                    <input type="hidden" name="nCproceso" id="nCproceso" value="{{ $NConforme->nCproceso }}">
                                     <input type="hidden" name="nConforme" id="nConforme" value="{{ $NConforme->id }}">
                                 </div>
                             </div>
@@ -131,7 +127,7 @@
                     </form>
                 </div>
                 <div id="derrogar" style="display: none;">
-                    <form action="{{ route('tramite.create', [$NConforme->proceso, $NConforme->id]) }}" method="POST"
+                    <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
@@ -163,8 +159,6 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="tramite" id="tramite" value="3">
-                                    <input type="hidden" name="proceso" id="proceso" value="{{ $NConforme->proceso }}">
-                                    <input type="hidden" name="nCproceso" id="nCproceso" value="{{ $NConforme->nCproceso }}">
                                     <input type="hidden" name="nConforme" id="nConforme" value="{{ $NConforme->id }}">
                                 </div>
                             </div>
@@ -174,7 +168,7 @@
                     </form>
                 </div>
                 <div id="cerrar" style="display: none;">
-                    <form action="{{ route('tramite.create', [$NConforme->proceso, $NConforme->id]) }}" method="POST"
+                    <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
@@ -206,8 +200,6 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="tramite" id="tramite" value="4">
-                                    <input type="hidden" name="proceso" id="proceso" value="{{ $NConforme->proceso }}">
-                                    <input type="hidden" name="nCproceso" id="nCproceso" value="{{ $NConforme->nCproceso }}">
                                     <input type="hidden" name="nConforme" id="nConforme" value="{{ $NConforme->id }}">
                                 </div>
                             </div>

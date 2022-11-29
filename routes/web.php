@@ -44,8 +44,8 @@ Route::post('NConformes/subcategorias', [App\Http\Controllers\NconformeControlle
 Route::get('NConformes/download/{id}', [App\Http\Controllers\NconformeController::class, 'download'])->name('NConformes.download');
 
 //tramite
-Route::get('tramite/create/{usuario}/{Nconfome}', [App\Http\Controllers\NconformeController::class, 'createT'])->name('tramite.create.vista');
-Route::post('tramite/create/{usuario}/{Nconfome}', [App\Http\Controllers\NconformeController::class, 'createTramite'])->name('tramite.create');
+Route::get('tramite/create/{Nconfome}', [App\Http\Controllers\NconformeController::class, 'createT'])->name('tramite.create.vista');
+Route::post('tramite/create/{Nconfome}', [App\Http\Controllers\NconformeController::class, 'createTramite'])->name('tramite.create');
 
 Route::get('markAsRead', function(){
     auth()->user()->unreadNotifications->markAsRead();
