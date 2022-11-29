@@ -55,7 +55,7 @@
                         <td>{{ $nC->status }}</td>
                         <td><a href="{{ route('NConformes.update.vista', $nC->id) }}"
                                 class="btn btn-success btn-sm mb-2" title="Editar"><i class="fas fa-edit"></i></a>
-                            <a href="{{ route('tramite.create') }}" class="btn btn-primary btn-sm mb-2" title="Tramitar"><i
+                            <a href="{{ route('tramite.create', [$nC->proceso , $nC->id]) }}" class="btn btn-primary btn-sm mb-2" title="Tramitar"><i
                                     class="fa fa-briefcase"></i></a>
                             <a data-toggle="modal" data-target="#modal-show-{{ $nC->id }}"
                                 class="btn btn-warning btn-sm mb-2" title="Ver">

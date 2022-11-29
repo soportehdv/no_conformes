@@ -8,6 +8,7 @@ use App\Models\Files;
 use App\Models\Ventas;
 use App\Models\Compras;
 use App\Models\Estados;
+use App\Models\Tramite;
 use App\Models\NConforme;
 use App\Models\Ubicacion;
 use App\Models\Fracciones;
@@ -121,9 +122,6 @@ class NconformeController extends Controller
             $noCon = $NConforme->last()->id;
             $file->noConforme    = $noCon;
             $file->save();
-
-
-
         }
 
 
@@ -145,12 +143,10 @@ class NconformeController extends Controller
             'accion'            =>  $request->accion,
             'file'              =>  $request->file,
             'aDescripcion'      =>  $request->aDescripcion,
-
         );
         }
         else{
         $data = array(
-
             'reportado'         =>  $request->reportado,
             'fReporte'          =>  $request->fReporte,
             'proceso'           =>  $request->proceso,
@@ -159,9 +155,7 @@ class NconformeController extends Controller
             'nCacciones'        =>  $request->nCacciones,
             'accion'            =>  $request->accion,
         );
-
         }
-
         // try {
 
 
@@ -382,47 +376,61 @@ class NconformeController extends Controller
 
     public function createT($user, $NConforme)
     {
-        $user = user::all();
-        $NConformes = NConforme::all();
+        $user = user::where('id', $user)->first();
+        $NConforme = NConforme::where('id', $NConforme)->first();
+
 
 
         return view('NConformes.tramite', [
             'user'       => $user,
-            'NConformes' => $NConformes
+            'NConforme' => $NConforme
         ]);
     }
 
     public function createTramite(Request $request)
     {
+        // dd($request->all());
 
         //validamos los datos
         $validate = request()->validate( [
-            'name'      => 'required',
-            'cargo'     => 'required',
-            'email'     => 'required',
-            'rol'       => 'required',
-            'password'  => ['required','min:6','confirmed'],
+            'observacion'      => 'required',
         ],[
-            'name.required'      => 'El campo nombre es obligatorio',
-            'cargo.required'      => 'El campo cargo es obligatorio',
-            'email.required'      => 'El campo correo es obligatorio',
-            'rol.required'      => 'El campo rol es obligatorio',
-            'password.required'  => 'El campo contraseña es obligatorio',
-            'password.min'  => 'La contraseña debe tener al menos 6 caracteres',
-            'password.confirmed'  => 'Las contraseñas no coinciden',
+            'reasignar.required'      => 'Es obligatorio escribir una observación',
         ]);
 
-        $user = new User;
-        $user->name = $request->input('name');
-        $user->cargo = $request->input('cargo');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        $user->rol = $request->input('rol');
-        $user->save();
-        $request->session()->flash('alert-success', 'Usuario registrado con exito!');
+        $tramite = new Tramite;
+        $tramite->proceso       = $request->input('proceso');
+        $tramite->nCproceso     = $request->input('nCproceso');
+        $tramite->tramite       = $request->input('tramite');
+        $tramite->observacion   = $request->input('observacion');
+        if($request->file != null){
+            $tramite->file      = 1;
+        }else{
+            $tramite->file      = 0;
+        }
+        $tramite->save();
 
+        if($request->file != null){
+            $file = new Files();
+            $file->nombre       = $request->file->getClientOriginalName();
+            $file->extension    = $request->file->getClientOriginalExtension();
+            $file->ruta         = str_replace(" ","_",date('Y-m-d').'_'.$file->nombre);
+            $tipo               = explode('/', $request->file->getClientMimeType() );
+            $file->mime         = $tipo[0];
+            $file->size         = number_format($request->file->getSize()/1024,2,',','.');
+            /*primero muevo el archivo antes de generar un registro en la bd por si se presenta fallos de permisos en la subida, no me genere
+            registros basura en la bd*/
+            $request->file->move( public_path('files/biblioteca'), $file->ruta);
+            $file->aDescripcion  = $request->input('aDescripcion');
 
-        return redirect()->route('user.lista');
+            // $NConforme = NConforme::all();
+            // $noCon = $NConforme->last()->id;
+            $file->noConforme    = $request->input('nConforme');
+            $file->save();
+        }
+
+        $request->session()->flash('alert-success', 'registrado con exito!');
+        return redirect()->route('NConformes.lista');
     }
 
 }
