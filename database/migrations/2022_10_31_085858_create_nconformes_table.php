@@ -22,7 +22,7 @@ class CreateNconformesTable extends Migration
             $table->string('nCdescripcion');
             $table->string('nCacciones');
             $table->string('accion');
-            $table->string('status')->default('registrada');
+            $table->string('status')->default('1');
             $table->integer('imagen');
             $table->timestamps();
         });

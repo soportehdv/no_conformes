@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
             'name'      => 'Eduardo Garcia',
             'cargo'     => 'Coordinador Estadistica',
             'proceso'   => 'Estadistica',
-            'email'     => 'jhonrymat@gmail.com',
+            'email'     => 'Estadistica@gmail.com',
             'password'  => bcrypt('1234'),
             'rol'       => 'servicios'
         ]);

@@ -192,19 +192,23 @@ class NconformeController extends Controller
     public function vista($id)
     {
 
-        $NConforme = NConforme::where('id', $id)->first();
-        $estado = Estados::all();
-        $user = User::all();
-        $user2 = User::all();
+        $NConforme  = NConforme::where('id', $id)->first();
+        $estado     = Estados::all();
+        $tramite    = Tramite::all();
+        $files      = Files::all();
+        $user       = User::all();
+        $user2      = User::all();
 
 
         // $fracciones = Fracciones::all();
 
         return view('NConformes/vista', [
             'NConforme' => $NConforme,
-            'estado' => $estado,
-            'user' => $user,
-            'user2' => $user2,
+            'estado'    => $estado,
+            'tramite'   => $tramite,
+            'files'     => $files,
+            'user'      => $user,
+            'user2'     => $user2,
 
             // 'fracciones' => $fracciones
         ]);
@@ -404,10 +408,18 @@ class NconformeController extends Controller
             'reasignar.required'      => 'Es obligatorio escribir una observación',
         ]);
 
+        $totalTramite  = Tramite::all();
+        if($totalTramite->last() != null){
+            $ultimoTramite = $totalTramite->last()->id + 1;
+        }else{
+            $ultimoTramite = 1;
+        }
+
         $tramite = new Tramite;
         $tramite->nConforme     = $request->input('nConforme');
         $tramite->tramite       = $request->input('tramite');
         $tramite->observacion   = $request->input('observacion');
+        $tramite->tramite_img   = $ultimoTramite;
         if($request->file != null){
             $tramite->file      = 1;
         }else{

@@ -44,11 +44,21 @@ class User extends Authenticatable
     ];
 
     public function adminlte_image(){
-        return 'https://picsum.photos/300/300';
+        $files = Files::all();
+        foreach($files as $file){
+            if($file->id == auth()->user()->image){
+                return  asset('files/biblioteca/' . $file->ruta);
+            }
+        }
     }
 
     public function adminlte_desc(){
-        return "Usuario";
+        return auth()->user()->rol;
+    }
+
+    public function adminlte_profile_url(){
+
+        return 'misDatos/';
     }
 
     public function Nconformes(){

@@ -1,5 +1,5 @@
 <li>
-    <div class="col-md-12">
+    {{-- <div class="col-md-12">
         <div class="row">
             <div class="col-md-1">
                 <a href="{{ asset('files/biblioteca/' . $file->ruta) }}"
@@ -31,55 +31,38 @@
                 <p>{{ $file->aDescripcion }}</p>
             </div>
         </div>
+    </div> --}}
+    <div class="row">
+                <div class="col-sm-6">
+                    <label
+                        for="">Archivo</label>
+                    <div
+                        style="column-gap:0px; display:grid; grid-template-columns:60px auto; grid-template-rows:auto; padding:0rem 0; width:100%">
+                        <a href="{{ asset('files/biblioteca/' . $file->ruta) }}"
+                            style="grid-column: 1 / 2; grid-row: 1 / 4;"
+                            title=""
+                            target="_blank"
+                            aria-label=""><img
+                                alt=""
+                                class="img-fluid mimethumb"
+                                src="{{ asset('img/' . 'logo-archivo.webp') }}"
+                                style="height:auto; max-width:50%"
+                                title=""> </a>
+                        <a href="{{ asset('files/biblioteca/' . $file->ruta) }}"
+                            target="_blank"><span
+                                style="font-size:12px"><span
+                                    style="font-family:Arial,Helvetica,sans-serif"><span
+                                        style="color:#000000">{{ $file->nombre }}
+                                    </span></span></span></a>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="">Descripción
+                        del
+                        archivo</label>
+                    <div>
+                        {{ $file->aDescripcion }}
+                    </div>
+                </div>
     </div>
 </li>
-{{-- <div class="col-md-6">
-        @if ($file->extension == 'doc')
-            <div class="row">
-                <div class="col-md-3">
-                    <a href="{{ asset('files/biblioteca/' . $file->ruta_edit) }}"
-                        title="{{ $file->nombre }}." target="blank">
-                        <img src="http://www.hdv.gov.co/files/biblioteca/2022-09-27_337932.png"
-                            alt="{{ $file->nombre }}." title="{{ $file->nombre }}." width="100"
-                            height="100" class="mimethumb img-fluid">
-                    </a>
-                </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <a href="{{ asset('files/biblioteca/' . $file->ruta_edit) }}"
-                            title="{{ $file->nombre }}." target="blank">{{ $file->nombre }}.</a>
-                    </div>
-                    <div class="row">
-                        <a class="descarga"
-                            href="{{ asset('documentos/download/' . $file->id) }}">{{ $file->size_edit }}
-                            KB, Descargar</a>
-                    </div>
-                </div>
-            </div>
-        @elseif($file->nombre != null)
-            <div class="row">
-                <div class="col-md-3">
-                    <a href="{{ asset('files/biblioteca/' . $file->ruta_edit) }}"
-                        title="{{ $file->nombre }}." target="blank">
-                        <img src="https://www.hdv.gov.co/files/biblioteca/2022-09-27_337958.png"
-                            alt="{{ $file->nombre }}." title="{{ $file->nombre }}." width="100"
-                            height="100" class="mimethumb img-fluid">
-                    </a>
-                </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <a href="{{ asset('files/biblioteca/' . $file->ruta_edit) }}"
-                            title="{{ $file->nombre }}." target="blank">{{ $file->nombre }}.</a>
-                    </div>
-                    <div class="row">
-                        <a class="descarga"
-                            href="{{ asset('documentos/download/' . $file->id) }}">{{ $file->size_edit }}
-                            KB, Descargar</a>
-                    </div>
-                </div>
-            </div>
-        @else
-            <br><br>
-            <h6> No sé a subido archivos editables para este documento </h6>
-        @endif
-    </div> --}}

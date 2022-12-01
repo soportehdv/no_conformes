@@ -52,7 +52,33 @@
                         <td>{{ $nC->fReporte }}</td>
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
-                        <td>{{ $nC->status }}</td>
+                        <td>
+                            @foreach ($estados as $est)
+                                @if ($est->id == $nC->status)
+                                    @switch($nC->status)
+                                        @case(1)
+                                            <span class="badge badge-pill badge-light">{{ $est->estado }}</span>
+                                        @break
+
+                                        @case(2)
+                                            <span class="badge badge-pill badge-warning">{{ $est->estado }}</span>
+                                        @break
+
+                                        @case(3)
+                                            <span class="badge badge-pill badge-primary">{{ $est->estado }}</span>
+                                        @break
+
+                                        @case(4)
+                                            <span class="badge badge-pill badge-danger">{{ $est->estado }}</span>
+                                        @break
+
+                                        @case(5)
+                                            <span class="badge badge-pill badge-success">Aceptado</span>
+                                        @break
+                                    @endswitch
+                                @endif
+                            @endforeach
+                        </td>
                         <td>
                             {{-- <a href="{{ route('NConformes.update.vista', $nC->id) }}"
                                 class="btn btn-success btn-sm mb-2"><i class="fas fa-edit"></i></a> --}}
@@ -101,11 +127,39 @@
                                         <li class="list-group-item">Requiere iniciar Acción Correptiva y/o Preventiva?:
                                             <b>{{ $nC->accion }}</b>
                                         </li>
-                                        @if ($nC->status == 'registrada')
-                                            <li class="list-group-item">Estado :
-                                                <b>{{ $nC->status }}</b>
-                                            </li>
-                                        @endif
+                                        <li class="list-group-item">Estado :
+                                            <b>
+                                                @foreach ($estados as $est)
+                                                    @if ($est->id == $nC->status)
+                                                        @switch($nC->status)
+                                                            @case(1)
+                                                                <span
+                                                                    class="badge badge-pill badge-light">{{ $est->estado }}</span>
+                                                            @break
+
+                                                            @case(2)
+                                                                <span
+                                                                    class="badge badge-pill badge-warning">{{ $est->estado }}</span>
+                                                            @break
+
+                                                            @case(3)
+                                                                <span
+                                                                    class="badge badge-pill badge-primary">{{ $est->estado }}</span>
+                                                            @break
+
+                                                            @case(4)
+                                                                <span
+                                                                    class="badge badge-pill badge-danger">{{ $est->estado }}</span>
+                                                            @break
+
+                                                            @case(5)
+                                                                <span class="badge badge-pill badge-success">Aceptado</span>
+                                                            @break
+                                                        @endswitch
+                                                    @endif
+                                                @endforeach
+                                            </b>
+                                        </li>
                                     </ul>
                                 </div>
 
@@ -147,7 +201,8 @@
                                                         <h5 class="mb-0">
                                                             @foreach ($estados as $est)
                                                                 @if ($est->id == $tra->tramite)
-                                                                    {{ $est->estado }}
+                                                                    {{ $est->estado }} <i class="fa fa-angle-down"
+                                                                        aria-hidden="true"></i>
                                                                 @endif
                                                             @endforeach
                                                         </h5>
@@ -155,7 +210,75 @@
                                                     <div id="collapseOn{{ $loop->index }}" class="collapse"
                                                         aria-labelledby="{{ $tra->id }}" data-parent="#accordion">
                                                         <div class="card-body">
-                                                            {{ $tra->observacion }}
+                                                            <nav>
+                                                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                                    <a class="nav-item nav-link active"
+                                                                        id="nav-home-tab{{ $tra->id }}"
+                                                                        data-toggle="tab"
+                                                                        href="#nav-home{{ $tra->id }}"
+                                                                        role="tab"
+                                                                        aria-controls="nav-home{{ $tra->id }}"
+                                                                        aria-selected="true">Descripción</a>
+                                                                    <a class="nav-item nav-link"
+                                                                        id="nav-profile-tab{{ $tra->id }}"
+                                                                        data-toggle="tab"
+                                                                        href="#nav-profile{{ $tra->id }}"
+                                                                        role="tab"
+                                                                        aria-controls="nav-profile{{ $tra->id }}"
+                                                                        aria-selected="false">Archivo adjunto</a>
+                                                                </div>
+                                                            </nav>
+                                                            <div class="tab-content" id="nav-tabContent">
+                                                                <div class="tab-pane fade show active"
+                                                                    id="nav-home{{ $tra->id }}" role="tabpanel"
+                                                                    aria-labelledby="nav-home-tab{{ $tra->id }}">
+                                                                    {{ $tra->observacion }}</div>
+                                                                <div class="tab-pane fade"
+                                                                    id="nav-profile{{ $tra->id }}"
+                                                                    role="tabpanel"
+                                                                    aria-labelledby="nav-profile-tab{{ $tra->id }}">
+                                                                    <div class="row">
+                                                                        @forelse ($files as $file)
+                                                                            @if ($file->id == $tra->tramite_img)
+                                                                                <div class="col-sm-6">
+                                                                                    <label
+                                                                                        for="">Archivo</label>
+                                                                                    <div
+                                                                                        style="column-gap:0px; display:grid; grid-template-columns:60px auto; grid-template-rows:auto; padding:0rem 0; width:100%">
+                                                                                        <a href="{{ asset('files/biblioteca/' . $file->ruta) }}"
+                                                                                            style="grid-column: 1 / 2; grid-row: 1 / 4;"
+                                                                                            title=""
+                                                                                            target="_blank"
+                                                                                            aria-label=""><img
+                                                                                                alt=""
+                                                                                                class="img-fluid mimethumb"
+                                                                                                src="{{ asset('img/' . 'logo-archivo.webp') }}"
+                                                                                                style="height:auto; max-width:50%"
+                                                                                                title=""> </a>
+                                                                                        <a href="{{ asset('files/biblioteca/' . $file->ruta) }}"
+                                                                                            target="_blank"><span
+                                                                                                style="font-size:12px"><span
+                                                                                                    style="font-family:Arial,Helvetica,sans-serif"><span
+                                                                                                        style="color:#000000">{{ $file->nombre }}
+                                                                                                    </span></span></span></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6">
+                                                                                    <label for="">Descripción
+                                                                                        del
+                                                                                        archivo</label>
+                                                                                    <div>
+                                                                                        {{ $file->aDescripcion }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endif
+                                                                        @empty
+                                                                            <p>No hay archivos para esta respuesta</p>
+                                                                        @endforelse
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

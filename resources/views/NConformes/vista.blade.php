@@ -66,11 +66,35 @@
                                 <li class="list-group-item">Requiere iniciar Acción Correptiva y/o Preventiva?:
                                     <b>{{ $NConforme->accion }}</b>
                                 </li>
-                                @if ($NConforme->status == 'registrada')
-                                    <li class="list-group-item">Estado :
-                                        <b>{{ $NConforme->status }}</b>
-                                    </li>
-                                @endif
+                                <li class="list-group-item">Estado :
+                                    <b>
+                                        @foreach ($estado as $est)
+                                            @if ($est->id == $NConforme->status)
+                                                @switch($NConforme->status)
+                                                    @case(1)
+                                                        <span class="badge badge-pill badge-light">{{ $est->estado }}</span>
+                                                    @break
+
+                                                    @case(2)
+                                                        <span class="badge badge-pill badge-warning">{{ $est->estado }}</span>
+                                                    @break
+
+                                                    @case(3)
+                                                        <span class="badge badge-pill badge-primary">{{ $est->estado }}</span>
+                                                    @break
+
+                                                    @case(4)
+                                                        <span class="badge badge-pill badge-danger">{{ $est->estado }}</span>
+                                                    @break
+
+                                                    @case(5)
+                                                        <span class="badge badge-pill badge-success">Aceptado</span>
+                                                    @break
+                                                @endswitch
+                                            @endif
+                                        @endforeach
+                                    </b>
+                                </li>
                             </ul>
                         </div>
 
@@ -79,7 +103,7 @@
                                 Archivos adjuntos
                             </div>
                             @if ($NConforme->imagen == 1)
-                                @foreach ($files as $file)
+                                @forelse ($files as $file)
                                     @if ($file->noConforme == $NConforme->id)
                                         <ul>
                                             {{-- <li>{{ $file->aDescripcion }}</li> --}}
@@ -87,21 +111,116 @@
                                             @include('NConformes.IFimagenes')
                                         </ul>
                                     @endif
-                                @endforeach
+                                @empty
+                                    <p>No hay archivos para esta respuesta</p>
+                                @endforelse
                             @else
                                 <br><br>
                                 <h6> No sé a subido archivos para este no conforme </h6>
                             @endif
                         </div>
                         {{-- ejemplo --}}
+                        <div class="card" style="width: 100%;">
+                            <div class="card-header text-black" align="center">
+                                <b>Tramites realizados</b>
+                            </div>
+                            <br>
+                            <div id="accordion">
+                                @forelse ($tramite as $tra)
+                                    @if ($tra->nConforme == $NConforme->id)
+                                        <div class="card">
+                                            <div class="card-header btn btn-link bg-info" id="{{ $tra->id }}"
+                                                data-toggle="collapse" data-target="#collapseOn{{ $loop->index }}"
+                                                aria-expanded="true" aria-controls="collapseOn{{ $loop->index }}">
+                                                <h5 class="mb-0">
+                                                    @foreach ($estado as $est)
+                                                        @if ($est->id == $tra->tramite)
+                                                            {{ $est->estado }} <i class="fa fa-angle-down"
+                                                                aria-hidden="true"></i>
+                                                        @endif
+                                                    @endforeach
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOn{{ $loop->index }}" class="collapse"
+                                                aria-labelledby="{{ $tra->id }}" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <nav>
+                                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                            <a class="nav-item nav-link active"
+                                                                id="nav-home-tab{{ $tra->id }}" data-toggle="tab"
+                                                                href="#nav-home{{ $tra->id }}" role="tab"
+                                                                aria-controls="nav-home{{ $tra->id }}"
+                                                                aria-selected="true">Descripción</a>
+                                                            <a class="nav-item nav-link"
+                                                                id="nav-profile-tab{{ $tra->id }}" data-toggle="tab"
+                                                                href="#nav-profile{{ $tra->id }}" role="tab"
+                                                                aria-controls="nav-profile{{ $tra->id }}"
+                                                                aria-selected="false">Archivo adjunto</a>
+                                                        </div>
+                                                    </nav>
+                                                    <div class="tab-content" id="nav-tabContent">
+                                                        <div class="tab-pane fade show active"
+                                                            id="nav-home{{ $tra->id }}" role="tabpanel"
+                                                            aria-labelledby="nav-home-tab{{ $tra->id }}">
+                                                            {{ $tra->observacion }}</div>
+                                                        <div class="tab-pane fade" id="nav-profile{{ $tra->id }}"
+                                                            role="tabpanel"
+                                                            aria-labelledby="nav-profile-tab{{ $tra->id }}">
+                                                            <div class="row">
+                                                                @forelse ($files as $file)
+                                                                    @if ($file->id == $tra->tramite_img)
+                                                                        <div class="col-sm-6">
+                                                                            <label for="">Archivo</label>
+                                                                            <div
+                                                                                style="column-gap:0px; display:grid; grid-template-columns:60px auto; grid-template-rows:auto; padding:0rem 0; width:100%">
+                                                                                <a href="{{ asset('files/biblioteca/' . $file->ruta) }}"
+                                                                                    style="grid-column: 1 / 2; grid-row: 1 / 4;"
+                                                                                    title="" target="_blank"
+                                                                                    aria-label=""><img alt=""
+                                                                                        class="img-fluid mimethumb"
+                                                                                        src="{{ asset('img/' . 'logo-archivo.webp') }}"
+                                                                                        style="height:auto; max-width:50%"
+                                                                                        title=""> </a>
+                                                                                <a href="{{ asset('files/biblioteca/' . $file->ruta) }}"
+                                                                                    target="_blank"><span
+                                                                                        style="font-size:12px"><span
+                                                                                            style="font-family:Arial,Helvetica,sans-serif"><span
+                                                                                                style="color:#000000">{{ $file->nombre }}
+                                                                                            </span></span></span></a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <label for="">Descripción
+                                                                                del
+                                                                                archivo</label>
+                                                                            <div>
+                                                                                {{ $file->aDescripcion }}
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                @empty
+                                                                    <p>No hay archivos para esta respuesta</p>
+                                                                @endforelse
 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @empty
+                                    {{-- no hay nada que mostrar --}}
+                                @endforelse
+                            </div>
+                        </div>
 
                     </div>
 
                 </div>
             </div>
 
-            <a class="btn btn-danger float-left" href="{{ URL::previous() }}">Atras</a>
+            <a class="btn btn-danger float-left" href="{{ url('NConformes/lista') }}">Atras</a>
             <br>
             <br>
         </div>

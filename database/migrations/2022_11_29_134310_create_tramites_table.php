@@ -17,8 +17,9 @@ class CreateTramitesTable extends Migration
             $table->id();
             $table->integer('nConforme');
             $table->integer('tramite');
-            $table->string('observacion');
+            $table->integer('tramite_img');
             $table->integer('file');
+            $table->string('observacion');
             $table->timestamps();
         });
     }

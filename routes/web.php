@@ -24,11 +24,15 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Auth::routes();
 
 //USERS
-Route::get('user/create', [App\Http\Controllers\UserController::class, 'create'])->name('user.create.vista');
-Route::post('user/create', [App\Http\Controllers\UserController::class, 'createUser'])->name('user.create');
-Route::get('user/update/{user_id}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update.vista');
-Route::post('user/update/{user_id}', [App\Http\Controllers\UserController::class, 'updateUser'])->name('user.update');
-Route::get('user/list', [App\Http\Controllers\UserController::class, 'getUser'])->name('user.lista');
+Route::get('user/create', [App\Http\Controllers\UserController::class, 'create'])->name('user.create.vista')->middleware('admin');
+Route::post('user/create', [App\Http\Controllers\UserController::class, 'createUser'])->name('user.create')->middleware('admin');
+Route::get('user/update/{user_id}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update.vista')->middleware('admin');
+Route::post('user/update/{user_id}', [App\Http\Controllers\UserController::class, 'updateUser'])->name('user.update')->middleware('admin');
+Route::get('user/list', [App\Http\Controllers\UserController::class, 'getUser'])->name('user.lista')->middleware('admin');
+
+// editar perfir
+Route::get('misDatos', [App\Http\Controllers\UserController::class, 'misDatos'])->name('misDatos')->middleware('auth');
+Route::post('misDatos/actualizar', [App\Http\Controllers\UserController::class, 'misDatosUsuario'])->name('misDatosUsuario');
 
 //No conformes
 Route::get('NConformes/lista', [App\Http\Controllers\NconformeController::class, 'getNConformes'])->name('NConformes.lista');

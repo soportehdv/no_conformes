@@ -15,19 +15,23 @@ class EstadoSeeder extends Seeder
     public function run()
     {
         DB::table('estados')->insert([
-            'estado' => 'asignado'
+            'estado' => 'Registrado'
         ]);
 
         DB::table('estados')->insert([
-            'estado' => 'Respuesta'
+            'estado' => 'Asignado'
         ]);
 
         DB::table('estados')->insert([
-            'estado' => 'derrogardo'
+            'estado' => 'Respondido'
         ]);
 
         DB::table('estados')->insert([
-            'estado' => 'cerrado'
+            'estado' => 'Derrogardo'
+        ]);
+
+        DB::table('estados')->insert([
+            'estado' => 'Cerrado'
         ]);
     }
 }
