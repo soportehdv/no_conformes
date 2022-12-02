@@ -8,6 +8,7 @@ use App\Models\Files;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -131,16 +132,41 @@ class UserController extends Controller
     }
 
     public function misDatosUsuario(Request $request){
-
         $user           = Auth::user();
         $userId         = $user->id;
         $userEmail      = $user->email;
         $userPassword   = $user->password;
+        // dd($request->all());
+        if($request->file != null){
+            $file = new Files();
+            $file->nombre       = $request->file->getClientOriginalName();
+            $file->extension    = $request->file->getClientOriginalExtension();
+            $file->ruta         = str_replace(" ","_",date('Y-m-d').'_'.$file->nombre);
+            $tipo               = explode('/', $request->file->getClientMimeType() );
+            $file->mime         = $tipo[0];
+            $file->size         = number_format($request->file->getSize()/1024,2,',','.');
+            /*primero muevo el archivo antes de generar un registro en la bd por si se presenta fallos de permisos en la subida, no me genere
+            registros basura en la bd*/
+            $request->file->move( public_path('files/biblioteca'), $file->ruta);
+            $file->aDescripcion  = "";
+
+            // $NConforme = NConforme::all();
+            // $noCon = $NConforme->last()->id;
+            $file->noConforme    = 0;
+            $file->save();
+            // guardamos dato en user
+            $fil    = Files::all();
+            $fi     = $fil->last()->id;
+            $users  = User::all();
+            $user->image = $fi;
+            $user->save();
+
+        }
 
         if($request->password_actual !=""){
             $NuewPass   = $request->password;
             $confirPass = $request->confirm_password;
-            $name       = $request->name;
+            $userEmail      = $user->email;
 
                 //Verifico si la clave actual es igual a la clave del usuario en session
                 if (Hash::check($request->password_actual, $userPassword)) {
@@ -152,9 +178,9 @@ class UserController extends Controller
                             $user->password = Hash::make($request->password);
                             $sqlBD = DB::table('users')
                                   ->where('id', $user->id)
-                                  ->update(['password' => $user->password], ['name' => $user->name]);
-
+                                  ->update(['password' => $user->password], ['email' => $user->email]);
                             return redirect()->back()->with('updateClave','La clave fue cambiada correctamente.');
+
                         }else{
                             return redirect()->back()->with('clavemenor','Recuerde la clave debe ser mayor a 6 digitos.');
                         }
@@ -168,7 +194,8 @@ class UserController extends Controller
             }
 
 
-        }else{
+        }
+        elseif($request->email != $userEmail){
             $name       = $request->name;
             $sqlBDUpdateName = DB::table('users')
                             ->where('id', $user->id)
@@ -176,5 +203,6 @@ class UserController extends Controller
             return redirect()->back()->with('name','El nombre fue cambiado correctamente.');;
 
         }
+
     }
 }
