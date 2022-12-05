@@ -444,6 +444,8 @@ class NconformeController extends Controller
             // $noCon = $NConforme->last()->id;
             $file->noConforme    = $request->input('nConforme');
             $file->save();
+        event(new NconformeEvent($tramite));
+
         }
 
         $request->session()->flash('alert-success', 'registrado con exito!');
