@@ -20,7 +20,6 @@ class NconformeNotification extends Notification
      */
     public function __construct(Nconforme $nConforme)
     {
-        dd($request->all());
         $this->nConforme = $nConforme;
     }
 

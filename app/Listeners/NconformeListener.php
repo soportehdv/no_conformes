@@ -28,7 +28,14 @@ class NconformeListener
      */
     public function handle($event)
     {
-        Notification::send(User::where('id', $event->nConforme->nCproceso)->first(), new NconformeNotification($event->nConforme));
-        Notification::send(User::where('id', 5)->first(), new NconformeNotification($event->nConforme));
+        if($event->nConforme->nCproceso != 5)
+        {
+            Notification::send(User::where('id', $event->nConforme->nCproceso)->first(), new NconformeNotification($event->nConforme));
+            Notification::send(User::where('id', 5)->first(), new NconformeNotification($event->nConforme));
+        }
+        else
+        {
+            Notification::send(User::where('id', $event->nConforme->nCproceso)->first(), new NconformeNotification($event->nConforme));
+        }
     }
 }
