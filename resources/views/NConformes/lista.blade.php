@@ -67,7 +67,7 @@
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
                         <td>
-                            @foreach ($estados as $est)
+                            @foreach ($estado as $est)
                                 @if ($est->id == $nC->status)
                                     @switch($nC->status)
                                         @case(1)
@@ -112,7 +112,7 @@
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
                         <td>
-                            @foreach ($estados as $est)
+                            @foreach ($estado as $est)
                                 @if ($est->id == $nC->status)
                                     @switch($nC->status)
                                         @case(1)
@@ -190,7 +190,7 @@
                                         </li>
                                         <li class="list-group-item">Estado :
                                             <b>
-                                                @foreach ($estados as $est)
+                                                @foreach ($estado as $est)
                                                     @if ($est->id == $nC->status)
                                                         @switch($nC->status)
                                                             @case(1)
@@ -259,7 +259,7 @@
                                                         aria-expanded="true"
                                                         aria-controls="collapseOn{{ $loop->index }}">
                                                         <h5 class="mb-0">
-                                                            @foreach ($estados as $est)
+                                                            @foreach ($estado as $est)
                                                                 @if ($est->id == $tra->tramite)
                                                                     {{ $est->estado }} <i class="fa fa-angle-down"
                                                                         aria-hidden="true"></i>
@@ -271,6 +271,18 @@
                                                         aria-labelledby="{{ $tra->id }}"
                                                         data-parent="#accordion">
                                                         <div class="card-body">
+                                                            @foreach ($user as $u)
+                                                                @if ($u->id == $tra->nCproceso)
+                                                                    @foreach ($estado as $est)
+                                                                        @if ($est->id == $tra->tramite)
+                                                                            <b>{{ $u->name }} a
+                                                                                {{ $est->estado }}</b>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endif
+                                                            @endforeach
+                                                            <br>
+                                                            <br>
                                                             <nav>
                                                                 <div class="nav nav-tabs" id="nav-tab"
                                                                     role="tablist">

@@ -57,6 +57,8 @@ Route::get('markAsRead', function(){
 })->name('markAsRead');
 Route::post('/mark-as-read', [App\Http\Controllers\NconformeController::class, 'markNotification'])->name('markNotification');
 
+Route::post('/mark-as-read2', [App\Http\Controllers\NconformeController::class, 'markNotification2'])->name('markNotification2');
+
 Route::get('targets/target', [App\Http\Controllers\TargetController::class, 'gettarget'])->name('listatarget.target');
 
 
