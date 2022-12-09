@@ -403,8 +403,6 @@ class NconformeController extends Controller
     {
         $NConforme = NConforme::where('id', $NConforme)->first();
 
-
-
         return view('NConformes.tramite', [
             'NConforme' => $NConforme
         ]);

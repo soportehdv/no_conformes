@@ -185,20 +185,32 @@
                         let request = sendMarkRequest($(this).data('id'));
                         var noC = document.getElementById("Nc");
                         var noCid = noC.dataset.nocon;
+                        console.log(noCid);
                         request.done(() => {
                             $(this).parents('div.alert').remove();
                             window.location.href = "<?php echo URL::to('NConformes/vista/"+noCid+"'); ?>";
                         });
                     });
+                    $('#mark-all').click(function() {
+                        let request = sendMarkRequest();
+                        request.done(() => {
+                            $('div.alert').remove();
+                            location.reload();
+                        })
+                    });
+                });
+
+                $(function(){
                     $('.mark-as-read2').click(function() {
                         let request = sendMarkRequest($(this).data('id'));
                         var tr = document.getElementById("tramite");
                         // console.log(tr);
                         var tramId = tr.dataset.tram;
-                        // console.log(tramId);
+                        console.log(tramId);
                         request.done(() => {
                             $(this).parents('div.alert').remove();
                             window.location.href = "<?php echo URL::to('NConformes/vista/"+tramId+"'); ?>";
+                            console.log("mark.as.read2")
                         });
                     });
                     $('#mark-all').click(function() {

@@ -37,183 +37,61 @@
                     <n>Seleccioné el tipo de Tramite para continuar:</n>
                 </p>
                 <select class="form-control" id="status" name="status" onChange="mostrar(this.value);">
-                    <option value="ninguno">Seleccione un tramite</option>
-                    <option value="asignar">Reasignar no conforme</option>
-                    <option value="responder">Responder no conforme</option>
-                    <option value="derrogar">Derrogar no conforme</option>
-                    <option value="cerrar">Cerrar no conforme</option>
+                    @switch($NConforme->status)
+                        @case(1)
+                            <option value="ninguno">Seleccione un tramite</option>
+                            <option value="asignar">Reasignar no conforme</option>
+                            <option value="responder">Responder no conforme</option>
+                            <option value="derrogar">Derrogar no conforme</option>
+                            <option value="cerrar">Cerrar no conforme</option>
+                        @break
+
+                        @case(2)
+                            <option value="ninguno">Seleccione un tramite</option>
+                            <option value="asignar">Reasignar no conforme</option>
+                            <option value="responder">Responder no conforme</option>
+                            <option value="derrogar">Derrogar no conforme</option>
+                            <option value="cerrar">Cerrar no conforme</option>
+                        @break
+
+                        @case(3)
+                            <option value="ninguno">Seleccione un tramite</option>
+                            <option value="asignar">Reasignar no conforme</option>
+                            <option value="responder">Responder no conforme</option>
+                            <option value="derrogar">Derrogar no conforme</option>
+                            <option value="cerrar">Cerrar no conforme</option>
+                        @break
+
+                        @case(4)
+                            <option value="errorDerrogado">Seleccione un tramite</option>
+                            <option value="errorDerrogado">Reasignar no conforme</option>
+                            <option value="errorDerrogado">Responder no conforme</option>
+                            <option value="errorDerrogado">Derrogar no conforme</option>
+                            <option value="errorDerrogado">Cerrar no conforme</option>
+                        @break
+
+                        @case(5)
+                            <option value="ninguno">Seleccione un tramite</option>
+                            <option value="asignar">Reasignar no conforme</option>
+                            <option value="responder">Responder no conforme</option>
+                            <option value="derrogar">Derrogar no conforme</option>
+                            <option value="cerrar">Cerrar no conforme</option>
+                        @break
+
+                        @default
+                    @endswitch
+
                 </select>
                 <br>
-                <div id="asignar" style="display: none;">
-                    <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <div class="card">
-                                <div class="card-header bg-primary">
-                                    Reasignar no conformidad
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <br>
-                                        <div class="col-sm-12">
-                                            <label class="form_label required" for="">¿Por qué lo quiere reasignar? : </label>
-                                            <textarea type="text" class="form-control upper" name="observacion" id="observacion" value=""
-                                                placeholder="observaciones" cols="100" rows="5" required></textarea>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-sm-6 center_margin">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">¿Desea adjuntar archivos?</label>
-                                                <input type="file" class="form-control" name="file" id="file">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 center_margin">
-                                            <label class="form_label required" for="">Descrpción del archivo : </label>
-                                            <textarea type="text" class="form-control upper" name="aDescripcion" id="aDescripcion" value=""
-                                                placeholder="observaciones" cols="100" rows="5" required></textarea>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="tramite" id="tramite" value="2">
-                                    <input type="hidden" name="nConforme" id="nConforme" value="{{ $NConforme->id }}">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </form>
-                </div>
-                <div id="responder" style="display: none;">
-                    <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <div class="card">
-                                <div class="card-header bg-primary">
-                                    Responder no conformidad
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <br>
-                                        <div class="col-sm-12">
-                                            <label class="form_label required" for="">Respuesta : </label>
-                                            <textarea type="text" class="form-control upper" name="observacion" id="observacion" value=""
-                                                placeholder="observaciones" cols="100" rows="5" required></textarea>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-sm-6 center_margin">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">¿Desea adjuntar archivos?</label>
-                                                <input type="file" class="form-control" name="file" id="file">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 center_margin">
-                                            <label class="form_label required" for="">Descripción del archivo : </label>
-                                            <textarea type="text" class="form-control upper" name="aDescripcion" id="aDescripcion" value=""
-                                                placeholder="observaciones" cols="100" rows="5" required></textarea>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="tramite" id="tramite" value="3">
-                                    <input type="hidden" name="nConforme" id="nConforme" value="{{ $NConforme->id }}">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </form>
-                </div>
-                <div id="derrogar" style="display: none;">
-                    <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <div class="card">
-                                <div class="card-header bg-primary">
-                                    Derrogar no conformidad
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <br>
-                                        <div class="col-sm-12">
-                                            <label class="form_label required" for="">¿Por qué lo quiere derrogar? : </label>
-                                            <textarea type="text" class="form-control upper" name="observacion" id="observacion" value=""
-                                                placeholder="observaciones" cols="100" rows="5" required></textarea>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-sm-6 center_margin">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">¿Desea adjuntar archivos?</label>
-                                                <input type="file" class="form-control" name="file" id="file">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 center_margin">
-                                            <label class="form_label required" for="">Descrpción del archivo : </label>
-                                            <textarea type="text" class="form-control upper" name="aDescripcion" id="aDescripcion" value=""
-                                                placeholder="observaciones" cols="100" rows="5" required></textarea>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="tramite" id="tramite" value="4">
-                                    <input type="hidden" name="nConforme" id="nConforme" value="{{ $NConforme->id }}">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </form>
-                </div>
-                <div id="cerrar" style="display: none;">
-                    <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <div class="card">
-                                <div class="card-header bg-primary">
-                                    Finalizar no conformidad
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <br>
-                                        <div class="col-sm-12">
-                                            <label class="form_label required" for="">¿Por qué se va a finalizar la no conformidad? : </label>
-                                            <textarea type="text" class="form-control upper" name="observacion" id="observacion" value=""
-                                                placeholder="observaciones" cols="100" rows="5" required></textarea>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-sm-6 center_margin">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">¿Desea adjuntar archivos?</label>
-                                                <input type="file" class="form-control" name="file" id="file">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 center_margin">
-                                            <label class="form_label required" for="">Descrpción del archivo : </label>
-                                            <textarea type="text" class="form-control upper" name="aDescripcion" id="aDescripcion" value=""
-                                                placeholder="observaciones" cols="100" rows="5" required></textarea>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="tramite" id="tramite" value="5">
-                                    <input type="hidden" name="nConforme" id="nConforme" value="{{ $NConforme->id }}">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </form>
-                </div>
-                <div id="ninguno" style="display: none;">
-                    <div class="panel panel-primary" align="justify">
-                        <div class="panel-heading">No se ha seleccionado ningun tramite</div>
-                        <div class="panel-body">HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO.</div>
-                    </div>
-                </div>
+                @include('TiposTramites/asignar')
+
+                @include('TiposTramites/responder')
+
+                @include('TiposTramites/derrogar')
+
+                @include('TiposTramites/cerrar')
+
+                @include('TiposTramites/errorDerrogado')
             </div>
         </div>
     </div>
@@ -257,6 +135,9 @@
                 $("#derrogar").hide();
                 $("#cerrar").hide();
                 $("#ninguno").show();
+            }
+            if (id == "errorDerrogado") {
+                $("#errorDerrogado").show();
             }
 
         }
