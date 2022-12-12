@@ -75,7 +75,7 @@ class UserSeeder extends Seeder
             'name'      => 'Alex Warff Mercado',
             'cargo'     => 'Subgerente Asistencial',
             'proceso'   => 'Gestión Asistencial',
-            'email'     => 'jhonrymat@gmail.com',
+            'email'     => 'jhonrymat20@gmail.com',
             'password'  => bcrypt('1234'),
             'rol'       => 'servicios'
         ]);

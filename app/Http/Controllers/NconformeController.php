@@ -56,6 +56,8 @@ class NconformeController extends Controller
             $files      = Files::all();
             $tramite    = Tramite::all();
             $estados    = Estados::all();
+            $user       = User::all();
+
             $NConformes = NConforme::join('users', 'users.id', '=', 'NConformes.proceso')
                 ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
                 ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformes.*')
@@ -66,6 +68,8 @@ class NconformeController extends Controller
                 'files'      => $files,
                 'tramite'    => $tramite,
                 'estados'    => $estados,
+                'user'       => $user,
+
             ]);
     }
 
@@ -110,6 +114,7 @@ class NconformeController extends Controller
         $noC->nCdescripcion = $request->input('nCdescripcion');
         $noC->nCacciones    = $request->input('nCacciones');
         $noC->accion        = $request->input('accion');
+
         if($request->file != null){
             $noC->imagen        = 1;
         }else{
@@ -402,15 +407,17 @@ class NconformeController extends Controller
     public function createT($NConforme)
     {
         $NConforme = NConforme::where('id', $NConforme)->first();
+        $subProceso = user::all();
+
 
         return view('NConformes.tramite', [
-            'NConforme' => $NConforme
+            'NConforme' => $NConforme,
+            'subProceso' => $subProceso
         ]);
     }
 
     public function createTramite(Request $request)
     {
-        // dd($request->all());
 
         //validamos los datos
         $validate = request()->validate( [
@@ -419,33 +426,67 @@ class NconformeController extends Controller
             'reasignar.required'      => 'Es obligatorio escribir una observación',
         ]);
 
-        $totalTramite  = Tramite::all();
-        if($totalTramite->last() != null){
-            $ultimoTramite = $totalTramite->last()->id + 1;
-        }else{
-            $ultimoTramite = 1;
-        }
-
-        $tramite = new Tramite;
-        $tramite->nConforme     = $request->input('nConforme');
-        $tramite->tramite       = $request->input('tramite');
-        $tramite->observacion   = $request->input('observacion');
-        $tramite->tramite_img   = $ultimoTramite;
-        if($request->file != null){
-            $tramite->file      = 1;
-        }else{
-            $tramite->file      = 0;
-        }
-        foreach (NConforme::all() as $noConf) {
-            if ($noConf->id == $tramite->nConforme) {
-                $tramite->proceso    = $noConf->proceso;
-                $tramite->nCproceso  = $noConf->nCproceso;
+        $totalFiles  = Files::all();
+        if ($request->file != null) {
+            if($totalFiles->last() != null){
+                $ultimaImagen = $totalFiles->last()->id + 1;
+            }else{
+                $ultimaImagen = 1;
             }
+        }else{
+            $ultimaImagen = 0;
         }
-        $tramite->save();
 
-        User::where('id', $tramite->proceso )->first()->notify(new TramiteNotification($tramite));
-        User::where('id', 5)->first()->notify(new TramiteNotification($tramite));
+
+        // inicio, si se hace una asiganacion a otro usuario
+        if ($request->input('proceso2')) {
+            $tramite = new Tramite;
+            $tramite->nConforme     = $request->input('nConforme');
+            $tramite->tramite       = $request->input('tramite');
+            $tramite->observacion   = $request->input('reportanteoculto');
+            $tramite->tramite_img   = $ultimaImagen;
+            $tramite->file          = 0;
+            $tramite->nCproceso     = $request->input('proceso2');
+
+            foreach (NConforme::all() as $noConf) {
+                if ($noConf->id == $tramite->nConforme) {
+                    $tramite->proceso    = $noConf->proceso;
+                }
+            }
+            // dd($tramite);
+
+            $tramite->save();
+
+            User::where('id', $tramite->nCproceso )->first()->notify(new TramiteNotification($tramite));
+            User::where('id', $tramite->proceso )->first()->notify(new TramiteNotification($tramite));
+            User::where('id', 5)->first()->notify(new TramiteNotification($tramite));
+        }
+        // fin, si se hace una asiganacion a otro usuario
+        else{
+            $tramite = new Tramite;
+            $tramite->nConforme     = $request->input('nConforme');
+            $tramite->tramite       = $request->input('tramite');
+            $tramite->observacion   = $request->input('observacion');
+            $tramite->tramite_img   = $ultimaImagen;
+            if($request->file != null){
+                $tramite->file      = 1;
+            }else{
+                $tramite->file      = 0;
+            }
+            foreach (NConforme::all() as $noConf) {
+                if ($noConf->id == $tramite->nConforme) {
+                    $tramite->proceso    = $noConf->proceso;
+                    $tramite->nCproceso  = $noConf->nCproceso;
+                }
+            }
+            $tramite->save();
+
+            User::where('id', $tramite->proceso )->first()->notify(new TramiteNotification($tramite));
+            User::where('id', 5)->first()->notify(new TramiteNotification($tramite));
+        }
+
+
+
 
 
         if($request->file != null){
@@ -467,7 +508,7 @@ class NconformeController extends Controller
             $file->save();
         }
         $noCTra = NConforme::where('id', $tramite->nConforme)->first();
-        $noCTra->status = $tramite->tramite;
+        $noCTra->status     = $tramite->tramite;
         $noCTra->save();
 
 

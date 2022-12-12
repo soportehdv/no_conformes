@@ -275,8 +275,15 @@
                                                                 @if ($u->id == $tra->nCproceso)
                                                                     @foreach ($estado as $est)
                                                                         @if ($est->id == $tra->tramite)
-                                                                            <b>{{ $u->name }} a
-                                                                                {{ $est->estado }}</b>
+                                                                            @if ($tra->tramite == 2)
+                                                                                <b>Se ha asignado el no conforme a:
+                                                                                    {{ $u->name }} -
+                                                                                    {{ $u->cargo }} de
+                                                                                    {{ $u->proceso }}</b>
+                                                                            @else
+                                                                                <b>{{ $u->name }} a
+                                                                                    {{ $est->estado }}</b>
+                                                                            @endif
                                                                         @endif
                                                                     @endforeach
                                                                 @endif

@@ -150,7 +150,11 @@
                                                             @if ($u->id == $tra->nCproceso)
                                                                 @foreach ($estado as $est)
                                                                     @if ($est->id == $tra->tramite)
-                                                                        <b>{{ $u->name }} a {{ $est->estado }}</b>
+                                                                        @if ($tra->tramite == 2)
+                                                                            <b>Se ha asignado el no conforme a: {{ $u->name }} - {{ $u->cargo }} de {{ $u->proceso }}</b>
+                                                                        @else
+                                                                            <b>{{ $u->name }} a {{ $est->estado }}</b>
+                                                                        @endif
                                                                     @endif
                                                                 @endforeach
                                                             @endif
@@ -182,6 +186,7 @@
                                                                 aria-labelledby="nav-profile-tab{{ $tra->id }}">
                                                                 <div class="row">
                                                                     @forelse ($files as $file)
+                                                                        {{-- @if ($file->file != '0') --}}
                                                                         @if ($file->id == $tra->tramite_img)
                                                                             <div class="col-sm-6">
                                                                                 <label for="">Archivo</label>
@@ -212,6 +217,8 @@
                                                                                 </div>
                                                                             </div>
                                                                         @endif
+                                                                        {{-- @endif --}}
+
                                                                     @empty
                                                                         <p>No hay archivos para esta respuesta</p>
                                                                     @endforelse
@@ -240,12 +247,12 @@
             </div>
         </div>
     @else
-    <script type="text/javascript">
-        function redirect() {
-            window.location.href = "<?php echo URL::to('NConformes/index'); ?>";
-        }
-        window.onload = redirect;
-    </script>
+        <script type="text/javascript">
+            function redirect() {
+                window.location.href = "<?php echo URL::to('NConformes/index'); ?>";
+            }
+            window.onload = redirect;
+        </script>
     @endif
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

@@ -210,6 +210,25 @@
                                                     <div id="collapseOn{{ $loop->index }}" class="collapse"
                                                         aria-labelledby="{{ $tra->id }}" data-parent="#accordion">
                                                         <div class="card-body">
+                                                            @foreach ($user as $u)
+                                                                @if ($u->id == $tra->nCproceso)
+                                                                    @foreach ($estados as $est)
+                                                                        @if ($est->id == $tra->tramite)
+                                                                            @if ($tra->tramite == 2)
+                                                                                <b>Se ha asignado el no conforme a:
+                                                                                    {{ $u->name }} -
+                                                                                    {{ $u->cargo }} de
+                                                                                    {{ $u->proceso }}</b>
+                                                                            @else
+                                                                                <b>{{ $u->name }} a
+                                                                                    {{ $est->estado }}</b>
+                                                                            @endif
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endif
+                                                            @endforeach
+                                                            <br>
+                                                            <br>
                                                             <nav>
                                                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                                                     <a class="nav-item nav-link active"

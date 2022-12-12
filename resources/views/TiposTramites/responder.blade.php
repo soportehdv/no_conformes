@@ -27,7 +27,7 @@
                         <div class="col-sm-6 center_margin">
                             <label class="form_label required" for="">Descripción del archivo : </label>
                             <textarea type="text" class="form-control upper" name="aDescripcion" id="aDescripcion" value=""
-                                placeholder="observaciones" cols="100" rows="5" required></textarea>
+                                placeholder="observaciones" cols="100" rows="5"></textarea>
                         </div>
                     </div>
                     <input type="hidden" name="tramite" id="tramite" value="3">

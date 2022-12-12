@@ -64,7 +64,8 @@
                                 $NoconformeNotification = $notification->data['noConformeID'];
                             @endphp
                             <button id="Nc" class="dropdown-item mark-as-read btn btn-sm btn-dark" type="submit"
-                                data-id="{{ $notification->id }}" data-Nocon="{{ $NoconformeNotification }}" style="overflow: hidden;text-overflow: ellipsis;">
+                                data-id="{{ $notification->id }}" data-Nocon="{{ $NoconformeNotification }}"
+                                style="overflow: hidden;text-overflow: ellipsis;">
                                 <i class="fas fa-envelope mr-2"></i>
                                 <style>
                                     .dropdown-menu-lg {
@@ -130,8 +131,10 @@
                                 $TramiteNotification = $notification->data['noConformeID'];
                             @endphp
 
-                            <button id="tramite" class="dropdown-item mark-as-read2 btn btn-sm btn-dark" type="submit"
-                                data-id="{{ $notification->id }}" data-Tram="{{ $TramiteNotification }}" style="overflow: hidden;text-overflow: ellipsis;">
+                            <button id="tramite" class="dropdown-item mark-as-read2 btn btn-sm btn-dark"
+                                type="submit" data-id="{{ $notification->id }}"
+                                data-Tram="{{ $TramiteNotification }}"
+                                style="overflow: hidden;text-overflow: ellipsis;">
                                 <i class="fas fa-envelope mr-2"></i>
                                 <style>
                                     .dropdown-menu-lg {
@@ -144,10 +147,15 @@
                                             @if ($status->id == $notification->data['tramite'])
                                                 @foreach (App\Models\User::all() as $us2)
                                                     @if ($us2->id == $notification->data['proceso'])
-                                                    {{ $us->proceso }} a {{ $status->estado }} a {{ $us2->proceso }}
+                                                        @if ($status->estado == 'Asignado')
+                                                            {{ $us2->proceso }} a {{ $status->estado }} a
+                                                            {{ $us->proceso }}
+                                                        @else
+                                                            {{ $us->proceso }} a {{ $status->estado }} a
+                                                            {{ $us2->proceso }}
+                                                        @endif
                                                     @endif
                                                 @endforeach
-
                                             @endif
                                         @endforeach
                                     @endif
@@ -200,7 +208,7 @@
                     });
                 });
 
-                $(function(){
+                $(function() {
                     $('.mark-as-read2').click(function() {
                         let request = sendMarkRequest($(this).data('id'));
                         var tr = document.getElementById("tramite");
