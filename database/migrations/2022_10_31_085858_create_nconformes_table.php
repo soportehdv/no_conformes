@@ -24,6 +24,7 @@ class CreateNconformesTable extends Migration
             $table->string('accion');
             $table->string('status')->default('1');
             $table->integer('imagen');
+            $table->integer('asignado');
             $table->timestamps();
         });
 

@@ -73,6 +73,27 @@ class NconformeController extends Controller
             ]);
     }
 
+    public function asignadosConformes(Request $request){
+        $files      = Files::all();
+        $tramite    = Tramite::all();
+        $estados    = Estados::all();
+        $user       = User::all();
+
+        $NConformes = NConforme::join('users', 'users.id', '=', 'NConformes.proceso')
+            ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
+            ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformes.*')
+            ->get();
+        // dd($NConformes);
+        return view('NConformes/asignados', [
+            'NConformes' => $NConformes,
+            'files'      => $files,
+            'tramite'    => $tramite,
+            'estados'    => $estados,
+            'user'       => $user,
+
+        ]);
+    }
+
     public function createN()
     {
         $subProceso = user::all();
@@ -438,8 +459,9 @@ class NconformeController extends Controller
         }
 
 
-        // inicio, si se hace una asiganacion a otro usuario
+        // inicio, si se hace una asignacion a otro usuario
         if ($request->input('proceso2')) {
+            // dd('condicion 1');
             $tramite = new Tramite;
             $tramite->nConforme     = $request->input('nConforme');
             $tramite->tramite       = $request->input('tramite');
@@ -450,7 +472,11 @@ class NconformeController extends Controller
 
             foreach (NConforme::all() as $noConf) {
                 if ($noConf->id == $tramite->nConforme) {
-                    $tramite->proceso    = $noConf->proceso;
+                    if ($noConf->asignado > 0) {
+                        $tramite->proceso    = auth()->user()->id;
+                    }else{
+                        $tramite->proceso    = $noConf->proceso;
+                    }
                 }
             }
             // dd($tramite);
@@ -460,9 +486,15 @@ class NconformeController extends Controller
             User::where('id', $tramite->nCproceso )->first()->notify(new TramiteNotification($tramite));
             User::where('id', $tramite->proceso )->first()->notify(new TramiteNotification($tramite));
             User::where('id', 5)->first()->notify(new TramiteNotification($tramite));
+
+            $noCTra = NConforme::where('id', $tramite->nConforme)->first();
+            $noCTra->status     = $tramite->tramite;
+            $noCTra->asignado   = $tramite->nCproceso;
+            $noCTra->save();
         }
         // fin, si se hace una asiganacion a otro usuario
         else{
+            // dd('condicion 2');
             $tramite = new Tramite;
             $tramite->nConforme     = $request->input('nConforme');
             $tramite->tramite       = $request->input('tramite');
@@ -475,14 +507,23 @@ class NconformeController extends Controller
             }
             foreach (NConforme::all() as $noConf) {
                 if ($noConf->id == $tramite->nConforme) {
-                    $tramite->proceso    = $noConf->proceso;
-                    $tramite->nCproceso  = $noConf->nCproceso;
+                        if ($noConf->asignado > 0) {
+                            $tramite->proceso    = $noConf->proceso;
+                            $tramite->nCproceso  = $noConf->asignado;
+                        }else{
+                            $tramite->proceso    = $noConf->proceso;
+                            $tramite->nCproceso  = $noConf->nCproceso;
+                        }
                 }
             }
             $tramite->save();
 
             User::where('id', $tramite->proceso )->first()->notify(new TramiteNotification($tramite));
             User::where('id', 5)->first()->notify(new TramiteNotification($tramite));
+
+            $noCTra = NConforme::where('id', $tramite->nConforme)->first();
+            $noCTra->status     = $tramite->tramite;
+            $noCTra->save();
         }
 
 
@@ -507,9 +548,7 @@ class NconformeController extends Controller
             $file->noConforme    = $request->input('nConforme');
             $file->save();
         }
-        $noCTra = NConforme::where('id', $tramite->nConforme)->first();
-        $noCTra->status     = $tramite->tramite;
-        $noCTra->save();
+
 
 
         $request->session()->flash('alert-success', 'registrado con exito!');

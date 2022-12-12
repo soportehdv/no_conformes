@@ -264,19 +264,20 @@ return [
 
         ],
         [
+            'text'        => 'No Conformes Asignados',
+            'url'         => 'NConformes/asignados',
+            'icon'        => 'fas fa-fw fa-street-view',
+            'role'        => 'servicios'
+
+        ],
+        [
             'text'        => 'Notificaciones',
             'url'         => 'NConformes/index',
             'icon'        => 'fas fa-fw fa-bell',
             'role'        => 'servicios'
 
         ],
-        // [
-        //     'text' => 'Ubicaciones',
-        //     'url'  => 'ubicacion/lista',
-        //     'icon' => 'fas fa-fw fa-map-marker-alt',
-        //     'role'        => 'admin'
 
-        // ],
         // [
         //     'text'    => 'Stock',
         //     'url'     => 'stock/list',

@@ -21,7 +21,8 @@ class Nconforme extends Model
         'accion',
         'file',
         'aDescripcion',
-        'status'
+        'status',
+        'asignado'
 
     ];
     public function user(){

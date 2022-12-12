@@ -46,6 +46,9 @@ Route::post('NConformes/update/{NConformes_id}', [App\Http\Controllers\Nconforme
 
 Route::post('NConformes/subcategorias', [App\Http\Controllers\NconformeController::class, 'subcategorias']);
 Route::get('NConformes/download/{id}', [App\Http\Controllers\NconformeController::class, 'download'])->name('NConformes.download');
+// NConformes/asignados
+Route::get('NConformes/asignados', [App\Http\Controllers\NconformeController::class, 'asignadosConformes'])->name('NConformes.asignados');
+
 
 //tramite
 Route::get('tramite/create/{Nconfome}', [App\Http\Controllers\NconformeController::class, 'createT'])->name('tramite.create.vista');
