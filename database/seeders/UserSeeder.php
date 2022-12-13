@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             'name'      => 'Silvia Alexandra Sandoval Candela',
             'cargo'     => 'Coordinador de Calidad',
             'proceso'   => 'Gestion de Calidad',
-            'email'     => 'calidad@gmail.com',
+            'email'     => 'jhonrymat@gmail.com',
             'password'  => bcrypt('1234'),
             'rol'       => 'admin'
         ]);

@@ -27,11 +27,11 @@ use App\Notifications\NconformeNotification;
 class NconformeController extends Controller
 {
     public function __construct()
-        {
-            $this->middleware('auth');
-            // $this->middleware('admin');
+    {
+        $this->middleware('auth');
+        // $this->middleware('admin');
 
-        }
+    }
 
     public function getNConformes(Request $request)
     {
@@ -215,6 +215,7 @@ class NconformeController extends Controller
         // User::where('id', $noC->nCproceso)->first()->notify(new NconformeNotification($noC));
         // User::where('id', 5)->first()->notify(new NconformeNotification($noC));
         event(new NconformeEvent($noC));
+
         $request->session()->flash('alert-success', 'No conforme registrado con exito!');
         return redirect()->route('NConformes.lista');
     }

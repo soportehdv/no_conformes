@@ -31,7 +31,7 @@ class NconformeNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database','mail'];
     }
 
     /**
@@ -43,9 +43,10 @@ class NconformeNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('Hospital Departamental de villavicencio')
+                    ->line('Ha recibido un no conforme.')
+                    ->action('Ver No Conformidad', url('/'))
+                    ->line('Gracias por usar nuestras aplicaciones!');
     }
 
     /**
