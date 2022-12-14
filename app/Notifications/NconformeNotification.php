@@ -43,6 +43,8 @@ class NconformeNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->subject('Notificación de nuevo no conforme')
+                    ->greeting('Hola!')
                     ->line('Hospital Departamental de villavicencio')
                     ->line('Ha recibido un no conforme.')
                     ->action('Ver No Conformidad', url('/'))

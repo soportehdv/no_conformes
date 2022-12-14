@@ -66,10 +66,5 @@ Route::get('targets/target', [App\Http\Controllers\TargetController::class, 'get
 
 
 // Route::get('ventas/admin/invoice/{categoria}',[App\Http\Controllers\InvoiceController::class, 'sacaSub']);
-use App\Models\User;
-Route::get('notificacion', function (){
-    $user = User::find(1);
-    $user->notify(new \App\Notifications\NconformeNotification);
-    return 'Notificacion enviada';
-});
+
 
