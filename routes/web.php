@@ -67,4 +67,8 @@ Route::get('targets/target', [App\Http\Controllers\TargetController::class, 'get
 
 // Route::get('ventas/admin/invoice/{categoria}',[App\Http\Controllers\InvoiceController::class, 'sacaSub']);
 
+Route::get('imagen', function(){
+    return asset('img/logoHDV1.png');
+});
+
 

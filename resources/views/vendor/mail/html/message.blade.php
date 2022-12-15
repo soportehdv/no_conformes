@@ -21,7 +21,7 @@
 {{-- Footer --}}
 @slot('footer')
 @component('mail::footer')
-© {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
+© {{ date('Y') }} HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO. @lang('All rights reserved.') - Desarrollado por JHON MATOMA
 @endcomponent
 @endslot
 @endcomponent

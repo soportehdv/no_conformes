@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Nconforme;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -42,12 +43,15 @@ class NconformeNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $usuarios = User::where('id', $this->nConforme->proceso)->first();
+        $usuarios->proceso;
+
         return (new MailMessage)
-                    ->subject('Notificación de nuevo no conforme')
                     ->greeting('Hola!')
-                    ->line('Hospital Departamental de villavicencio')
-                    ->line('Ha recibido un no conforme.')
-                    ->action('Ver No Conformidad', url('/'))
+                    ->subject('Notificación de nuevo no conforme')
+                    ->line('Ha recibido un no conforme de: '. $usuarios->proceso)
+                    ->action('Ver No Conformidad', asset('NConformes/vista/' . $this->nConforme->id))
+                    ->line('Recuerda que tiene un plazo maximo de 5 dias para contestar la no conformidad')
                     ->line('Gracias por usar nuestras aplicaciones!');
     }
 
