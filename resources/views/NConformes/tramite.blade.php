@@ -42,7 +42,7 @@
                             <option value="ninguno">Seleccione un tramite</option>
                             <option value="asignar">Reasignar no conforme</option>
                             <option value="responder">Responder no conforme</option>
-                            <option value="derrogar">Derrogar no conforme</option>
+                            <option value="derogar">Derogar no conforme</option>
                             <option value="cerrar">Cerrar no conforme</option>
                         @break
 
@@ -50,7 +50,7 @@
                             <option value="ninguno">Seleccione un tramite</option>
                             <option value="asignar">Reasignar no conforme</option>
                             <option value="responder">Responder no conforme</option>
-                            <option value="derrogar">Derrogar no conforme</option>
+                            <option value="derogar">Derogar no conforme</option>
                             <option value="cerrar">Cerrar no conforme</option>
                         @break
 
@@ -58,23 +58,23 @@
                             <option value="ninguno">Seleccione un tramite</option>
                             <option value="asignar">Reasignar no conforme</option>
                             <option value="responder">Responder no conforme</option>
-                            <option value="derrogar">Derrogar no conforme</option>
+                            <option value="derogar">Derogar no conforme</option>
                             <option value="cerrar">Cerrar no conforme</option>
                         @break
 
                         @case(4)
-                            <option value="errorDerrogado">Seleccione un tramite</option>
-                            <option value="errorDerrogado">Reasignar no conforme</option>
-                            <option value="errorDerrogado">Responder no conforme</option>
-                            <option value="errorDerrogado">Derrogar no conforme</option>
-                            <option value="errorDerrogado">Cerrar no conforme</option>
+                            <option value="errorDerogado">Seleccione un tramite</option>
+                            <option value="errorDerogado">Reasignar no conforme</option>
+                            <option value="errorDerogado">Responder no conforme</option>
+                            <option value="errorDerogado">Derogar no conforme</option>
+                            <option value="errorDerogado">Cerrar no conforme</option>
                         @break
 
                         @case(5)
                             <option value="ninguno">Seleccione un tramite</option>
                             <option value="asignar">Reasignar no conforme</option>
                             <option value="responder">Responder no conforme</option>
-                            <option value="derrogar">Derrogar no conforme</option>
+                            <option value="derogar">Derogar no conforme</option>
                             <option value="cerrar">Cerrar no conforme</option>
                         @break
 
@@ -87,7 +87,7 @@
 
                 @include('TiposTramites/responder')
 
-                @include('TiposTramites/derrogar')
+                @include('TiposTramites/derogar')
 
                 @include('TiposTramites/cerrar')
 
@@ -102,7 +102,7 @@
             if (id == "asignar") {
                 $("#asignar").show();
                 $("#responder").hide();
-                $("#derrogar").hide();
+                $("#derogar").hide();
                 $("#cerrar").hide();
                 $("#ninguno").hide();
             }
@@ -110,29 +110,29 @@
             if (id == "responder") {
                 $("#asignar").hide();
                 $("#responder").show();
-                $("#derrogar").hide();
+                $("#derogar").hide();
                 $("#cerrar").hide();
                 $("#ninguno").hide();
             }
 
-            if (id == "derrogar") {
+            if (id == "derogar") {
                 $("#asignar").hide();
                 $("#responder").hide();
-                $("#derrogar").show();
+                $("#derogar").show();
                 $("#cerrar").hide();
                 $("#ninguno").hide();
             }
             if (id == "cerrar") {
                 $("#asignar").hide();
                 $("#responder").hide();
-                $("#derrogar").hide();
+                $("#derogar").hide();
                 $("#cerrar").show();
                 $("#ninguno").hide();
             }
             if (id == "ninguno") {
                 $("#asignar").hide();
                 $("#responder").hide();
-                $("#derrogar").hide();
+                $("#derogar").hide();
                 $("#cerrar").hide();
                 $("#ninguno").show();
             }

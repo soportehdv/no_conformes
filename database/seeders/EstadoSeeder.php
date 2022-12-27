@@ -27,7 +27,7 @@ class EstadoSeeder extends Seeder
         ]);
 
         DB::table('estados')->insert([
-            'estado' => 'Derrogardo'
+            'estado' => 'Derogardo'
         ]);
 
         DB::table('estados')->insert([

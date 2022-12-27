@@ -1,17 +1,17 @@
-<div id="derrogar" style="display: none;">
+<div id="derogar" style="display: none;">
     <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
         enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <div class="card">
                 <div class="card-header bg-primary">
-                    Derrogar no conformidad
+                    Derogar no conformidad
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <br>
                         <div class="col-sm-12">
-                            <label class="form_label required" for="">¿Por qué lo quiere derrogar? : </label>
+                            <label class="form_label required" for="">¿Por qué lo quiere derogar? : </label>
                             <textarea type="text" class="form-control upper" name="observacion" id="observacion" value=""
                                 placeholder="observaciones" cols="100" rows="5" required></textarea>
                         </div>

@@ -23,6 +23,8 @@
 
 @section('cssDataTable')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
 @endsection
 
 @endsection
@@ -44,6 +46,22 @@
             </div>
         @endif
     @endforeach
+    <br>
+    <br>
+    <h4>Busqueda por rango de fechas</h4>
+    <div class="row">
+        <div class="col-sm-3">
+            <label for="">Fecha inicial : </label>
+            <input type="text" class="form-control upper" name="min" id="min" value=""
+                placeholder="Fecha inicial">
+        </div>
+        <div class="col-sm-3">
+            <label for="">Fecha final : </label>
+            <input type="text" class="form-control upper" name="max" id="max" value=""
+                placeholder="Fecha final">
+        </div>
+    </div>
+    <br>
     <br>
     <table id="Nconformes" class="table table-striped table-bordered shadow-lg mt-4 display compact"
         style="font-size: 16px;">
@@ -390,37 +408,138 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+
+
+
+
     <script>
+        var minDate, maxDate;
+
+        // Custom filtering function which will search data in column four between two values
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = minDate.val();
+                var max = maxDate.val();
+                var date = new Date(data[1]);
+
+                if (
+                    (min === null && max === null) ||
+                    (min === null && date <= max) ||
+                    (min <= date && max === null) ||
+                    (min <= date && date <= max)
+                ) {
+                    return true;
+                }
+                return false;
+            }
+        );
         $(document).ready(function() {
-            $('#Nconformes').DataTable({
-                "language": {
-                    searchPanes: {
-                        title: {
-                            _: 'Total de filtros selecionados - %d',
-                            0: 'Selecione un opción para filtrar tu busqueda',
-                            1: 'Se ha selecionado un filtro'
+            // Create date inputs
+            minDate = new DateTime($('#min'), {
+                format: 'MMMM Do YYYY'
+            });
+            maxDate = new DateTime($('#max'), {
+                format: 'MMMM Do YYYY'
+
+            });
+
+            var table = $('#Nconformes').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    // 'copy', 'csv', 'excel', 'pdf', 'print'
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'No conformes',
+                        className: 'btn',
+                        text: "PDF",
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4] //exportar solo la primera y segunda columna
                         },
-                        "clearMessage": "Borrar seleccionados",
-                        "showMessage": "Mostrar Todo",
-                        "collapseMessage": "Contraer Todo",
-                        count: '{total}',
-                        countFiltered: '{shown} ({total})',
-                    },
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "zeroRecords": "No se ha encontrado nada relacionado - Disculpa",
-                    "info": "Mostrando la pagina _PAGE_ de _PAGES_",
-                    "infoEmpty": "No records available",
-                    "infoFiltered": "(Filtrado de _MAX_ registros totales)",
-                    "search": "Buscar:",
-                    "paginate": {
-                        "next": "Siguiente",
-                        "previous": "Anterior"
+                        customize: function(doc) {
+                            doc.styles.tableBodyEven.alignment = 'center';
+                            doc.styles.tableBodyOdd.alignment = 'center';
+                        },
+                    }
+                ],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
+                    "datetime": {
+                        "previous": "Anterior",
+                        "next": "Proximo",
+                        "hours": "Horas",
+                        "minutes": "Minutos",
+                        "seconds": "Segundos",
+                        "unknown": "-",
+                        "amPm": [
+                            "AM",
+                            "PM"
+                        ],
+                        "months": {
+                            "0": "Enero",
+                            "1": "Febrero",
+                            "10": "Noviembre",
+                            "11": "Diciembre",
+                            "2": "Marzo",
+                            "3": "Abril",
+                            "4": "Mayo",
+                            "5": "Junio",
+                            "6": "Julio",
+                            "7": "Agosto",
+                            "8": "Septiembre",
+                            "9": "Octubre"
+                        },
+                        "weekdays": [
+                            "Dom",
+                            "Lun",
+                            "Mar",
+                            "Mie",
+                            "Jue",
+                            "Vie",
+                            "Sab"
+                        ]
                     },
                     "buttons": {
                         "copy": "Copiar",
+                        "colvis": "Visibilidad",
+                        "collection": "Colección",
+                        "colvisRestore": "Restaurar visibilidad",
+                        "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                        "copySuccess": {
+                            "1": "Copiada 1 fila al portapapeles",
+                            "_": "Copiadas %ds fila al portapapeles"
+                        },
+                        "copyTitle": "Copiar al portapapeles",
+                        "csv": "CSV",
+                        "excel": "Excel",
+                        "pageLength": {
+                            "-1": "Mostrar todas las filas",
+                            "_": "Mostrar %d filas"
+                        },
+                        "pdf": "PDF",
                         "print": "Imprimir",
-                    }
+                        "renameState": "Cambiar nombre",
+                        "updateState": "Actualizar",
+                        "createState": "Crear Estado",
+                        "removeAllStates": "Remover Estados",
+                        "removeState": "Remover",
+                        "savedStates": "Estados Guardados",
+                        "stateRestore": "Estado %d"
+                    },
                 }
+
+            });
+
+            $('#min, #max').on('change', function() {
+                table.draw();
+
             });
         });
     </script>

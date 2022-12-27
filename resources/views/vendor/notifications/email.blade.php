@@ -51,7 +51,7 @@ HDV
 @isset($actionText)
 @slot('subcopy')
 @lang(
-    "Si tiene problemas para hacer clic en botón \":actionText\", da clic aqui\n",<br>
+    "Si tiene problemas para hacer clic en botón \":actionText\", da clic aqui\n",
     [
         'actionText' => $actionText,
     ]
