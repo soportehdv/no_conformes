@@ -64,7 +64,7 @@
     <br>
     <br>
     <table id="Nconformes" class="table table-striped table-bordered shadow-lg mt-4 display compact"
-        style="font-size: 16px;">
+        style="font-size: 12px;">
         <thead class="bg-primary text-white">
             <tr>
                 <th>Codigo</th>
@@ -417,6 +417,13 @@
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
 
+    {{-- usar excel --}}
+    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.2.0/js/buttons.html5.styles.min.js">
+    </script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.2.0/js/buttons.html5.styles.templates.min.js">
+    </script>
+
 
 
 
@@ -453,22 +460,76 @@
 
             var table = $('#Nconformes').DataTable({
                 dom: 'Bfrtip',
-                buttons: [
-                    // 'copy', 'csv', 'excel', 'pdf', 'print'
-                    {
-                        extend: 'pdfHtml5',
-                        title: 'No conformes',
-                        className: 'btn',
-                        text: "PDF",
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4] //exportar solo la primera y segunda columna
+                buttons: {
+                    dom: {
+                        button: {
+                            className: 'btn',
                         },
-                        customize: function(doc) {
-                            doc.styles.tableBodyEven.alignment = 'center';
-                            doc.styles.tableBodyOdd.alignment = 'center';
+                    },
+                    buttons: [
+                        {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fas fa-file-pdf"></i>',
+                            titleAttr: 'Exportar a PDF',
+                            title: 'No conformes',
+                            className: 'btn btn-outline-danger',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4] //exportar solo la primera y segunda columna
+                            },
+                            customize: function(doc) {
+                                doc.styles.tableBodyEven.alignment = 'center';
+                                doc.styles.tableBodyOdd.alignment = 'center';
+                            },
                         },
-                    }
-                ],
+                        {
+                            extend: 'print',
+                            text: '<i class="fas fa-print"></i>',
+                            titleAttr: 'Imprimir',
+                            className: 'btn btn-outline-info',
+                            exportOptions: {
+                                columns: [1, 2, 3, 4] //exportar solo la primera y segunda columna
+                            },
+                            customize: function(win) {
+
+                                $(win.document.body)
+                                    .css('font-size', '10pt')
+                                    .prepend(
+                                        '<img src="https://www.hdv.gov.co/files/biblioteca/2022-12-14_logoHDV1.png" style="position:absolute; top:30%; left:5%; width:700px; opacity: 0.3;" />'
+                                    );
+
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit')
+                                    .css('width', '780px')
+                                    .css('text-align', 'center');
+
+                                $(win.document.body).find('table, th')
+                                    .css('text-align', 'center');
+
+                                $(win.document.body).find('table, th')
+                                    .css('text-align', 'center');
+                            },
+                            header: true,
+                            title: 'No conformes',
+                            orientation: 'landscape',
+                        },
+                        {
+                            extend:'excelHtml5',
+                            text:'<i class="fas fa-file-excel"></i>',
+                            className: 'btn btn-outline-success',
+                            titleAttr: 'Exportar a Excel',
+                            exportOptions: {
+                                columns: [0, 1, 2, 3, 4] //exportar solo la primera y segunda columna
+                            },
+                            excelStyles:{
+                                "template":[
+                                    "blue_medium", "header_blue","title_medium"
+                                ]
+                            }
+                        },
+                    ]
+
+            },
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
                     "datetime": {
