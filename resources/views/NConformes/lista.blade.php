@@ -64,7 +64,7 @@
     <br>
     <br>
     <table id="Nconformes" class="table table-striped table-bordered shadow-lg mt-4 display compact"
-        style="font-size: 12px;">
+        style="font-size: 13px;">
         <thead class="bg-primary text-white">
             <tr>
                 <th>Codigo</th>
@@ -73,7 +73,8 @@
                 <th>De quien se queja</th>
                 <th>Estado</th>
                 <th>Acción</th>
-
+                <th style="display: none">descripción</th>
+                <th style="display: none">Acciones realizadas</th>
             </tr>
         </thead>
         <tbody>
@@ -123,6 +124,8 @@
                                 <i class="fa fa-eye"></i>
                             </a>
                         </td>
+                        <td style="display: none">{{ $nC->nCdescripcion }}</td>
+                        <td style="display: none">{{ $nC->nCacciones }}</td>
                     </tr>
                     {{-- admin --}}
                 @elseif (auth()->user()->rol == 'admin')
@@ -168,6 +171,8 @@
                                 <i class="fa fa-eye"></i>
                             </a>
                         </td>
+                        <td style="display: none">{{ $nC->nCdescripcion }}</td>
+                        <td style="display: none">{{ $nC->nCacciones }}</td>
                     </tr>
                 @endif
                 {{-- modal show --}}
@@ -519,7 +524,7 @@
                             className: 'btn btn-outline-success',
                             titleAttr: 'Exportar a Excel',
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4] //exportar solo la primera y segunda columna
+                                columns: [0, 1, 2, 3, 4, 6, 7] //exportar solo la primera y segunda columna
                             },
                             excelStyles:{
                                 "template":[
