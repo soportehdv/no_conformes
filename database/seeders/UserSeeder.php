@@ -415,9 +415,13 @@ class UserSeeder extends Seeder
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
-
-
-
-
+        DB::table('users')->insert([
+            'name'      => 'Ventanilla',
+            'cargo'     => 'Ventanilla',
+            'proceso'   => 'Ventanilla',
+            'email'     => 'sistemas.soportehdv@gmail.com',
+            'password'  => bcrypt('HDV1234.'),
+            'rol'       => 'ventanilla'
+        ]);
     }
 }

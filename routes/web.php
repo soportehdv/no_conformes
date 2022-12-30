@@ -64,11 +64,12 @@ Route::post('/mark-as-read2', [App\Http\Controllers\NconformeController::class, 
 
 Route::get('targets/target', [App\Http\Controllers\TargetController::class, 'gettarget'])->name('listatarget.target');
 
+//ventanilla
+Route::get('ventanilla/radicado', [App\Http\Controllers\TargetController::class, 'getRadicado'])->name('listaRadicado.radicado');
+
+
 
 // Route::get('ventas/admin/invoice/{categoria}',[App\Http\Controllers\InvoiceController::class, 'sacaSub']);
 
-Route::get('imagen', function(){
-    return asset('img/logoHDV1.png');
-});
 
 

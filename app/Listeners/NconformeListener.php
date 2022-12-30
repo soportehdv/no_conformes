@@ -32,10 +32,12 @@ class NconformeListener
         {
             Notification::send(User::where('id', $event->nConforme->nCproceso)->first(), new NconformeNotification($event->nConforme));
             Notification::send(User::where('id', 5)->first(), new NconformeNotification($event->nConforme));
+            Notification::send(User::where('id', 51)->first(), new NconformeNotification($event->nConforme));
         }
         else
         {
             Notification::send(User::where('id', $event->nConforme->nCproceso)->first(), new NconformeNotification($event->nConforme));
+            Notification::send(User::where('id', 51)->first(), new NconformeNotification($event->nConforme));
         }
     }
 }
