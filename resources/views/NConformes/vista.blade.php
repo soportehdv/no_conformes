@@ -41,7 +41,30 @@
                                         <b>{{ $NConforme->id }}</b>
                                     </li>
                                     <li class="list-group-item">Fecha de no conforme:
-                                        <b>{{ $NConforme->fReporte }}</b>
+                                        @php
+                                            //suma 5 dias a la fecha ingresada
+                                            $date = \Carbon\Carbon::parse($NConforme->fReporte)
+                                                ->addDay(6)
+                                                ->toDateTimeString();
+
+                                            // comparacion de fechas para saber cuantos dias quedan
+                                            $restantes = \Carbon\Carbon::createFromTimeStamp(strtotime($date))->diffInDays(now(), false);
+                                        @endphp
+                                        @if ($NConforme->status == 5)
+                                            <b>{{ $NConforme->fReporte }}</b>
+                                        @else
+                                            @if ($restantes >= 0)
+                                                <b>{{ $NConforme->fReporte }} <span
+                                                        class="badge badge-pill badge-danger">Finalizo tiempo para contestar
+                                                        No
+                                                        conforme</span></b>
+                                            @else
+                                                <b>{{ $NConforme->fReporte }} <span
+                                                        class="badge badge-pill badge-danger">Faltan
+                                                        {{ $restantes }}-</span> dias para vencer No conforme</b>
+                                            @endif
+                                        @endif
+
                                     </li>
                                     @foreach ($user as $us1)
                                         @if ($us1->id == $NConforme->proceso)
@@ -151,9 +174,12 @@
                                                                 @foreach ($estado as $est)
                                                                     @if ($est->id == $tra->tramite)
                                                                         @if ($tra->tramite == 2)
-                                                                            <b>Se ha asignado el no conforme a: {{ $u->name }} - {{ $u->cargo }} de {{ $u->proceso }}</b>
+                                                                            <b>Se ha asignado el no conforme a:
+                                                                                {{ $u->name }} - {{ $u->cargo }}
+                                                                                de {{ $u->proceso }}</b>
                                                                         @else
-                                                                            <b>{{ $u->name }} a {{ $est->estado }}</b>
+                                                                            <b>{{ $u->name }} a
+                                                                                {{ $est->estado }}</b>
                                                                         @endif
                                                                     @endif
                                                                 @endforeach

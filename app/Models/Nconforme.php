@@ -12,6 +12,7 @@ class Nconforme extends Model
     protected $table = "nconformes";
 
     protected $fillable = [
+        'radicado',
         'reportado',
         'fReporte',
         'proceso',
@@ -22,7 +23,8 @@ class Nconforme extends Model
         'file',
         'aDescripcion',
         'status',
-        'asignado'
+        'asignado',
+        'NcFinalizado'
 
     ];
     public function user(){

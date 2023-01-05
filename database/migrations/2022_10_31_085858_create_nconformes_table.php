@@ -26,6 +26,7 @@ class CreateNconformesTable extends Migration
             $table->string('status')->default('1');
             $table->integer('imagen');
             $table->integer('asignado');
+            $table->datetime('NcFinalizado');
             $table->timestamps();
         });
 

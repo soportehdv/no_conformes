@@ -514,7 +514,6 @@ class NconformeController extends Controller
         }
         // fin, si se hace una asiganacion a otro usuario
         else{
-            // dd('condicion 2');
             $tramite = new Tramite;
             $tramite->nConforme     = $request->input('nConforme');
             $tramite->tramite       = $request->input('tramite');
@@ -541,8 +540,18 @@ class NconformeController extends Controller
             User::where('id', $tramite->proceso )->first()->notify(new TramiteNotification($tramite));
             User::where('id', 5)->first()->notify(new TramiteNotification($tramite));
 
+
+
+            // fecha de cierre
             $noCTra = NConforme::where('id', $tramite->nConforme)->first();
             $noCTra->status     = $tramite->tramite;
+            // actualizamos fecha de finalizacion
+            if ($request->input('tramite') == "5") {
+                $now = new \DateTime();
+                $finalizacion = $now->format('Y-m-d H:i:s');
+                // dd($finalizacion);
+                $noCTra->NcFinalizado = $finalizacion;
+            }
             $noCTra->save();
         }
 
@@ -565,7 +574,7 @@ class NconformeController extends Controller
             $file->save();
         }
 
-        
+
 
 
 
