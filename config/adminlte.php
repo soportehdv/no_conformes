@@ -278,13 +278,13 @@ return [
 
         ],
 
-        // [
-        //     'text'    => 'Stock',
-        //     'url'     => 'stock/list',
-        //     'icon'    => 'fas fa-fw fa-warehouse',
-        //     'role'        => 'admin',
+        [
+            'text'    => 'Radicados',
+            'url'     => 'ventanilla/radicado',
+            'icon'    => 'fas fa-fw fa-warehouse',
+            'role'        => 'ventanilla',
 
-        // ],
+        ],
 
         // [
         //     'text' => 'Entrega',

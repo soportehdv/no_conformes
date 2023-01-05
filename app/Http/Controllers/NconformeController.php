@@ -326,6 +326,25 @@ class NconformeController extends Controller
             'user' => $user,
         ]);
     }
+    public function updateRadicado(Request $request, $nC_id){
+        $noC = NConforme::where('id', $nC_id)->first();
+
+        $validate = Validator::make($request->all(), [
+            'radicado'     => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            $request->session()->flash('alert-danger', 'Error al actualizar producto');
+            return redirect()->back();
+        }
+
+        $noC->radicado     = $request->input('radicado');
+        $noC->save();
+
+        $request->session()->flash('alert-success', 'Radicado ingresado con exito!');
+        return redirect()->route('listaRadicado.radicado');
+    }
+
     public function updatecomprasProducto(Request $request, $compra_id, $id_venta)
     {
         // dd($request->input('unidades'));
@@ -527,10 +546,6 @@ class NconformeController extends Controller
             $noCTra->save();
         }
 
-
-
-
-
         if($request->file != null){
             $file = new Files();
             $file->nombre       = $request->file->getClientOriginalName();
@@ -549,6 +564,8 @@ class NconformeController extends Controller
             $file->noConforme    = $request->input('nConforme');
             $file->save();
         }
+
+        
 
 
 

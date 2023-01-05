@@ -68,6 +68,7 @@
         <thead class="bg-primary text-white">
             <tr>
                 <th>Codigo</th>
+                <th>Radicado</th>
                 <th>Fecha No Conforme</th>
                 <th>Quien se queja</th>
                 <th>De quien se queja</th>
@@ -82,6 +83,7 @@
                 @if ($nC->nCproceso == auth()->user()->id && auth()->user()->rol != 'admin')
                     <tr>
                         <th>{{ $nC->id }}</th>
+                        <th>{{ $nC->radicado }}</th>
                         <td>{{ $nC->fReporte }}</td>
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
@@ -131,6 +133,7 @@
                 @elseif (auth()->user()->rol == 'admin')
                     <tr>
                         <th>{{ $nC->id }}</th>
+                        <th>{{ $nC->radicado }}</th>
                         <td>{{ $nC->fReporte }}</td>
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
@@ -195,6 +198,9 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Id
                                             <b>{{ $nC->id }}</b>
+                                        </li>
+                                        <li class="list-group-item">Radicado
+                                            <b>{{ $nC->radicado }}</b>
                                         </li>
                                         <li class="list-group-item">Fecha de no conforme:
                                             <b>{{ $nC->fReporte }}</b>
@@ -479,7 +485,7 @@
                             title: 'No conformes',
                             className: 'btn btn-outline-danger',
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4] //exportar solo la primera y segunda columna
+                                columns: [0, 1, 2, 3, 4, 5] //exportar solo la primera y segunda columna
                             },
                             customize: function(doc) {
                                 doc.styles.tableBodyEven.alignment = 'center';
@@ -492,7 +498,7 @@
                             titleAttr: 'Imprimir',
                             className: 'btn btn-outline-info',
                             exportOptions: {
-                                columns: [1, 2, 3, 4] //exportar solo la primera y segunda columna
+                                columns: [1, 2, 3, 4, 5] //exportar solo la primera y segunda columna
                             },
                             customize: function(win) {
 
@@ -524,7 +530,7 @@
                             className: 'btn btn-outline-success',
                             titleAttr: 'Exportar a Excel',
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 6, 7] //exportar solo la primera y segunda columna
+                                columns: [0, 1, 2, 3, 4, 5, 7, 8] //exportar solo la primera y segunda columna
                             },
                             excelStyles:{
                                 "template":[

@@ -36,6 +36,7 @@
         <thead class="bg-primary text-white">
             <tr>
                 <th>Codigo</th>
+                <th>Radicado</th>
                 <th>Fecha No Conforme</th>
                 <th>Quien se queja</th>
                 <th>De quien se queja</th>
@@ -49,6 +50,7 @@
                 @if ($nC->proceso == auth()->user()->id)
                     <tr>
                         <th>{{ $nC->id }}</th>
+                        <th>{{ $nC->radicado }}</th>
                         <td>{{ $nC->fReporte }}</td>
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
@@ -109,6 +111,9 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Id
                                             <b>{{ $nC->id }}</b>
+                                        </li>
+                                        <li class="list-group-item">radicado
+                                            <b>{{ $nC->radicado }}</b>
                                         </li>
                                         <li class="list-group-item">Fecha de no conforme:
                                             <b>{{ $nC->fReporte }}</b>

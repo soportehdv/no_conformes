@@ -44,6 +44,9 @@ Route::post('NConformes/create', [App\Http\Controllers\NconformeController::clas
 Route::get('NConformes/update/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'update'])->name('NConformes.update.vista');
 Route::post('NConformes/update/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'updateNoConformes'])->name('NConformes.update');
 
+// radicado
+Route::post('radicado/{radicado_id}', [App\Http\Controllers\NconformeController::class, 'updateRadicado'])->name('Radicado.update');
+
 Route::post('NConformes/subcategorias', [App\Http\Controllers\NconformeController::class, 'subcategorias']);
 Route::get('NConformes/download/{id}', [App\Http\Controllers\NconformeController::class, 'download'])->name('NConformes.download');
 // NConformes/asignados
