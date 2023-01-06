@@ -43,14 +43,17 @@
                                     <li class="list-group-item">Fecha de no conforme:
                                         @php
                                             //suma 5 dias a la fecha ingresada
-                                            $date = \Carbon\Carbon::parse($NConforme->fReporte)
-                                                ->addDay(6)
-                                                ->toDateTimeString();
+                                            $fechaSinH = \Carbon\Carbon::parse($NConforme->fReporte)
+                                            ->addDay(6)
+                                            ->toDateTimeString();
+
+                                            // obteniendo fecha fin hora
+                                            $r = \Carbon\Carbon::parse($fechaSinH)->format('Y/m/d');
 
                                             // comparacion de fechas para saber cuantos dias quedan
-                                            $restantes = \Carbon\Carbon::createFromTimeStamp(strtotime($date))->diffInDays(now(), false);
+                                            $restantes = \Carbon\Carbon::createFromTimeStamp(strtotime($r))->diffInDays(now(), false);
                                         @endphp
-                                        @if ($NConforme->status == 5)
+                                        @if ($NConforme->status == "5")
                                             <b>{{ $NConforme->fReporte }}</b>
                                         @else
                                             @if ($restantes >= 0)

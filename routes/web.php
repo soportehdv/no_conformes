@@ -44,8 +44,6 @@ Route::post('NConformes/create', [App\Http\Controllers\NconformeController::clas
 Route::get('NConformes/update/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'update'])->name('NConformes.update.vista');
 Route::post('NConformes/update/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'updateNoConformes'])->name('NConformes.update');
 
-// radicado
-Route::post('radicado/{radicado_id}', [App\Http\Controllers\NconformeController::class, 'updateRadicado'])->name('Radicado.update');
 
 Route::post('NConformes/subcategorias', [App\Http\Controllers\NconformeController::class, 'subcategorias']);
 Route::get('NConformes/download/{id}', [App\Http\Controllers\NconformeController::class, 'download'])->name('NConformes.download');
@@ -69,8 +67,10 @@ Route::get('targets/target', [App\Http\Controllers\TargetController::class, 'get
 
 //ventanilla
 Route::get('ventanilla/radicado', [App\Http\Controllers\TargetController::class, 'getRadicado'])->name('listaRadicado.radicado');
+Route::get('ventanilla/radicadoPendiente', [App\Http\Controllers\TargetController::class, 'getRadicadoPendiente'])->name('listaRadicadoPendiente.radicado');
 
-
+// radicado
+Route::post('radicado/{radicado_id}', [App\Http\Controllers\NconformeController::class, 'updateRadicado'])->name('Radicado.update');
 
 // Route::get('ventas/admin/invoice/{categoria}',[App\Http\Controllers\InvoiceController::class, 'sacaSub']);
 

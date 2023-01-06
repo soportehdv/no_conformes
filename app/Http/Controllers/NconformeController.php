@@ -233,7 +233,7 @@ class NconformeController extends Controller
 
         // $fracciones = Fracciones::all();
 
-        return view('NConformes/vista', [
+        return view('NConformes/vistaPrevia', [
             'NConforme' => $NConforme,
             'estado'    => $estado,
             'tramite'   => $tramite,

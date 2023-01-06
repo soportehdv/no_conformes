@@ -76,6 +76,7 @@
                 <th>Acción</th>
                 <th style="display: none">descripción</th>
                 <th style="display: none">Acciones realizadas</th>
+                <th style="display: none">Fecha de finalizacion</th>
             </tr>
         </thead>
         <tbody>
@@ -84,7 +85,31 @@
                     <tr>
                         <th>{{ $nC->id }}</th>
                         <th>{{ $nC->radicado }}</th>
-                        <td>{{ $nC->fReporte }}</td>
+                        <td>
+                            {{ $nC->fReporte }}
+                            @php
+                                //suma 5 dias a la fecha ingresada
+                                $fechaSinH = \Carbon\Carbon::parse($nC->fReporte)
+                                    ->addDay(6)
+                                    ->toDateTimeString();
+
+                                // obteniendo fecha fin hora
+                                $r = \Carbon\Carbon::parse($fechaSinH)->format('Y/m/d');
+
+                                // comparacion de fechas para saber cuantos dias quedan
+                                $restantes = \Carbon\Carbon::createFromTimeStamp(strtotime($r))->diffInDays(now(), false);
+                            @endphp
+                            @if ($nC->status == '5')
+                                <b>{{ $nC->fReporte }}</b>
+                            @else
+                                @if ($restantes >= 0)
+                                    <b>{{ $nC->fReporte }} <span class="badge badge-pill badge-danger">En mora</span></b>
+                                @else
+                                    <b>{{ $nC->fReporte }} <span class="badge badge-pill badge-danger">Faltan
+                                            {{ $restantes }}-</span> dias</b>
+                                @endif
+                            @endif
+                        </td>
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
                         <td>
@@ -128,13 +153,39 @@
                         </td>
                         <td style="display: none">{{ $nC->nCdescripcion }}</td>
                         <td style="display: none">{{ $nC->nCacciones }}</td>
+                        <td style="display: none">{{ $nC->NcFinalizado }}</td>
                     </tr>
                     {{-- admin --}}
                 @elseif (auth()->user()->rol == 'admin')
                     <tr>
                         <th>{{ $nC->id }}</th>
                         <th>{{ $nC->radicado }}</th>
-                        <td>{{ $nC->fReporte }}</td>
+                        <td>
+                            {{ $nC->fReporte }}
+                            @php
+                                //suma 5 dias a la fecha ingresada
+                                $fechaSinH = \Carbon\Carbon::parse($nC->fReporte)
+                                    ->addDay(6)
+                                    ->toDateTimeString();
+
+                                // obteniendo fecha fin hora
+                                $r = \Carbon\Carbon::parse($fechaSinH)->format('Y/m/d');
+
+                                // comparacion de fechas para saber cuantos dias quedan
+                                $restantes = \Carbon\Carbon::createFromTimeStamp(strtotime($r))->diffInDays(now(), false);
+                            @endphp
+                            @if ($nC->status == '5')
+                                <b><span class="badge badge-pill badge-primary"
+                                        style="font-size: 12px">Finalizada</span></b>
+                            @else
+                                @if ($restantes >= 0)
+                                    <b><span class="badge badge-pill badge-danger">En mora</span></b>
+                                @else
+                                <b><span class="badge badge-pill badge-danger">Faltan
+                                    {{ $restantes }}-</span> dias</b>
+                                @endif
+                            @endif
+                        </td>
                         <td>{{ $nC->Aservicio }}</td>
                         <td>{{ $nC->servicio }}</td>
                         <td>
@@ -176,6 +227,7 @@
                         </td>
                         <td style="display: none">{{ $nC->nCdescripcion }}</td>
                         <td style="display: none">{{ $nC->nCacciones }}</td>
+                        <td style="display: none">{{ $nC->NcFinalizado }}</td>
                     </tr>
                 @endif
                 {{-- modal show --}}
@@ -204,6 +256,36 @@
                                         </li>
                                         <li class="list-group-item">Fecha de no conforme:
                                             <b>{{ $nC->fReporte }}</b>
+                                        </li>
+                                        <li class="list-group-item">Fecha de no conforme:
+                                            @php
+                                                //suma 5 dias a la fecha ingresada
+                                                $fechaSinH = \Carbon\Carbon::parse($nC->fReporte)
+                                                    ->addDay(6)
+                                                    ->toDateTimeString();
+
+                                                // obteniendo fecha fin hora
+                                                $r = \Carbon\Carbon::parse($fechaSinH)->format('Y/m/d');
+
+                                                // comparacion de fechas para saber cuantos dias quedan
+                                                $restantes = \Carbon\Carbon::createFromTimeStamp(strtotime($r))->diffInDays(now(), false);
+                                            @endphp
+                                            @if ($nC->status == '5')
+                                                <b>{{ $nC->fReporte }}</b>
+                                            @else
+                                                @if ($restantes >= 0)
+                                                    <b>{{ $nC->fReporte }} <span
+                                                            class="badge badge-pill badge-danger">Finalizo tiempo para
+                                                            contestar
+                                                            No
+                                                            conforme</span></b>
+                                                @else
+                                                    <b>{{ $nC->fReporte }} <span
+                                                            class="badge badge-pill badge-danger">Faltan
+                                                            {{ $restantes }}-</span> dias para vencer No
+                                                        conforme</b>
+                                                @endif
+                                            @endif
                                         </li>
                                         <li class="list-group-item">Quien se queja: <b>{{ $nC->reportante }},
                                                 {{ $nC->Aservicio }}</b>
@@ -477,8 +559,7 @@
                             className: 'btn',
                         },
                     },
-                    buttons: [
-                        {
+                    buttons: [{
                             extend: 'pdfHtml5',
                             text: '<i class="fas fa-file-pdf"></i>',
                             titleAttr: 'Exportar a PDF',
@@ -525,22 +606,24 @@
                             orientation: 'landscape',
                         },
                         {
-                            extend:'excelHtml5',
-                            text:'<i class="fas fa-file-excel"></i>',
+                            extend: 'excelHtml5',
+                            text: '<i class="fas fa-file-excel"></i>',
                             className: 'btn btn-outline-success',
                             titleAttr: 'Exportar a Excel',
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 7, 8] //exportar solo la primera y segunda columna
+                                columns: [0, 1, 2, 3, 4, 5, 7,
+                                    8, 9
+                                ] //exportar solo la primera y segunda columna
                             },
-                            excelStyles:{
-                                "template":[
-                                    "blue_medium", "header_blue","title_medium"
+                            excelStyles: {
+                                "template": [
+                                    "blue_medium", "header_blue", "title_medium"
                                 ]
                             }
                         },
                     ]
 
-            },
+                },
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
                     "datetime": {

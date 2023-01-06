@@ -40,7 +40,7 @@
                             <div class="col-sm-6">
                                 <label for="exampleInputEmail1">Fecha de reporte : </label>
                                 <input type="datetime-local" autocomplete="on" class="form-control upper" name="fReporte"
-                                    id="fReporte" value="" min="<?php echo substr(date('c'), 0, 19) ?>" aria-describedby="emailHelp" required>
+                                    id="fReporte" value="" aria-describedby="emailHelp" required>
                             </div>
                             {{-- <input type="hidden" name="user" id="user" value="jhonrymat@gmail.com"> --}}
                         </div>

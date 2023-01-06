@@ -277,50 +277,20 @@ return [
             'role'        => 'servicios'
 
         ],
-
         [
-            'text'    => 'Radicados',
-            'url'     => 'ventanilla/radicado',
-            'icon'    => 'fas fa-fw fa-warehouse',
-            'role'        => 'ventanilla',
+            'text'          => 'Radicados',
+            'url'           => 'ventanilla/radicado',
+            'icon'          => 'fas fa-fw fa-warehouse',
+            'role'          => 'ventanilla',
 
         ],
+        [
+            'text'          => 'Pendiente por radicar',
+            'url'           => 'ventanilla/radicadoPendiente',
+            'icon'          => 'fas fa-fw fa-warehouse',
+            'role'          => 'ventanilla',
 
-        // [
-        //     'text' => 'Entrega',
-        //     'url'  => 'ventas/todas',
-        //     'icon' => 'fas fa-fw fa-dolly',
-        //     'role' => 'admin'
-        // ],
-        // [
-        //     'text' => 'historial de lavado',
-        //     'url'  => 'lavado/todas',
-        //     'icon' => 'fas fa-fw fa-hospital ',
-        //     'role' => 'admin'
-        // ],
-        // [
-        //     'text' => 'Lotes',
-        //     'url'  => 'lotes/todos',
-        //     'icon' => 'fas fa-fw fa-lock',
-        //     'role'        => 'admin'
-
-        // ],
-        // [
-        //     'text' => 'Nombres precios',
-        //     'url'  => 'nombres/lista',
-        //     'icon' => 'fas fa-fw fa-lock',
-        //     'role' => 'admin'
-
-        // ],
-        // [
-        //     'text' => 'Fracciones',
-        //     'url'  => 'fracciones/lista',
-        //     'icon' => 'fas fa-fw fa-lock',
-        //     'role' => 'admin'
-
-        // ],
-
-
+        ],
 
     ],
 
