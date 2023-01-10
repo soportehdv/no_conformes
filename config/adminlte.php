@@ -238,12 +238,6 @@ return [
         ],
         ['header' => 'Menú'],
         [
-            'text'        => 'Inicio',
-            'url'         => 'targets/target',
-            'icon'        => 'fa fa-fw fa-home',
-            'role'        => 'admin'
-        ],
-        [
             'text'        => 'Usuarios',
             'url'         => 'user/list',
             'icon'        => 'far fa-fw fa-user',
