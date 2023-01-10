@@ -42,4 +42,25 @@ class TargetController extends Controller
                 'estado'        => $estado,
             ]);
     }
+
+    public function getRadicadoPendiente(Request $request)
+    {
+            $files      = Files::all();
+            $user       = User::all();
+            $tramite    = Tramite::all();
+            $estado     = Estados::all();
+            $NConformes = NConforme::join('users', 'users.id', '=', 'NConformes.proceso')
+                ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
+                ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformes.*')
+                ->where('radicado', '=', null)
+                ->get();
+            // dd($NConformes);
+            return view('targets/radicadoPendiente', [
+                'NConformes'    => $NConformes,
+                'user'          => $user,
+                'files'         => $files,
+                'tramite'       => $tramite,
+                'estado'        => $estado,
+            ]);
+    }
 }
