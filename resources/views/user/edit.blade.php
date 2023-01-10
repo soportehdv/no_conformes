@@ -50,9 +50,9 @@
                             aria-describedby="emailHelp" placeholder="Nombre" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Cargo </label>
+                        <label for="exampleInputEmail1">Area de servicio </label>
                         <input type="text" class="form-control" name="cargo" value="{{ $user->cargo }}"
-                            aria-describedby="emailHelp" placeholder="Cargo" required>
+                            aria-describedby="emailHelp" placeholder="Proceso" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Rol </label>

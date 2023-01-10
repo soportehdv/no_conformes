@@ -26,9 +26,10 @@ class HomeController extends Controller
     public function index()
     {
         if(Auth::user()->rol == 'servicios')
-            return redirect()->route('clientes.lista');
-        else 
-            if(Auth::user()->rol == 'admin')                
-                return redirect()->route('listatarget.target');
+            return redirect()->route('listatarget.target');
+        elseif(Auth::user()->rol == 'admin')
+            return redirect()->route('listatarget.target');
+        elseif(Auth::user()->rol == 'ventanilla')
+            return redirect()->route('listaRadicado.radicado');
     }
 }

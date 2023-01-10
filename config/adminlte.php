@@ -71,7 +71,7 @@ return [
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => true,
     'usermenu_desc' => true,
-    'usermenu_profile_url' => false,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -250,83 +250,47 @@ return [
             'role'        => 'admin'
         ],
         [
-            'text' => 'Ingresar producto',
-            'url'  => 'compras/lista',
-            'icon' => 'fas fa-fw fa-share',
-            'role'        => 'admin'
-
-        ],
-        // [
-        //     'text' => 'Devolución de productos',
-        //     'url'  => 'devolucion/list',
-        //     'icon' => 'fas fa-fw fa-share fa-flip-horizontal',
-        //     'role'        => 'admin'
-
-        // ],
-        [
-            'text' => 'Pedidos',
-            'url'  => 'clientes/list',
-            'icon' => 'fas fa-fw fa-chalkboard-teacher',
+            'text'        => 'No Conformes Recibidos',
+            'url'         => 'NConformes/lista',
+            'icon'        => 'fas fa-fw fa-share',
             'role'        => 'servicios'
 
         ],
-        // [
-        //     'text' => 'Proveedores',
-        //     'url'  => 'proveedor/list',
-        //     'icon' => 'fas fa-fw fa-truck',
-        //     'role'        => 'admin'
-
-        // ],
         [
-            'text' => 'Ubicaciones',
-            'url'  => 'ubicacion/lista',
-            'icon' => 'fas fa-fw fa-map-marker-alt',
-            'role'        => 'admin'
+            'text'        => 'No Conformes Enviados',
+            'url'         => 'NConformes/enviados',
+            'icon'        => 'fas fa-fw fa-truck',
+            'role'        => 'servicios'
 
         ],
-        // [
-        //     'text'    => 'Stock',
-        //     'url'     => 'stock/list',
-        //     'icon'    => 'fas fa-fw fa-warehouse',
-        //     'role'        => 'admin',
-
-        // ],
-
         [
-            'text' => 'Entrega',
-            'url'  => 'ventas/todas',
-            'icon' => 'fas fa-fw fa-dolly',
-            'role' => 'admin'
+            'text'        => 'No Conformes Asignados',
+            'url'         => 'NConformes/asignados',
+            'icon'        => 'fas fa-fw fa-street-view',
+            'role'        => 'servicios'
+
         ],
         [
-            'text' => 'historial de lavado',
-            'url'  => 'lavado/todas',
-            'icon' => 'fas fa-fw fa-hospital ',
-            'role' => 'admin'
+            'text'        => 'Notificaciones',
+            'url'         => 'NConformes/index',
+            'icon'        => 'fas fa-fw fa-bell',
+            'role'        => 'servicios'
+
         ],
-        // [
-        //     'text' => 'Lotes',
-        //     'url'  => 'lotes/todos',
-        //     'icon' => 'fas fa-fw fa-lock',
-        //     'role'        => 'admin'
+        [
+            'text'          => 'Radicados',
+            'url'           => 'ventanilla/radicado',
+            'icon'          => 'fas fa-fw fa-warehouse',
+            'role'          => 'ventanilla',
 
-        // ],
-        // [
-        //     'text' => 'Nombres precios',
-        //     'url'  => 'nombres/lista',
-        //     'icon' => 'fas fa-fw fa-lock',
-        //     'role' => 'admin'
+        ],
+        [
+            'text'          => 'Pendiente por radicar',
+            'url'           => 'ventanilla/radicadoPendiente',
+            'icon'          => 'fas fa-fw fa-warehouse',
+            'role'          => 'ventanilla',
 
-        // ],
-        // [
-        //     'text' => 'Fracciones',
-        //     'url'  => 'fracciones/lista',
-        //     'icon' => 'fas fa-fw fa-lock',
-        //     'role' => 'admin'
-
-        // ],
-
-
+        ],
 
     ],
 

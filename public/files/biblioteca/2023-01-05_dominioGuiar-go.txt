@@ -1,0 +1,18 @@
+Control panel username:	b11_32673463
+Control panel password:	**********
+Control panel URL:	cpanel.byethost11.com
+MySQL username	b11_32673463
+MySQL password:	**********
+MySQL hostname:	sql309.byethost11.com
+FTP username:	b11_32673463
+FTP password:	**********
+FTP host name:	ftp.byethost11.com
+
+http://cpanel.byethost.com/panel/indexpl.php
+https://sv1.scriptinstall.rocks:2083/cpsess0567656082/frontend/x3/softaculous/index.live.php?act=software&soft=26&tab=install
+
+Your Website URL:	http://guiargo.byethost11.com
+Nuevocomienzo2023 	 
+WordPress has been successfully installed at :
+http://guiargo.gq
+Administrative URL : http://guiargo.gq/wp-admin/
