@@ -137,11 +137,13 @@
                                 <label for="">¿Requiere iniciar Acción Correctiva y/o Preventiva?</label>
                                 <br>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="accion" id="si" class="custom-control-input" value="si">
+                                    <input type="radio" name="accion" id="si" class="custom-control-input"
+                                        value="si">
                                     <label for="si" class="custom-control-label">Si </label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="accion" id="no" class="custom-control-input" value="no">
+                                    <input type="radio" name="accion" id="no" class="custom-control-input"
+                                        value="no">
                                     <label for="no" class="custom-control-label">No </label>
                                 </div>
                             </div>
@@ -162,7 +164,8 @@
                         </div>
                     </div>
                 </div>
-                <input class="btn btn-success float-right" type="submit" value="Ingresar" />
+                {{-- <input class="btn btn-success float-right" type="submit" value="Ingresar" /> --}}
+                <input class="btn btn-success float-right" onclick="this.disabled=true;this.value='Enviando.. .';this.form.submit();" name="commit" value="Enviar" type="submit">
                 <a class="btn btn-danger float-left" href="{{ URL::previous() }}">Atras</a>
                 <br>
                 <br>
@@ -227,4 +230,5 @@
 
         }).catch(error => console.error(error));
     });
+
 </script>

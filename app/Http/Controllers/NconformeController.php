@@ -570,7 +570,7 @@ class NconformeController extends Controller
 
             // $NConforme = NConforme::all();
             // $noCon = $NConforme->last()->id;
-            $file->noConforme    = $request->input('nConforme');
+            $file->noConforme    = null;
             $file->save();
         }
 

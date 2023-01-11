@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             'name'      => 'Silvia Alexandra Sandoval Candela',
             'cargo'     => 'Coordinador de Calidad',
             'proceso'   => 'Gestion de Calidad',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'calidad.coordinacion@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'admin'
         ]);
