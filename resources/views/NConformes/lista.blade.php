@@ -86,7 +86,6 @@
                         <th>{{ $nC->id }}</th>
                         <th>{{ $nC->radicado }}</th>
                         <td>
-                            {{ $nC->fReporte }}
                             @php
                                 //suma 5 dias a la fecha ingresada
                                 $fechaSinH = \Carbon\Carbon::parse($nC->fReporte)
@@ -253,9 +252,6 @@
                                         </li>
                                         <li class="list-group-item">Radicado
                                             <b>{{ $nC->radicado }}</b>
-                                        </li>
-                                        <li class="list-group-item">Fecha de no conforme:
-                                            <b>{{ $nC->fReporte }}</b>
                                         </li>
                                         <li class="list-group-item">Fecha de no conforme:
                                             @php

@@ -42,7 +42,7 @@
             </div>
         </div>
         <br>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <input class="btn btn-primary" onclick="this.disabled=true;this.value='Enviando.. .';this.form.submit();" name="commit" value="Enviar" type="submit">
     </form>
 </div>
 <script>

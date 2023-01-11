@@ -60,7 +60,8 @@
                             <option value="admin">Admin</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary float-right">Agregar</button>
+                    <input class="btn btn-primary float-right" onclick="this.disabled=true;this.value='Enviando.. .';this.form.submit();" name="commit" value="Agregar" type="submit">
+
                     <a class="btn btn-danger float-left" href="{{ URL::previous() }}">Atras</a>
 
                 </form>
