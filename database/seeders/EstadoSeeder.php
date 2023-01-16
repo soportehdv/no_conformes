@@ -33,5 +33,17 @@ class EstadoSeeder extends Seeder
         DB::table('estados')->insert([
             'estado' => 'Cerrado'
         ]);
+
+        DB::table('estados')->insert([
+            'estado' => 'En_revision'
+        ]);
+
+        DB::table('estados')->insert([
+            'estado' => 'Aprobado'
+        ]);
+
+        DB::table('estados')->insert([
+            'estado' => 'Rechazado'
+        ]);
     }
 }

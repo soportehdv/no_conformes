@@ -97,6 +97,7 @@
         </style>
         <div class="card">
             <div class="card-body">
+                @if (Auth::user()->rol != "general")
                 <form method="POST" action="{{ route('misDatosUsuario') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row justify-content-center">
@@ -214,6 +215,90 @@
                     </div>
 
                 </form>
+                @else
+                <form method="POST" action="{{ route('misDatosUsuario') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row justify-content-center">
+                        <div class="col-sm-4">
+                            <div class="max-width">
+                                @foreach ($files as $file)
+                                    @if ($file->id == auth()->user()->image)
+                                        <img src="{{ asset('files/biblioteca/' . $file->ruta) }}"
+                                            class="user-image img-circle elevation-2" alt=""
+                                            style="display:block; margin:auto; "width="200" height="200"
+                                            id="ocultar">
+                                    @endif
+                                @endforeach
+                                <output id="list" class="mostrar"></output>
+                            </div>
+                            <!--ESTILO 1-->
+                            <div class="container-input" style="display: none">
+                                <input type="file" name="file" id="file" class="inputfile inputfile-1"
+                                    data-multiple-caption="{count} archivos seleccionados" multiple />
+                                <label for="file">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
+                                        height="17" viewBox="0 0 20 17">
+                                        <path
+                                            d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                        </path>
+                                    </svg>
+                                    <span class="iborrainputfile">Seleccionar imagen</span>
+                                </label>
+                            </div>
+                            <p align="center"><b>{{ auth()->user()->name }}</b></p>
+                            <p align="center">{{ auth()->user()->cargo }}</p>
+                            <script>
+                                function archivo(evt) {
+                                    var files = evt.target.files; // FileList object
+
+                                    // Obtenemos la imagen del campo "file".
+                                    for (var i = 0, f; f = files[i]; i++) {
+                                        //Solo admitimos imágenes.
+                                        if (!f.type.match('image.*')) {
+                                            continue;
+                                        }
+
+                                        var reader = new FileReader();
+
+                                        reader.onload = (function(theFile) {
+                                            return function(e) {
+                                                // Insertamos la imagen
+                                                document.getElementById("list").innerHTML = [
+                                                    '<img class="mostrar thumb user-image img-circle elevation-2" width="200" height="200" src="',
+                                                    e.target.result, '" title="', escape(theFile.name), '"/>'
+                                                ].join('');
+                                                document.getElementById('ocultar').style.display = 'none';
+                                            };
+                                        })(f);
+
+                                        reader.readAsDataURL(f);
+                                    }
+                                }
+
+                                document.getElementById('file').addEventListener('change', archivo, false);
+                            </script>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="name">Correo de Usuario</label>
+                                    <input type="text" name="name" value="{{ Auth::user()->email }}"
+                                        class="form-control @error('name') is-invalid @enderror" disabled>
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <a class="btn btn-danger float-left" href="{{ route('home') }}">Atras</a>
+                        </div>
+                    </div>
+
+                </form>
+
+                @endif
+
 
             </div>
         </div>

@@ -285,6 +285,22 @@ return [
             'role'          => 'ventanilla',
 
         ],
+        [
+            'text'          => 'No conforme General',
+            'url'           => 'NConformes/vistaGeneral',
+            'icon'          => 'fas fa-fw fa-warehouse',
+            'role'          => 'general',
+
+        ],
+        [
+            'text'          => 'Listado pendiente',
+            'url'           => 'NConformes/listaGeneral',
+            'icon'          => 'fas fa-fw fa-warehouse',
+            'role'          => 'servicios',
+
+        ],
+
+
 
     ],
 

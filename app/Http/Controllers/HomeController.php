@@ -31,5 +31,7 @@ class HomeController extends Controller
             return redirect()->route('NConformes.lista');
         elseif(Auth::user()->rol == 'ventanilla')
             return redirect()->route('listaRadicado.radicado');
+        elseif(Auth::user()->rol == 'general')
+            return redirect()->route('NConformes.vistaGeneral');
     }
 }

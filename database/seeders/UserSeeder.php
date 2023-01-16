@@ -24,6 +24,14 @@ class UserSeeder extends Seeder
             'rol' => 'admin'
         ]);
         DB::table('users')->insert([
+            'name' => 'hdv',
+            'cargo' => 'General',
+            'proceso'   => 'General',
+            'email' => 'general@gmail.com',
+            'password' => bcrypt('HDV1234.'),
+            'rol' => 'general'
+        ]);
+        DB::table('users')->insert([
             'name'      => 'Maryury Diaz Cespedes',
             'cargo'     => 'Gerente',
             'proceso'   => 'Gestión Gerencial',

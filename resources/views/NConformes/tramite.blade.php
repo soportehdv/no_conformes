@@ -2,6 +2,13 @@
 @section('title', 'Tramite')
 
 @section('content_header')
+    <script>
+        function checkSubmit() {
+            document.getElementById("btsubmit").value = "Enviando...";
+            document.getElementById("btsubmit").disabled = true;
+            return true;
+        }
+    </script>
     <div class="card" style="height:4em;">
         <div class="card-header">
             <h2>Tramite de no conforme</h2>
