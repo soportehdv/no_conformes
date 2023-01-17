@@ -34,17 +34,6 @@
                             aria-describedby="emailHelp" placeholder="Ingresa email" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" name="password" value="{{ $user->password }}"
-                            aria-describedby="emailHelp" placeholder="Contraseña" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Confirmar contraseña</label>
-                        <input type="password" class="form-control" name="password_confirmation"
-                            value="{{ $user->password }}" aria-describedby="emailHelp" placeholder="Confirmar contraseña"
-                            required>
-                    </div>
-                    <div class="form-group">
                         <label for="exampleInputEmail1">Nombre </label>
                         <input type="text" class="form-control" name="name" value="{{ $user->name }}"
                             aria-describedby="emailHelp" placeholder="Nombre" required>
@@ -66,8 +55,46 @@
                             @endif
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Agregar</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Se cambiara la contraseña actual</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Escriba la nueva contraseña</label>
+                                        <input type="password" class="form-control" name="password" value=""
+                                            aria-describedby="emailHelp" placeholder="Contraseña" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Confirmar la nueva contraseña</label>
+                                        <input type="password" class="form-control" name="password_confirmation"
+                                            value="" aria-describedby="emailHelp" placeholder="Confirmar contraseña"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Button trigger modal Cambiar contraseña -->
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                        Cambiar contraseña
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="float: right">Guardar</button>
                 </form>
+
+
 
             </div>
         </div>

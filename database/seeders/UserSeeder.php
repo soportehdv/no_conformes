@@ -24,10 +24,18 @@ class UserSeeder extends Seeder
             'rol' => 'admin'
         ]);
         DB::table('users')->insert([
+            'name' => 'hdv',
+            'cargo' => 'General',
+            'proceso'   => 'General',
+            'email' => 'general@gmail.com',
+            'password' => bcrypt('HDV1234.'),
+            'rol' => 'general'
+        ]);
+        DB::table('users')->insert([
             'name'      => 'Maryury Diaz Cespedes',
             'cargo'     => 'Gerente',
             'proceso'   => 'Gestión Gerencial',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'gerencia@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -35,7 +43,7 @@ class UserSeeder extends Seeder
             'name'      => 'Clarena Patricia Celis Castaño',
             'cargo'     => 'Jefe Oficina Comercial',
             'proceso'   => 'Gestión Comercial',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'costoshospitalarios@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -43,7 +51,7 @@ class UserSeeder extends Seeder
             'name'      => 'Luz Marina Londoño Vargas',
             'cargo'     => 'Jefe Oficina Asesora de Planeación y Desarrollo Institucional',
             'proceso'   => 'Gestión de Planeación y Desarrollo Institucional',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'planeacion@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -59,7 +67,7 @@ class UserSeeder extends Seeder
             'name'      => 'Eduardo Garcia',
             'cargo'     => 'Coordinador Estadistica',
             'proceso'   => 'Estadistica',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'estadistica.coordinador@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -67,7 +75,7 @@ class UserSeeder extends Seeder
             'name'      => 'Luz Mary Sanabria Vargas',
             'cargo'     => 'Jefe Oficina Asesora de Planeación y Desarrollo Institucional/Coordinador Unidad Funcional de Tecnologías de la Información y las Comunicaciones',
             'proceso'   => 'Gestión de Tecnologías, Información y Comunicaciones',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'sistemas.coordinador@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -75,7 +83,7 @@ class UserSeeder extends Seeder
             'name'      => 'Alex Warff Mercado',
             'cargo'     => 'Subgerente Asistencial',
             'proceso'   => 'Gestión Asistencial',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'subgerencia.asistencial@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -83,7 +91,7 @@ class UserSeeder extends Seeder
             'name'      => 'Angela Gomez Neira',
             'cargo'     => 'Medica epidemiologia',
             'proceso'   => 'Epidemiologia',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'epidemiologia.angelagomez@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -91,7 +99,7 @@ class UserSeeder extends Seeder
             'name'      => 'Norton Perez Gutierrez',
             'cargo'     => 'Coordinador Unidad Funcional de Medicina Crítica',
             'proceso'   => 'Medicina Crítica',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'medcritica.coordinacion@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -99,7 +107,7 @@ class UserSeeder extends Seeder
             'name'      => 'Haydee Castro Murcia',
             'cargo'     => 'Coordinador Unidad Funcional de Apoyo Diagnóstico y Terapéutico',
             'proceso'   => 'Apoyo Diagnóstico',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'apoyodiagnostico.coordinacion@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -107,15 +115,15 @@ class UserSeeder extends Seeder
             'name'      => 'Yady Cagua',
             'cargo'     => 'Coordinador imagenologia',
             'proceso'   => 'Imagenologia',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'ycagua@hotmail.com',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
         DB::table('users')->insert([
-            'name'      => 'Jennifer Cediel',
+            'name'      => 'Jennifer Cardona',
             'cargo'     => 'Profesional Hemodinamia',
             'proceso'   => 'Hemodinamia',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'angiorientesas@gmail.com',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -123,15 +131,15 @@ class UserSeeder extends Seeder
             'name'      => 'Magda Carolina Neuque Rico',
             'cargo'     => 'Coordinador Unidad Laboratorio clinico ',
             'proceso'   => 'Laboratorio Clinico',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'laboratorio.coordinador@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
         DB::table('users')->insert([
-            'name'      => 'Haydee Castro Murcia',
-            'cargo'     => 'Coordinador Unidad Funcional de Apoyo Diagnóstico y Terapéutico',
+            'name'      => 'PENDIENTE REASIGNAR',
+            'cargo'     => 'PENDIENTE REASIGNAR',
             'proceso'   => 'Laboratorio Patologia',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'PENDIENTEREASIGNAR@gmail.com',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -139,7 +147,7 @@ class UserSeeder extends Seeder
             'name'      => 'Ana Maria Salinas Varon',
             'cargo'     => 'Coordinador Terapia Fisica',
             'proceso'   => 'Terapia Fisica',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'terapia.anasalinas@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -147,7 +155,7 @@ class UserSeeder extends Seeder
             'name'      => 'Sandra  Soto',
             'cargo'     => 'Coordinador Terapia Respiratoria',
             'proceso'   => 'Terapia Respiratoria',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'terapias.respiratoria@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -155,7 +163,7 @@ class UserSeeder extends Seeder
             'name'      => 'Nohora Gutierrez ',
             'cargo'     => 'Coordinador Unidad Funcional de Apoyo Diagnóstico y Terapéutico',
             'proceso'   => 'Banco de Sangre y Servicio Transfusional',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'bsangre.coordinacion@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -163,7 +171,7 @@ class UserSeeder extends Seeder
             'name'      => 'Andrea Prieto',
             'cargo'     => 'Coordinador Unidad Funcional de Urgencias',
             'proceso'   => 'Urgencias',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'urgencias.coordinador@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);
@@ -171,7 +179,7 @@ class UserSeeder extends Seeder
             'name'      => 'Bibiana Salgado Caballero',
             'cargo'     => 'Coordinador Unidad Funcional de Cirugía',
             'proceso'   => 'Cirugía',
-            'email'     => 'ejemplo@gmail.com',
+            'email'     => 'coordinacion.cirugia@hdv.gov.co',
             'password'  => bcrypt('HDV1234.'),
             'rol'       => 'servicios'
         ]);

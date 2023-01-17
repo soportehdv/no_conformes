@@ -1,6 +1,6 @@
 <div id="responder" style="display: none;">
     <form action="{{ route('tramite.create', $NConforme->id) }}" method="POST"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data" onsubmit="return checkSubmit();">
         @csrf
         <div class="form-group">
             <div class="card">
@@ -37,6 +37,7 @@
         </div>
         <br>
         {{-- <button type="submit" class="btn btn-primary">Guardar</button> --}}
-        <input class="btn btn-primary" onclick="this.disabled=true;this.value='Enviando.. .';this.form.submit();" name="commit" value="Enviar" type="submit">
+        <input class="btn btn-success float-right" value="Enviar" type="submit" id="btsubmit"
+                        name="btsubmit">
     </form>
 </div>

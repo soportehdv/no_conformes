@@ -10,6 +10,7 @@ use App\Models\Compras;
 use App\Models\Estados;
 use App\Models\Tramite;
 use App\Models\NConforme;
+use App\Models\NconformeR;
 use App\Models\Ubicacion;
 use App\Models\Fracciones;
 use App\Events\TramiteEvent;
@@ -52,6 +53,27 @@ class NconformeController extends Controller
                 'estado'        => $estado,
             ]);
     }
+
+    public function getNConformesGeneral(Request $request)
+    {
+            $files      = Files::all();
+            $user       = User::all();
+            $tramite    = Tramite::all();
+            $estado     = Estados::all();
+            $NConformes = NConformeR::join('users', 'users.id', '=', 'NConformesr.proceso')
+                ->join('users as user', 'user.id', '=', 'NConformesr.nCproceso')
+                ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformesr.*')
+                ->get();
+            // dd($NConformes);
+            return view('General/lista', [
+                'NConformes'    => $NConformes,
+                'user'          => $user,
+                'files'         => $files,
+                'tramite'       => $tramite,
+                'estado'        => $estado,
+            ]);
+    }
+
     public function enviadosConformes(Request $request){
             $files      = Files::all();
             $tramite    = Tramite::all();
@@ -106,7 +128,6 @@ class NconformeController extends Controller
 
     public function createNoConforme(Request $request)
     {
-        // dd($request->all());
         //inicio donde validamos los datos
         $validate = Validator::make($request->all(), [
             'reportado'     => 'required',
@@ -116,7 +137,6 @@ class NconformeController extends Controller
             'nCdescripcion' => 'required',
             'nCacciones'    => 'required',
             'accion'        => 'required',
-
         ]);
 
         if($validate->fails()){
@@ -125,6 +145,15 @@ class NconformeController extends Controller
             return redirect()->back();
         }
         // finalizacion de validación de datos
+        if ($request->input('estadoAr') == "8") {
+            // cambio de estado en nconformesr
+            $NConformeR             = NConformeR::where('id', $request->input('idNc'))->first();
+            $NConformeR->status     = $request->input('estadoAr');
+            $NConformeR->save();
+
+            $request->session()->flash('alert-success', 'No conforme Rechazado con exito!');
+            return redirect()->route('NConformes.lista');
+        }
 
         // guardamos en la base de datos
         $noC = new NConforme();
@@ -135,12 +164,23 @@ class NconformeController extends Controller
         $noC->nCdescripcion = $request->input('nCdescripcion');
         $noC->nCacciones    = $request->input('nCacciones');
         $noC->accion        = $request->input('accion');
+        $noC->status        = "1";
 
         if($request->file != null){
             $noC->imagen        = 1;
         }else{
             $noC->imagen        = 0;
         }
+        if ($request->input('ExisteImg') != null ) {
+            $noC->imagen        = 1;
+        }
+        if ($request->input('idNc') != null ) {
+            // cambio de estado en nconformesr
+            $NConformeR = NConformeR::where('id', $request->input('idNc'))->first();
+            $NConformeR->status     = $request->input('estadoAr');
+            $NConformeR->save();
+        }
+
         $noC->save();
 
         if($request->file != null){
@@ -162,62 +202,103 @@ class NconformeController extends Controller
             $file->save();
         }
 
-
-        //inicio de codigo para envio de notificacion del correo electronico
+        // inicio de codigo para envio de notificacion del correo electronico
         // ultimo dato
         $NConforme = NConforme::all();
         $cod = $NConforme->last()->id;
 
-        if($request->file != null){
+        if ($request->input('ExisteImg') != null ) {
 
-        $data = array(
-            // datos con archivos
-            'reportado'         =>  $request->reportado,
-            'fReporte'          =>  $request->fReporte,
-            'proceso'           =>  $request->proceso,
-            'nCproceso'         =>  $request->nCproceso,
-            'nCdescripcion'     =>  $request->nCdescripcion,
-            'nCacciones'        =>  $request->nCacciones,
-            'accion'            =>  $request->accion,
-            'file'              =>  $request->file,
-            'aDescripcion'      =>  $request->aDescripcion,
-        );
+            $file = Files::where('noConformeR', $request->input('ExisteImg'))->first();
+            $file->noConforme        = $NConforme->last()->id;
+            $file->save();
+
         }
-        else{
-        $data = array(
-            'reportado'         =>  $request->reportado,
-            'fReporte'          =>  $request->fReporte,
-            'proceso'           =>  $request->proceso,
-            'nCproceso'         =>  $request->nCproceso,
-            'nCdescripcion'     =>  $request->nCdescripcion,
-            'nCacciones'        =>  $request->nCacciones,
-            'accion'            =>  $request->accion,
-        );
-        }
-        // try {
 
-
-        //     Mail::send('Emails.pqrd', $data, function ($message) use ($request) {
-        //         $message->from('sistemas.soportehdv2@gmail.com', 'HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO');
-        //         $message->to($request->user, $request->reportado)->subject('Remitente');
-        //         $message->cc($request->user, 'Hospital Villavicencio');
-        //         $message->subject('Notificación nuevo PQRSF de: ' . $request->nombre . ' asunto: ' . $request->asunto );
-        //     });
-
-
-
-        // } catch (\Exception $e) {
-        //     return back()->with('status2', 'Falló envio de PQRD, por favor intente mas tarde.');
-        // }
-
-        // return back()->with('status', '¡PQRD enviado exitosamente!');
-        //Finalización para enviar al correo electronico
-        // User::where('id', $noC->nCproceso)->first()->notify(new NconformeNotification($noC));
-        // User::where('id', 5)->first()->notify(new NconformeNotification($noC));
         event(new NconformeEvent($noC));
 
         $request->session()->flash('alert-success', 'No conforme registrado con exito!');
         return redirect()->route('NConformes.lista');
+    }
+
+    public function createNGeneral()
+    {
+        $subProceso = user::all();
+
+
+        return view('General/create', [
+            'subProceso' => $subProceso,
+        ]);
+    }
+
+    public function createNoConformeGeneral(Request $request)
+    {
+        // dd($request->all());
+        //inicio donde validamos los datos
+        $validate = Validator::make($request->all(), [
+            'reportado'     => 'required',
+            'fReporte'      => 'required',
+            'proceso'       => 'required',
+            'nCproceso'     => 'required',
+            'nCdescripcion' => 'required',
+            'nCacciones'    => 'required',
+            'accion'        => 'required',
+
+        ]);
+
+        if($validate->fails()){
+            $request->session()->flash('alert-danger', 'Error en el almacenando los datos');
+
+            return redirect()->back();
+        }
+        // finalizacion de validación de datos
+
+        // guardamos en la base de datos
+        $noC = new NConformeR();
+        $noC->reportado     = $request->input('reportado');
+        $noC->fReporte      = $request->input('fReporte');
+        $noC->proceso       = $request->input('proceso');
+        $noC->nCproceso     = $request->input('nCproceso');
+        $noC->nCdescripcion = $request->input('nCdescripcion');
+        $noC->nCacciones    = $request->input('nCacciones');
+        $noC->accion        = $request->input('accion');
+        $noC->status        = "6";
+
+        if($request->file != null){
+            $noC->imagen        = 1;
+        }else{
+            $noC->imagen        = 0;
+        }
+        $noC->save();
+
+        if($request->file != null){
+            $file = new Files();
+            $file->nombre       = $request->file->getClientOriginalName();
+            $file->extension    = $request->file->getClientOriginalExtension();
+            $file->ruta         = str_replace(" ","_",date('Y-m-d').'_'.$file->nombre);
+            $tipo               = explode('/', $request->file->getClientMimeType() );
+            $file->mime         = $tipo[0];
+            $file->size         = number_format($request->file->getSize()/1024,2,',','.');
+            /*primero muevo el archivo antes de generar un registro en la bd por si se presenta fallos de permisos en la subida, no me genere
+            registros basura en la bd*/
+            $request->file->move( public_path('files/biblioteca'), $file->ruta);
+            $file->aDescripcion  = $request->input('aDescripcion');
+
+            $NConforme = NConformeR::all();
+            $noCon = $NConforme->last()->id;
+            $file->noConformeR    = $noCon;
+            $file->noConforme     = null;
+            $file->save();
+        }
+
+        // event(new NconformeEvent($noC));
+
+        $request->session()->flash('alert-success', 'No conforme enviado con exito!');
+        return redirect()->route('NConformes.vistaGeneral');
+    }
+
+    public function vistaGeneral(){
+        return view('General.vista');
     }
 
     public function vista($id)
@@ -313,6 +394,78 @@ class NconformeController extends Controller
         $request->session()->flash('alert-success', 'No conforme actualizado con exito!');
         return redirect()->route('NConformes.lista');
     }
+
+    public function updateGeneral($id)
+    {
+        $NConforme = NConformeR::where('id', $id)->first();
+        $estado = Estados::all();
+        $user = User::all();
+        $files      = Files::all();
+
+        // $fracciones = Fracciones::all();
+
+        return view('General/editar', [
+            'NConforme' => $NConforme,
+            'estado'    => $estado,
+            'user'      => $user,
+            'files'     => $files,
+
+            // 'fracciones' => $fracciones
+        ]);
+    }
+    public function updateNoConformesGeneral(Request $request, $nC_id)
+    {
+
+        // $Compras = Compras::where('id', $compra_id)->first();
+        // $stock = Stock::where('id', $compra_id)->first();
+        $noC = NConforme::where('id', $nC_id)->first();
+
+
+
+        $validate = Validator::make($request->all(), [
+            'reportado'     => 'required',
+            'fReporte'      => 'required',
+            'proceso'       => 'required',
+            'nCproceso'     => 'required',
+            'nCdescripcion' => 'required',
+            'nCacciones'    => 'required',
+            'accion'        => 'required',
+
+        ]);
+
+        if ($validate->fails()) {
+            $request->session()->flash('alert-danger', 'Error al actualizar producto');
+
+            return redirect()->back();
+        }
+
+        // $noC = new NConforme();
+        $noC->reportado     = $request->input('reportado');
+        $noC->fReporte      = $request->input('fReporte');
+        $noC->proceso       = $request->input('proceso');
+        $noC->nCproceso     = $request->input('nCproceso');
+        $noC->nCdescripcion = $request->input('nCdescripcion');
+        $noC->nCacciones    = $request->input('nCacciones');
+        $noC->accion        = $request->input('accion');
+        if($request->file != null){
+            // $archivo = new Files();
+            $Dname       = $request->file->getClientOriginalName();
+            $Dextension  = $request->file->getClientOriginalExtension();
+            $noC->file       = str_replace(" ","_",date('Y-m-d').'_'.$Dname);
+            $tipo        = explode('/', $request->file->getClientMimeType() );
+            $Dmime       = $tipo[0];
+            $Dsize       = number_format($request->file->getSize()/1024,2,',','.');
+            /*primero muevo el archivo antes de generar un registro en la bd por si se presenta fallos de permisos en la subida, no me genere
+            registros basura en la bd*/
+            $request->file->move( public_path('files/biblioteca'), $noC->file);
+            $noC->aDescripcion  = $request->input('aDescripcion');
+        }
+        $noC->save();
+
+        $request->session()->flash('alert-success', 'No conforme actualizado con exito!');
+        return redirect()->route('NConformes.lista');
+    }
+
     public function updateProducto($compra_id, $id_venta)
     {
 

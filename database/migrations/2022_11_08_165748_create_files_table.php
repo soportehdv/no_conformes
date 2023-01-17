@@ -22,6 +22,7 @@ class CreateFilesTable extends Migration
             $table->string('size')->comment('tamaño archivo');
             $table->string('aDescripcion')->comment('descripcion');
             $table->integer('noConforme')->comment('foranea')->nullable();
+            $table->integer('noConformeR')->comment('foranea')->nullable();
 
 
 

@@ -30,7 +30,7 @@
             @endif
         @endforeach
         <br>
-        <form method="POST" action="{{ route('NConformes.create') }}" enctype="multipart/form-data"
+        <form method="POST" action="{{ route('NConformesGeneral.create') }}" enctype="multipart/form-data"
             onsubmit="return checkSubmit();">
             @csrf
             <div class="form-group">
@@ -72,6 +72,7 @@
                                 <label for="">Coordinador : </label>
                                 <input type="text" class="form-control upper" id="reportante" name="reportante"
                                     value="" disabled>
+
                             </div>
                             <div class="col-sm-4">
                                 <label for="">Correo : </label>
@@ -112,6 +113,7 @@
                                 <input type="text" class="form-control upper" name="correoR" id="correoR"
                                     value="" placeholder="Correo" disabled>
                                 <input type="hidden" name="correoOculto2" id="correoOculto2" value="">
+
                             </div>
                         </div>
                         <br>

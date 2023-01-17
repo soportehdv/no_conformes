@@ -26,7 +26,7 @@
         @endif
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('user.create') }}">
+                <form method="POST" action="{{ route('user.create') }}" onsubmit="return checkSubmit();">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email </label>
@@ -60,8 +60,8 @@
                             <option value="admin">Admin</option>
                         </select>
                     </div>
-                    <input class="btn btn-primary float-right" onclick="this.disabled=true;this.value='Enviando.. .';this.form.submit();" name="commit" value="Agregar" type="submit">
-
+                    <input class="btn btn-success float-right" value="Enviar" type="submit" id="btsubmit"
+                        name="btsubmit">
                     <a class="btn btn-danger float-left" href="{{ URL::previous() }}">Atras</a>
 
                 </form>

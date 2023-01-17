@@ -50,6 +50,14 @@ Route::get('NConformes/download/{id}', [App\Http\Controllers\NconformeController
 // NConformes/asignados
 Route::get('NConformes/asignados', [App\Http\Controllers\NconformeController::class, 'asignadosConformes'])->name('NConformes.asignados');
 
+// general
+Route::get('NConformes/createGeneral', [App\Http\Controllers\NconformeController::class, 'createNGeneral'])->name('NConformesGeneral.create.vista');
+Route::post('NConformes/createGeneral', [App\Http\Controllers\NconformeController::class, 'createNoConformeGeneral'])->name('NConformesGeneral.create');
+Route::get('NConformes/vistaGeneral', [App\Http\Controllers\NconformeController::class, 'vistaGeneral'])->name('NConformes.vistaGeneral');
+Route::get('NConformes/listaGeneral', [App\Http\Controllers\NconformeController::class, 'getNConformesGeneral'])->name('NConformesGeneral.lista');
+Route::get('NConformes/updateGeneral/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'updateGeneral'])->name('NConformesGeneral.update.vista');
+Route::post('NConformes/updateGeneral/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'updateNoConformesGeneral'])->name('NConformesGeneral.update');
+
 
 //tramite
 Route::get('tramite/create/{Nconfome}', [App\Http\Controllers\NconformeController::class, 'createT'])->name('tramite.create.vista');
