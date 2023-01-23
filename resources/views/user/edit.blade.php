@@ -55,7 +55,10 @@
                             @endif
                         </select>
                     </div>
-
+                    <button type="submit" class="btn btn-primary" style="float: right">Guardar</button>
+                </form>
+                <form method="POST" action="{{ route('user.update', $user->id) }}">
+                    @csrf
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -91,7 +94,6 @@
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                         Cambiar contraseña
                     </button>
-                    <button type="submit" class="btn btn-primary" style="float: right">Guardar</button>
                 </form>
 
 

@@ -60,7 +60,7 @@
                                 <select class="form-control" name="proceso" id="proceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($subProceso as $us)
-                                        @if (Auth::user()->id == $us->id)
+                                        @if ($us->id >= 3)
                                             <option value="{{ $us->id }}">
                                                 {{ $us->cargo }}
                                             </option>

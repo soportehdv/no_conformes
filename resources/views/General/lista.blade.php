@@ -133,16 +133,8 @@
                             @endforeach
                         </td>
                         <td>
-                            {{-- <a href="{{ route('NConformes.update.vista', $nC->id) }}"
-                                class="btn btn-success btn-sm mb-2" title="Editar"><i class="fas fa-edit"></i></a> --}}
-                            @if ($nC->asignado == 0)
-                                <a href="{{ route('tramite.create', $nC->id) }}" class="btn btn-primary btn-sm mb-2"
-                                    title="Tramitar"><i class="fa fa-briefcase"></i></a>
-                            @endif
-                            <a data-toggle="modal" data-target="#modal-show-{{ $nC->id }}"
-                                class="btn btn-warning btn-sm mb-2" title="Ver">
-                                <i class="fa fa-eye"></i>
-                            </a>
+                            <a href="{{ route('NConformesGeneral.update.vista', $nC->id) }}"
+                                class="btn btn-success btn-sm mb-2" title="Editar"><i class="fas fa-edit"></i></a>
                         </td>
                         <td style="display: none">{{ $nC->nCdescripcion }}</td>
                         <td style="display: none">{{ $nC->nCacciones }}</td>
