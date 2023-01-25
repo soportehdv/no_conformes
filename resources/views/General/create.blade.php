@@ -60,7 +60,7 @@
                                 <select class="form-control" name="proceso" id="proceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($subProceso as $us)
-                                        @if ($us->id >= 3)
+                                        @if ($us->id >= 3 && $us->id != 52)
                                             <option value="{{ $us->id }}">
                                                 {{ $us->cargo }}
                                             </option>
@@ -95,7 +95,7 @@
                                 <select class="form-control" name="nCproceso" id="nCproceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($subProceso as $sp)
-                                        @if ($loop->index != 0)
+                                        @if ($sp->id >= 3 && $sp->id != 52)
                                             <option value="{{ $sp->id }}">
                                                 {{ $sp->cargo }}
                                             </option>
