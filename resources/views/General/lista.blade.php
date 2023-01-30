@@ -63,7 +63,7 @@
         </thead>
         <tbody>
             @foreach ($NConformes as $nC)
-                @if ($nC->nCproceso == auth()->user()->id && auth()->user()->rol != 'admin')
+                @if ($nC->proceso == auth()->user()->id && auth()->user()->rol != 'admin')
                     <tr>
                         <th>{{ $nC->id }}</th>
                         <th>{{ $nC->radicado }}</th>
