@@ -30,8 +30,8 @@
         <br>
         <br>
         <h1 align="center">Bienvenidos</h1>
-        <p style="font-size: 23px">Hola a todos, desde el botón "Crear un nuevo conforme", podrá crear y solicitar revisión de un no
-            conforme por parte de su coordinador, para este posteriormente decidir si se aprueba o rechaza la solicitud.</p>
+        <p style="font-size: 23px">Hola a todos!   Ahora disponemos de esta herramienta para  reportar, responder, aceptar o redireccionar un
+        "servicio no conforme".   Ingresa desde el botón <b>"CREAR NUEVO NO CONFORME"</b></p>
         <div class="row">
             <div class="col-sm-12">
                 <img src="https://www.hdv.gov.co/files/biblioteca/2022-12-14_logoHDV1.png" alt="" width="100%">
