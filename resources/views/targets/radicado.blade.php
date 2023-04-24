@@ -171,7 +171,7 @@
                                             <li class="list-group-item">Acciones realizadas y fecha de realizacion:
                                                 <b>{{ $nC->nCacciones }}</b>
                                             </li>
-                                            <li class="list-group-item">Requiere iniciar Acción Correptiva y/o
+                                            <li class="list-group-item">Requiere iniciar Acción Correctiva y/o
                                                 Preventiva?:
                                                 <b>{{ $nC->accion }}</b>
                                             </li>
@@ -228,7 +228,7 @@
                                             @endforeach
                                         @else
                                             <br><br>
-                                            <h6> No sé a subido archivos para este no conforme </h6>
+                                            <h6> No se han subido archivos para este no conforme </h6>
                                         @endif
                                     </div>
                                     {{-- tramites --}}

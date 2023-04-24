@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-4">
-                            <label for="">Proceso : </label>
+                            <label for="">Cargo : </label>
                             <select class="form-control" name="proceso2" id="proceso2" required>
                                 <option value="">Seleciona un proceso</option>
                                 @foreach ($subProceso as $us)

@@ -90,7 +90,7 @@
                                     <li class="list-group-item">Acciones realizadas y fecha de realizacion:
                                         <b>{{ $NConforme->nCacciones }}</b>
                                     </li>
-                                    <li class="list-group-item">Requiere iniciar Acción Correptiva y/o Preventiva?:
+                                    <li class="list-group-item">Requiere iniciar Acción Correctiva y/o Preventiva?:
                                         <b>{{ $NConforme->accion }}</b>
                                     </li>
                                     <li class="list-group-item">Estado :
@@ -143,7 +143,7 @@
                                     @endforelse
                                 @else
                                     <br>
-                                    <h6 align="center"> No sé a subido archivos para este no conforme </h6>
+                                    <h6 align="center"> No se han subido archivos para este no conforme </h6>
                                 @endif
                             </div>
                             {{-- ejemplo --}}

@@ -129,7 +129,7 @@
                                         <li class="list-group-item">Acciones realizadas y fecha de realizacion:
                                             <b>{{ $nC->nCacciones }}</b>
                                         </li>
-                                        <li class="list-group-item">Requiere iniciar Acción Correptiva y/o Preventiva?:
+                                        <li class="list-group-item">Requiere iniciar Acción Correctiva y/o Preventiva?:
                                             <b>{{ $nC->accion }}</b>
                                         </li>
                                         <li class="list-group-item">Estado :
@@ -184,7 +184,7 @@
                                         @endforeach
                                     @else
                                         <br><br>
-                                        <h6> No sé a subido archivos para este no conforme </h6>
+                                        <h6> No se han subido archivos para este no conforme </h6>
                                     @endif
                                 </div>
                                 {{-- tramites --}}
@@ -340,7 +340,7 @@
                     searchPanes: {
                         title: {
                             _: 'Total de filtros selecionados - %d',
-                            0: 'Selecione un opción para filtrar tu busqueda',
+                            0: 'Seleccione un opción para filtrar tu busqueda',
                             1: 'Se ha selecionado un filtro'
                         },
                         "clearMessage": "Borrar seleccionados",

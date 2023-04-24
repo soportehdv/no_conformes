@@ -56,7 +56,7 @@
 
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="">Proceso : </label>
+                                <label for="">Cargo : </label>
                                 <select class="form-control" name="proceso" id="proceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($subProceso as $us)
@@ -90,7 +90,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="">Proceso : </label>
+                                <label for="">Cargo : </label>
                                 <select class="form-control" name="nCproceso" id="nCproceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($subProceso as $sp)
@@ -149,7 +149,7 @@
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" name="accion" id="no" class="custom-control-input"
-                                        value="no">
+                                        value="no" checked>
                                     <label for="no" class="custom-control-label">No </label>
                                 </div>
                             </div>

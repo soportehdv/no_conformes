@@ -140,7 +140,7 @@ class NconformeController extends Controller
         ]);
 
         if($validate->fails()){
-            $request->session()->flash('alert-danger', 'Error en el almacenando los datos');
+            $request->session()->flash('alert-danger', 'Error en los datos alamcenados.');
 
             return redirect()->back();
         }
@@ -247,7 +247,7 @@ class NconformeController extends Controller
         ]);
 
         if($validate->fails()){
-            $request->session()->flash('alert-danger', 'Error en el almacenando los datos');
+            $request->session()->flash('alert-danger', 'Error en los datos alamcenados.');
 
             return redirect()->back();
         }

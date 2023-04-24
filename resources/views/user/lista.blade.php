@@ -66,7 +66,7 @@
                     searchPanes: {
                         title: {
                             _: 'Total de filtros selecionados - %d',
-                            0: 'Selecione un opción para filtrar tu busqueda',
+                            0: 'Seleccione un opción para filtrar tu busqueda',
                             1: 'Se ha selecionado un filtro'
                         },
                         "clearMessage": "Borrar seleccionados",

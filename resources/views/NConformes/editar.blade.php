@@ -46,7 +46,7 @@
                         <br>
                         <div class="row">
                             <div class="col-sm-6">
-                                <label for="">Proceso : </label>
+                                <label for="">Cargo : </label>
                                 <select class="form-control" name="proceso" id="proceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($user as $us)
@@ -78,7 +78,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6">
-                                <label for="">Proceso : </label>
+                                <label for="">Cargo : </label>
                                 <select class="form-control" name="nCproceso" id="nCproceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($user as $us)

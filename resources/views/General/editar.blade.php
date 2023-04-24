@@ -53,7 +53,7 @@
                         <br>
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="">Proceso : </label>
+                                <label for="">Cargo : </label>
                                 <select class="form-control" name="proceso" id="proceso" required>
                                     @foreach ($user as $us)
                                         @if (Auth::user()->id == $us->id)
@@ -96,7 +96,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="">Proceso : </label>
+                                <label for="">Cargo : </label>
                                 <select class="form-control" name="nCproceso" id="nCproceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($user as $us)
@@ -207,7 +207,7 @@
                                         @endforeach
                                     @else
                                         <br><br>
-                                        <h6> No sé a subido archivos para este no conforme </h6>
+                                        <h6> No se han subido archivos para este no conforme </h6>
                                     @endif
                                 </div>
                             </div>
@@ -225,7 +225,7 @@
                             <div class="col-md-12">
                                 <label for="">Cambiar Estado : </label>
                                 <select class="form-control" name="estadoAr" id="estadoAr" required>
-                                    <option value="">Selecione una opción</option>
+                                    <option value="">Seleccione una opción</option>
                                     <option value="7">Aprobar</option>
                                     <option value="8">Rechazar</option>
                                 </select>
