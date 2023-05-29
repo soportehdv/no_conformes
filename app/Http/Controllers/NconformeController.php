@@ -140,7 +140,7 @@ class NconformeController extends Controller
         ]);
 
         if($validate->fails()){
-            $request->session()->flash('alert-danger', 'Error en los datos alamcenados.');
+            $request->session()->flash('alert-danger', 'Error en los datos almacenados.');
 
             return redirect()->back();
         }
