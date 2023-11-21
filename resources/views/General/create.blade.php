@@ -56,7 +56,7 @@
 
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="">Cargo : </label>
+                                <label for="">Cargo del jefe o coordinador a reportar : </label>
                                 <select class="form-control" name="proceso" id="proceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($subProceso as $us)
@@ -91,7 +91,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="">Cargo : </label>
+                                <label for="">Cargo del jefe o coordinador  : </label>
                                 <select class="form-control" name="nCproceso" id="nCproceso" required>
                                     <option value="">Seleciona un proceso</option>
                                     @foreach ($subProceso as $sp)

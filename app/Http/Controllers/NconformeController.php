@@ -17,13 +17,14 @@ use App\Events\TramiteEvent;
 use Illuminate\Http\Request;
 use App\Models\subcategorias;
 use App\Events\NconformeEvent;
+use App\Exports\infproductividadExport;
 use Illuminate\Support\Facades\DB;
 use App\Listeners\NconformeListener;
 use App\Http\Controllers\Subcategoria;
 use Illuminate\Support\Facades\Validator;
 use App\Notifications\TramiteNotification;
 use App\Notifications\NconformeNotification;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class NconformeController extends Controller
 {
@@ -54,6 +55,13 @@ class NconformeController extends Controller
             ]);
     }
 
+    public function getNConformesOportunidad()
+    {
+
+            //return (new infproductividadExport)->download('CENSO_DIARIO.xlsx');
+            return Excel::download(new infproductividadExport, 'CENSO_DIARIO.xlsx');
+    }
+
     public function getNConformesGeneral(Request $request)
     {
             $files      = Files::all();
@@ -63,8 +71,9 @@ class NconformeController extends Controller
             $NConformes = NConformeR::join('users', 'users.id', '=', 'NConformesr.proceso')
                 ->join('users as user', 'user.id', '=', 'NConformesr.nCproceso')
                 ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformesr.*')
+                ->where('NConformesr.status','=',6)
                 ->get();
-            // dd($NConformes);
+            //return $NConformes;
             return view('General/lista', [
                 'NConformes'    => $NConformes,
                 'user'          => $user,
@@ -84,7 +93,8 @@ class NconformeController extends Controller
                 ->join('users as user', 'user.id', '=', 'NConformes.nCproceso')
                 ->select('users.cargo as Aservicio', 'users.name as reportante', 'user.cargo as servicio', 'user.name as nCreportado', 'NConformes.*')
                 ->get();
-            // dd($NConformes);
+             //dd($NConformes);
+            //return $NConformes;
             return view('NConformes/enviados', [
                 'NConformes' => $NConformes,
                 'files'      => $files,
@@ -118,7 +128,8 @@ class NconformeController extends Controller
 
     public function createN()
     {
-        $subProceso = user::all();
+        $subProceso = user::orderBy('cargo')->get();
+        //$subProceso = user::all();
 
 
         return view('NConformes/create', [
@@ -223,8 +234,11 @@ class NconformeController extends Controller
 
     public function createNGeneral()
     {
-        $subProceso = user::all();
+        //$subProceso = user::all();
+        $subProceso = user::orderBy('cargo')->get();
+        //$subProceso = user::all();
 
+        //return $subProceso;
 
         return view('General/create', [
             'subProceso' => $subProceso,

@@ -225,7 +225,7 @@
                                                                                     {{ $u->cargo }} de
                                                                                     {{ $u->proceso }}</b>
                                                                             @else
-                                                                                <b>{{ $u->name }} a
+                                                                                <b>{{ $u->name }} ha
                                                                                     {{ $est->estado }}</b>
                                                                             @endif
                                                                         @endif

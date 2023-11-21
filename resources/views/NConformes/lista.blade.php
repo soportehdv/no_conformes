@@ -60,6 +60,9 @@
             <input type="text" class="form-control upper" name="max" id="max" value=""
                 placeholder="Fecha final">
         </div>
+
+
+
     </div>
     <br>
     <br>
@@ -517,6 +520,9 @@
 
 
     <script>
+
+
+
         var minDate, maxDate;
 
         // Custom filtering function which will search data in column four between two values
@@ -525,6 +531,8 @@
                 var min = minDate.val();
                 var max = maxDate.val();
                 var date = new Date(data[1]);
+
+
 
                 if (
                     (min === null && max === null) ||
@@ -538,12 +546,17 @@
             }
         );
         $(document).ready(function() {
+
+
+
+
+
             // Create date inputs
             minDate = new DateTime($('#min'), {
-                format: 'MMMM Do YYYY'
+                format: 'YYYY-mm-DD'
             });
             maxDate = new DateTime($('#max'), {
-                format: 'MMMM Do YYYY'
+                format: 'YYYY-mm-DD'
 
             });
 

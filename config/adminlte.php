@@ -244,6 +244,12 @@ return [
             'role'        => 'admin'
         ],
         [
+            'text'        => 'Informe de oportunidad',
+            'url'         => 'NConformes/oportunidad',
+            'icon'        => 'far fa-fw fa-user',
+            'role'        => 'admin'
+        ],
+        [
             'text'        => 'No Conformes Recibidos',
             'url'         => 'NConformes/lista',
             'icon'        => 'fas fa-fw fa-share',

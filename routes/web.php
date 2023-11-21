@@ -44,6 +44,8 @@ Route::post('NConformes/create', [App\Http\Controllers\NconformeController::clas
 Route::get('NConformes/update/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'update'])->name('NConformes.update.vista');
 Route::post('NConformes/update/{NConformes_id}', [App\Http\Controllers\NconformeController::class, 'updateNoConformes'])->name('NConformes.update');
 
+Route::get('NConformes/oportunidad', [App\Http\Controllers\NconformeController::class, 'getNConformesOportunidad'])->name('NConformes.oportunidad');
+
 
 Route::post('NConformes/subcategorias', [App\Http\Controllers\NconformeController::class, 'subcategorias']);
 Route::get('NConformes/download/{id}', [App\Http\Controllers\NconformeController::class, 'download'])->name('NConformes.download');
